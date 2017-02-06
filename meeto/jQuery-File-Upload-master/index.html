@@ -1,0 +1,30 @@
+<html>
+  <head>
+  <title>Image Rotate
+  </head>
+  <script>
+  var angle = 0, img = document.getElementById('image');
+document.getElementById('button').onclick = function() {
+    angle = (angle+90)%360;
+    img.className = "rotate"+angle;
+}
+  </script>
+  <style>
+  #image {
+    transform-origin: top left; /* IE 10+, Firefox, etc. */
+    -webkit-transform-origin: top left; /* Chrome */
+    -ms-transform-origin: top left; /* IE 9 */
+}
+#image.rotate90 {
+    transform: rotate(90deg) translateY(-100%);
+    -webkit-transform: rotate(90deg) translateY(-100%);
+    -ms-transform: rotate(90deg) translateY(-100%);
+}
+#image.rotate180 {
+  </style>
+  <body>
+  <button id="button">Click me!</button>
+<img src="../img/Tokyo.jpg" id="image" width="100" height="100"/>
+  sd
+  </body>
+  </html>

@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>Woffice</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="css/ie10-viewport-bug-workaround.css" rel="stylesheet">
+	
+	<!-- Add fancyBox -->
+	<link rel="stylesheet" href="plugin/fancybox/source/jquery.fancybox.css?v=2.1.5" type="text/css" media="screen" />
+
+	<!-- font awesome -->
+	<link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">	
+	
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="js/ie-emulation-modes-warning.js"></script>
+
+	<!-- price-slider -->
+	<link rel="stylesheet" href="//code.jquery.com/ui/1.11.1/themes/smoothness/jquery-ui.css">
+
+
+	
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <!-- Custom styles for this template -->
+    <link href="css/carousel.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+	
+		<!-- slick-slider -->
+	<link href="plugin/slick/slick.css" rel="stylesheet">
+	<link href="plugin/slick/slick-theme.css" rel="stylesheet">
+	
+  </head>
+<!-- NAVBAR
+================================================== -->
+  <body>
+    <div class="navbar-wrapper menu nevbar-position menu-border">
+      <div class="container header-container">
+        <nav class="navbar navbar-inverse navbar-static-top toggal-back menu-h">
+          <div class="container">
+            <div class="navbar-header">
+				<div class="left">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				  </button>
+				  <a class="navbar-brand menu-h navbar-logo" href="#">Your LOGO</a>
+				</div>
+				
+				<div class="nav-input-box">
+				<input type="text" class="nav-input" placeholder="Pick Your Workspace." />
+				</div>
+				<div class="browse menu-h">Browse<span class="caret"></span></div>	
+																																				
+            </div>
+			
+            <div id="navbar" class="navbar-collapse collapse">
+              <ul class="nav navbar-nav text-center font-menu">
+                <li><a href="#" data-toggle="modal" data-target=".bs-example-modal-sm">Sign Up</a></li>
+                <li><a href="#" data-toggle="modal" data-target=".bc-example-modal-sm">Login</a></li>
+                <li><a href="how-work.html">How It Works</a></li>
+                <li><a href="list_space.html" class="blue-button"> List Your Space</a></li>
+				
+              </ul>
+			  
+			  
+            </div>
+          </div>
+        </nav>
+
+      </div>
+    </div> 
+	
+
+ <!-- pop up start -->
+
+
+			<!-- Sing in modal -->
+				<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+				  <div class="modal-dialog modal-sm" role="document">
+
+					<div class="modal-content">
+						  
+								<div class="social-buttons">
+									<a href="#" class="btn btn-fb"><i class="fa fa-facebook"></i>&nbsp; Facebook</a>
+									<a href="#" class="btn btn-tw"><i class="fa fa-twitter"></i>&nbsp; Twitter</a>
+									<a href="#"  class="btn btn-go"><i class="fa fa-google-plus"></i>&nbsp; Google</a>
+								<!--	<a href="#" class="btn btn-ln"><i class="fa fa-linkedin"></i>&nbsp; Linkedin</a> -->
+									<a class="text-center center-block margin-main"><span class="text-center">OR</span></a>
+									<a href="#" data-toggle="modal" data-target=".ac-example-modal-sm" class="btn btn-email"><i class="fa fa-envelope-o"></i>&nbsp; Sign With Email</a>
+									<hr />
+									
+									<span>Already a member?<a href="#" data-toggle="modal" data-target=".bc-example-modal-sm" class="forgot">login</a></span>
+								</div>
+								
+					</div>
+				  </div>
+				</div>
+				
+				
+				<!-- Logi in modal -->
+				<div class="modal fade bc-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+				  <div class="modal-dialog modal-sm" role="document">
+
+					<div class="modal-content">
+						 
+								<div class="social-buttons">
+									<a href="#" class="btn btn-fb"><i class="fa fa-facebook"></i>&nbsp; Facebook</a>
+									<a href="#" class="btn btn-tw"><i class="fa fa-twitter"></i>&nbsp; Twitter</a>
+									<a href="#" class="btn btn-go"><i class="fa fa-google-plus"></i>&nbsp; Google</a>
+									<a class="text-center center-block margin-main"><span class="text-center"><b>OR</b></span></a>
+									
+									<div class="top-margin-10"></div>
+									 <form>
+										<div class="form-group">
+										  <input type="text" class="form-control" id="usr" placeholder="Email Address">
+										</div>
+										<div class="form-group">
+										  <input type="password" class="form-control" id="pwd" placeholder="Password">
+										</div>
+										
+										 <span class=""><input class="check" id="remember" type="checkbox"> &nbsp; Remember Me</span>
+										 
+										<span class="text-right r-left">
+										<a href="#" class="forgot">Forgot Password?</a>
+										</span>
+										
+									  </form>
+									  
+									<a href="#" class="btn btn-lo">LOGIN</a> 
+									<span>Don't have an account?<a href="#" data-toggle="modal" data-target=".ac-example-modal-sm"  class="forgot">Create Account</a></span>
+									  
+								</div>
+								
+					</div>
+				  </div>
+				</div>
+				
+				
+				
+				
+				
+				
+			<!-- sing with email - modal -->
+				<div class="modal fade ac-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+				  <div class="modal-dialog modal-sm" role="document">
+
+					<div class="modal-content">
+						 
+								<div class="social-buttons">
+									<a href="#" class="btn btn-fb"><i class="fa fa-facebook"></i>&nbsp; Facebook</a>
+									<a href="#" class="btn btn-tw"><i class="fa fa-twitter"></i>&nbsp; Twitter</a>
+									<a href="#" class="btn btn-go"><i class="fa fa-google-plus"></i>&nbsp; Google</a>
+									<a class="text-center center-block margin-main"><span class="text-center"><b>OR</b></span></a>
+									
+									<div class="top-margin-10"></div>
+									 <form>
+										<div class="form-group">
+										  <input type="text" class="form-control" id="usr" placeholder="First Name">
+										</div>
+										
+										<div class="form-group">
+										  <input type="text" class="form-control" id="usr" placeholder="Last Name">
+										</div>
+										
+										<div class="form-group">
+										  <input type="text" class="form-control" id="usr" placeholder="Email Address">
+										</div>
+										<div class="form-group">
+										  <input type="password" class="form-control" id="pwd" placeholder="Password">
+										</div>
+										
+										<div class="form-group">
+										  <input type="password" class="form-control" id="pwd" placeholder="confirm Password">
+										</div>
+										
+										 <span class=""><input class="check" id="remember" type="checkbox"> &nbsp; Inform me about Latest news</span>
+										 
+										 		<div class="top-margin-10"></div>	
+												
+										<p class="">
+										 By Signing up, you confirm that you accept our <a href="#" class="forgot">  Terms of Service </a> and <a href="#" class="forgot">Privacy Policy.</a>
+										</p>
+										
+										<div class=" ">
+										<span class="form-group f-left" style="width:35%;">
+											<input type="text" class="form-control" id=" " placeholder="captcha">
+										</span> 
+										
+										
+										<a href="#">
+											<img src="img/refresh.png" style="height:12px; width:12px; margin:10px 20px;">
+										</a>
+										
+										<span class="form-group r-left" style="width:50%;">
+											<input type="text" class="form-control" id=" " placeholder="code">
+										</span> 
+										
+										</div>
+									  </form>
+									  
+									<a href="#" class="btn btn-lo">Create Account</a> 
+									<span>Already a member?<a href="#" class="forgot">Login</a></span>
+									  
+								</div>
+								
+					</div>
+				  </div>
+				</div>
+					
+
+ <!-- pop up end-->
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+	
+
+<div class="container-flude full-container">
+	<div class="text-center">
+		<div class="top-margin-10">&nbsp;</div>	
+			<h3 class="space">List Your Space</h3>
+		<div class="top-margin-10">&nbsp;</div>		
+	</div>
+</div>
+
+<div class="container-flude dashboard">
+	<div class="container">
+		<div class="list_field">
+			<div class="list-name">
+				<div class="list-label">
+					<label>Property Type</label>
+				</div>	
+			</div>
+
+			<div class="list-type">
+				<ul class="type_field_btn">
+					<li class="field_btn">
+						<a>
+							<img src="img/list-page/Private-Office1.png" class="list-img img-responsive">
+							<span class="img-name">
+									Private Office				
+							</span>
+						</a>
+					</li>
+					
+					<li class="field_btn">
+						<a>
+							<img src="img/list-page/Meeting-Room1.png" class="list-img img-responsive">
+							<span class="img-name">
+									Meeting Room				
+							</span>
+						</a>
+					</li>
+					
+					<li class="field_btn">
+						<a>
+							<img src="img/list-page/Open-Space1.png" class="list-img img-responsive">
+							<span class="img-name">
+									Open Space					
+							</span>
+						</a>
+					</li>
+					
+					<li class="field_btn">
+						<a>
+							<img src="img/list-page/Classroom1.png" class="list-img img-responsive">
+							<span class="img-name">
+									Classroom & Conferences				
+							</span>
+						</a>
+					</li>
+					
+					<li class="field_btn">
+						<a>
+							<img src="img/list-page/default-list-img.png" class="list-img img-responsive">
+							<span class="img-name">
+									Clinics				
+							</span>
+						</a>
+					</li>
+					
+					
+				</ul>
+			</div>
+
+			
+			<div class="list-name">
+				<div class="list-label">
+					<label>Purpose</label>
+				</div>	
+			</div>
+
+			<div class="list-type">
+				<ul class="type_field_btn">
+					<li class="field_btn">
+						<a>
+							<img src="img/list-page/Freelance1.png" class="list-img img-responsive">
+							<span class="img-name">
+									General				
+							</span>
+						</a>
+					</li>
+					
+					<li class="field_btn">
+						<a>
+							<img src="img/list-page/Lawyers1.png" class="list-img img-responsive">
+							<span class="img-name">
+									Lawyers				
+							</span>
+						</a>
+					</li>
+					
+					<li class="field_btn">
+						<a>
+							<img src="img/list-page/default-list-img.png" class="list-img img-responsive">
+							<span class="img-name">
+									Dr & Therapists					
+							</span>
+						</a>
+					</li>
+				</ul>
+			</div>
+			
+			
+			
+			<div class="list-name">
+				<div class="list-label">
+					<label>Accommodates</label>
+				</div>	
+			</div>
+
+			<div class="list-type">
+				<ul class="type_field_btn">
+					<li class="field_btn">
+						<a>
+							<img src="img/list-page/group12.png" class="list-img img-responsive">
+
+						<select class="input-medium input-Accommodates" name="guests" id=" " >
+
+								<option value="1">1</option>
+								<option value="2">2</option>
+								<option value="3">3</option>
+								<option value="4">4</option>
+								<option value="5">5</option>
+								<option value="6">6</option>
+								<option value="7">7</option>
+								<option value="8">8</option>
+								<option value="9">9</option>
+								<option value="10-14">10-14</option>
+								<option value="15-19">15-19</option>
+								<option value="20-29">20-29</option>
+								<option value="30-49">30-49</option>
+								<option value="50-74">50-74</option>
+								<option value="75-99">75-99</option>
+								<option value="100+">100+</option>
+								                                   
+                        </select>
+							
+						</a>
+					</li>
+				</ul>
+			</div>
+
+
+			<div class="list-name">
+				<div class="list-label">
+					<label>city</label>
+				</div>	
+			</div>
+
+			<div class="list-type">
+				<ul class="type_field_btn">
+					<li class="field_btn">
+						<a>
+							<img src="img/list-page/map-marker.png" class="list-img img-responsive">
+								<input type="text" class="city-location" 	placeholder="Your Location">
+						</a>
+					</li>
+				</ul>
+			</div>
+			
+			
+			<div class="list-name">
+				<div class="list-label">
+					<label>&nbsp;</label>
+				</div>	
+			</div>
+
+			<div class="list-type">
+				<div class="top-margin-20">&nbsp;</div>	
+						<a class="blue-button">Continue</a>
+
+			</div>			
+			
+			
+			
+			
+		</div>
+	</div>
+</div>
+
+ 
+ 	
+	<!-- footer -->	
+	
+<div class="container-flude flude-footer  full-container">
+	<div class="container">
+		<div class="top-margin-20">&nbsp;</div>	
+			<div class="row">
+				<div class="col-md-4 col-sm-4 col-xs-12">
+					<select class="option">
+						<option value="">English</option>
+						<option value="">Hebrew</option>
+					  
+					</select>
+					
+					<select class="option">
+						<option value="">USD</option>
+						<option value="">GBP</option>
+						<option value="">ILS</option>
+						<option value="">EUR</option>
+					   	
+					</select>
+					<div class="top-margin-20">&nbsp;</div>
+				</div>
+				
+				<div class="col-md-4 col-sm-4 col-xs-12 opan-r">
+					<ul class="nav footer-list footer-menu">
+						<li><b>Company</b></li>
+						<li><a>Privacy Policy</a></li>
+						<li><a>Terms of Service</a></li>
+						<li><a>Cancellation Policy</a></li>
+						<li><a href="how-work.html">How It Works</a></li>
+						<li><a>Contact Us</a></li>
+						<li><a>Blog</a></li>
+						<li><a>About</a></li>
+					</ul>
+				</div>
+			</div>
+			
+			<div class="row">
+				<div class="copy-txt col-md-12 footer-bottom">
+
+					<span>Join Us On</span>
+					<ul class="footer-list margin-l">
+					
+						<li><a target="_blank" href="#" alt=" "><i class="fa fa-facebook " aria-hidden="true"></i></a></li>
+						<li><a target="_blank" href="#" alt=" "><i class="fa fa-twitter "></i></a></li>
+						<li><a target="_blank" href="#" alt=" "><i class="fa fa-google-plus"></i></a></li>
+						<li><a target="_blank" href="#" alt=" "><i class="fa fa-youtube-play"></i></a></li>
+						<li><a target="_blank" href="#" alt=" "><i class="fa fa-pinterest"></i></a></li>
+
+					</ul>
+
+						<p>Copyright 2016. Woffice. All rights reserved.</p>
+
+				</div> 
+			</div>
+	</div>
+</div>	
+
+<!-- footer END-->
+
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="js/bootstrap.min.js"></script>
+    <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
+    <script src="js/holder.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+	<script src="js/ie10-viewport-bug-workaround.js"></script> 
+	<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+  </body>
+</html>
+
+
+
+
+    
