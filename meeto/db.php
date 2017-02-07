@@ -5,9 +5,9 @@ session_start();
 
 date_default_timezone_set('Asia/Tokyo');
 
-define('DB_HOST', 'jobmatch1.db.12566969.hostedresource.com');
-define('DB_USERNAME', 'jobmatch1');
-define('DB_PASSWORD', 'Job@1234');
+define('DB_HOST', 'localhost');
+define('DB_USERNAME', 'meeto123');
+define('DB_PASSWORD', 'meeto@123');
 define('DB_NAME', 'jobmatch1');
 define('APPROVED', 'approved');
 define('PENDING', 'pending');

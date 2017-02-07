@@ -1,6 +1,5 @@
 <?php 
 require_once('db.php');  
-
 ?>
 <!DOCTYPE html>
 <html lang="en">  
@@ -50,6 +49,7 @@ ol li
     <!-- NAVBAR================================================== -->
 <body>   
 <?php require_once('header1.php');   ?>
+<?php	require_once('loginsignup.php'); ?>	
 <!-- pop up start -->
 	<div class="container-flude full-container">	
 	  <div class="container" style="width:80%;">		

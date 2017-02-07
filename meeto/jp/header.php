@@ -100,8 +100,7 @@
 					 <li><a href="#" data-toggle="modal" data-target=".bs-example-modal-sm">
 サインアップ</a></li>
                 <li><a id="some-id" href="#logindiv" data-toggle="modal" data-target=".bc-example-modal-sm">ログイン</a></li>
-                <li><a href="how-work.php">
-使い方</a></li>
+                <li><a href="how-work.php">使い方</a></li>
                 <li><a href="list_space.php" class="blue-button"> あなたのスペースを一覧表示</a></li>
 					<?php
 				}

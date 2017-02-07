@@ -571,8 +571,9 @@ text-align: center; width: 100%;}
 .label-font>li>label{font-weight:400; padding-left:5px; color:#4c4c4c;} 
 .label-font>li{padding:2px 0px;} 
 
-.red-button:hover{background:#f30707 !important;}
-.green-button:hover{background:#028e4e !important;}
+.red-button, .red-button:hover{background:#f30707 !important; border-radius:4px; color:#fff;font-weight:bold;}
+.green-button, .green-button:hover{background:#028e4e !important; border-radius:4px; color:#fff;font-weight:bold;}
+
 .right-text-in p{padding-left:15px;}
 
 
@@ -959,6 +960,8 @@ header{position:fixed !important;}
 
 input, select, textarea, option{font-size:14px;}
 
+.link_text{color:#1aa8e7}
+.gray_text{color:#999;}
 
 body header{position:fixed !important; background:#000;}
 
@@ -974,9 +977,9 @@ body header{position:fixed !important; background:#000;}
 .up-menu{display:none !important;}
 
 .city-select-overlay { top: 0px !important;}
-.steps-button-list { border-radius: 7px !important; padding: 10px 20px;}
+.steps-button-list { border-radius: 7px !important; padding: 10px 20px;position:absolute; top:50%;left:50%; transform:translate(-50%,-50%);-webkit-transform:translate(-50%,-50%);-moz-transform:translate(-50%,-50%);-ms-transform:translate(-50%,-50%);-o-transform:translate(-50%,-50%)}
 
-.steps-button {padding: 0px;}
+.steps-button {padding: 0px;position:relative;height:100px;}
 .dawonlod-ticket{padding: 10px; background: #7323dc; color: #fff; font-weight: bold; cursor: pointer;}
 
 .dawonlod-ticket-pop-up li{padding-bottom:30px;}

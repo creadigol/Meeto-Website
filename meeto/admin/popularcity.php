@@ -170,7 +170,7 @@ function setcity(cid)
 									<select id="country" class="input-name"  name="country" style="width:100%!important;" onchange="setstate(this.value);">
 										 <option value="">--Select Country--</option>
 										<?php
-											$selcountry=mysql_query("select * from countries");
+											$selcountry=mysql_query("select * from countries where id!=101");
 											while($fetcountry=mysql_fetch_array($selcountry))
 											{
 										?>

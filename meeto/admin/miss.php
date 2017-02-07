@@ -48,8 +48,14 @@ if($_REQUEST['kon']=="setcity")
 	if($_REQUEST['kon'] =='facilitystatus')
 	{
 		$deletesam=mysql_query("UPDATE `seminar_facility` SET status=$_REQUEST[status] WHERE `id` = $_REQUEST[id] ");
-		
-		
+	}
+	if($_REQUEST['kon'] =='attendeesstatus')
+	{
+		$deletesam=mysql_query("UPDATE `seminar_purpose` SET status=$_REQUEST[status] WHERE `id` = $_REQUEST[id] ");
+	}
+	if($_REQUEST['kon'] =='industrystatus')
+	{
+		$deletesam=mysql_query("UPDATE `seminar_industry` SET status=$_REQUEST[status] WHERE `id` = $_REQUEST[id] ");
 	}
 	
 	if($_REQUEST['kon'] =='hostseminar')
@@ -98,7 +104,7 @@ if($_REQUEST['kon']=="setcity")
 											?>
 											</td>
                                             <td><? echo $data['title']; ?></td>
-                                            <td><? echo $data['description']." ".$detaildata['lname']; ?></td>
+                                            <td><? echo $data['description']; ?></td>
                                             <td><? echo $data['total_seat']; ?></td>
                                             <td><span style="cursor:pointer;" onclick="deletesam('<?php echo $data['id']; ?>','<?php echo $data['uid']; ?>');" ><i class="fa fa-trash-o" aria-hidden="true"></i></span></td>
                                         </tr>
@@ -164,12 +170,16 @@ if($_REQUEST['kon'] =='user')
                                         </div>
 										<div class="form-group">
                                             <label>Gender</label>
-                                            <input class="form-control" type="text" name="gender" value="<?php echo $userdata['gender']; ?>">
+											<select class="form-control" name="gender" class="gender" id="gender" >
+											<option value="Male" <?php if($userdata['gender']=='Male') echo "selected"; ?>>Male</option>
+											<option value="Female" <?php if($userdata['gender']=='Female') echo "selected"; ?>>Female</option>
+											<option value="" <?php if($userdata['gender']=='') echo "selected"; ?>>Unspecified</option>
+											</select>
                                             <p class="help-block"></p>
                                         </div>
                                         <div class="form-group">
                                             <label>Date Of Birth</label>
-                                            <input class="form-control" type="date" name="dob" value="<?php echo "10/10/2015"; ?>">
+                                            <input class="form-control" type="text" name="dob" readonly value="<?php echo $userdata['dob']; ?>">
                                             <p class="help-block"></p>
                                         </div>
 										<div class="form-group">
@@ -194,9 +204,10 @@ if($_REQUEST['kon'] =='user')
 										<div class="form-group">
                                             <label>Country</label>
                                             <select class="form-control" name="country" id="country" class="country" onchange="user('<?php echo $_REQUEST['user_id']; ?>',this.value);">
+											<option value="" >Select Country</option>
 											<?php
 													
-														$querycounty=mysql_query("select * from  countries ");
+														$querycounty=mysql_query("select * from  countries where id!='101'");
 												while($country=mysql_fetch_array($querycounty))
 												{
 													if($_REQUEST[cscid] == $country[id])
@@ -409,11 +420,11 @@ if($_REQUEST['kon'] =='seminardetails')
                                             <input class="form-control" type="text" name="hostemail" value="<?php echo $data['contact_email']; ?>">
                                             <p class="help-block"><?php echo $erroremail; ?></p>
                                         </div>
-										<div class="form-group">
+										<!--<div class="form-group">
                                             <label>Qualification</label>
                                             <input class="form-control" type="text" name="qualification" value="<?php echo $data['qualification']; ?>">
                                             <p class="help-block"></p>
-                                        </div>
+                                        </div>-->
                                         <div class="form-group">
                                             <label>Total Seat</label>
                                             <input class="form-control" type="text" name="total_seat" value="<?php echo $data['total_seat']; ?>" readonly>
@@ -432,8 +443,6 @@ if($_REQUEST['kon'] =='seminardetails')
 												if(strlen($image["image"])>0){
 												
 											?>
-												
-												
 												<input type="file" name="upsempic" id="id_upsempic" style="display:none;" onchange="changesempic(this);">
 												<label  for="id_upsempic" style="border:1px solid black;" ><img align="center" src="../img/<? echo $image['image'];?>" width="100" height="100" class="img-square" id="id_upsempicimg" /></label>
 												
@@ -586,7 +595,7 @@ if($_REQUEST['kon'] =='seminardetails')
                                             <p class="help-block error"></p>
                                         </div>-->
 										<div class="form-group">
-                                            <label>Type</label>
+                                            <label>Place</label>
 											<?php 
 											$typequery=mysql_query("select * from `seminar_type` where `id`= $data[typeid] ");
 											$type=mysql_fetch_array($typequery);
@@ -594,15 +603,15 @@ if($_REQUEST['kon'] =='seminardetails')
                                             <input class="form-control" type="text" name="type" value="<?php echo $type['name']; ?>" readonly>
                                             <p class="help-block error"><?php echo $errortype; ?></p>
                                         </div>
-										<div class="form-group">
-                                            <label>Purpose</label>
+										<!--<div class="form-group">
+                                            <label>Attendees</label>
 											<?php 
 											$purposequery=mysql_query("select * from `seminar_purpose` where `id` = $data[puposeid] ");
 											$purpose=mysql_fetch_array($purposequery);
 											?>
                                             <input class="form-control" type="text" name="purpose" value="<?php echo $purpose['name']; ?>" readonly>
                                             <p class="help-block error"><?php echo $errorpurpose; ?></p>
-                                        </div>
+                                        </div>-->
 										<div class="form-group">
                                             <label>Contact No.</label>
                                             <input class="form-control" type="text" name="contact" value="<?php echo $data['phoneno']; ?>">
@@ -645,7 +654,7 @@ if($_REQUEST['kon'] =='seminardetails')
                                 <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                     <thead>
                                         <tr>
-                                            <th> Name</th>
+                                            <th>Name</th>
                                             <th>Status</th>
                                             
                                         </tr>
@@ -668,6 +677,116 @@ if($_REQUEST['kon'] =='seminardetails')
 											}else{
 											?>
 												<i class="fa fa-thumbs-o-down" onclick="facilitystatus('1','<?php echo $data['id']; ?>','<?php echo $data['seminar_id']; ?>');" title="Inactive" style="color:red;cursor:pointer;"></i>
+											<? } ?>
+											</center></td>
+                                        </tr>
+									<?
+										}
+									?>
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <!--End Advanced Tables -->
+                </div>
+            </div>
+<?php
+	}
+ if($_REQUEST['kon'] =='attendees')
+	{  
+?>
+	<div class="row">
+                <div class="col-md-12">
+                    <!-- Advanced Tables -->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                             Seminar Attendees
+                        </div>
+                        <div class="panel-body">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Status</th>
+                                            
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+									<?
+										$query=mysql_query("select * from `seminar_purpose` where seminar_id='$_REQUEST[sid]' ");
+										while($data=mysql_fetch_array($query)){
+											
+											$detailquery = mysql_query("select * from `purpose` where id='".$data['attendees_id']."' ");
+											$detaildata=mysql_fetch_array($detailquery);
+									?>
+                                        <tr class="odd gradeX">
+											
+                                            <td><? echo $detaildata['name']; ?></td>
+                                            <td><center><? if($data['status']=='1'){
+											?>
+												<i class="fa fa-thumbs-o-up" title="Active" style="color:green;cursor:pointer;" onclick="attendeesstatus('0','<?php echo $data['id']; ?>','<?php echo $data['seminar_id']; ?>');"></i>
+											<?
+											}else{
+											?>
+												<i class="fa fa-thumbs-o-down" onclick="attendeesstatus('1','<?php echo $data['id']; ?>','<?php echo $data['seminar_id']; ?>');" title="Inactive" style="color:red;cursor:pointer;"></i>
+											<? } ?>
+											</center></td>
+                                        </tr>
+									<?
+										}
+									?>
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <!--End Advanced Tables -->
+                </div>
+            </div>
+<?php
+	}
+if($_REQUEST['kon'] =='industrytype')
+	{  
+?>
+	<div class="row">
+                <div class="col-md-12">
+                    <!-- Advanced Tables -->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                             Industry Type
+                        </div>
+                        <div class="panel-body">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                    <thead>
+                                        <tr>
+                                            <th>Name</th>
+                                            <th>Status</th>
+                                            
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+									<?
+										$query=mysql_query("select * from `seminar_industry` where seminar_id='$_REQUEST[sid]'");
+										while($data=mysql_fetch_array($query)){
+											
+											$detailquery = mysql_query("select * from `industry` where id='".$data['industry_id']."' ");
+											$detaildata=mysql_fetch_array($detailquery);
+									?>
+                                        <tr class="odd gradeX">
+											
+                                            <td><? echo $detaildata['name']; ?></td>
+                                            <td><center><? if($data['status']=='1'){
+											?>
+												<i class="fa fa-thumbs-o-up" title="Active" style="color:green;cursor:pointer;" onclick="industrystatus('0','<?php echo $data['id']; ?>','<?php echo $data['seminar_id']; ?>');"></i>
+											<?
+											}else{
+											?>
+												<i class="fa fa-thumbs-o-down" onclick="industrystatus('1','<?php echo $data['id']; ?>','<?php echo $data['seminar_id']; ?>');" title="Inactive" style="color:red;cursor:pointer;"></i>
 											<? } ?>
 											</center></td>
                                         </tr>

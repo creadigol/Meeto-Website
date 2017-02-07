@@ -31,7 +31,7 @@ $hostuser=mysql_fetch_array(mysql_query("select * from user where id='".$fetsemi
 			$subject = "Seminar Ticket Booked";
 			$headers = 'MIME-Version: 1.0' . "\r\n";
 			$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-			$headers .= 'From: <creadigol.in@gmail.com>' . "\r\n";
+			$headers .= 'From:meeto.japan@gmail.com';
 			
 			$message  = '<html>';	
 			$message .= '<body>';
@@ -85,7 +85,8 @@ $rowuserdetail= mysql_fetch_array(mysql_query("select * from user_detail where u
 
 $rowusercompany=mysql_fetch_array(mysql_query("select * from user_company where uid = '".$_SESSION['jpmeetou']['id']."'")); 
 
-$selseminar=mysql_query("select * from seminar where id=$_REQUEST[id]");$fetseminar=mysql_fetch_array($selseminar);$selsemiphoto=mysql_query("select * from seminar_photos where seminar_id=$_REQUEST[id] limit 0,1");
+$selseminar=mysql_query("select * from seminar where id=$_REQUEST[id]");$fetseminar=mysql_fetch_array($selseminar);
+$selsemiphoto=mysql_query("select * from seminar_photos where seminar_id=$_REQUEST[id] limit 0,1");
 $fetsemiphoto=mysql_fetch_array($selsemiphoto);$selsemitype= mysql_fetch_array(mysql_query("select * from seminar_type where id=$fetseminar[typeid]"));
 //$selsemipurpose= mysql_fetch_array(mysql_query("select * from purpose where id=$fetseminar[puposeid]"));
 
@@ -150,7 +151,7 @@ $(window).scroll(function () {
                             <div class="col-md-12">
                                 <div class="col-md-6">
                                     <div class="row">
-                                        <img src="img/<?php echo $fetsemiphoto['image']; ?>" class="img-responsive slider-width center-block booking-icon">
+                                        <img src="img/<?php echo $fetsemiphoto['image']; ?>"  style="transform:rotate(<?php echo $fetsemiphoto['rotateval']; ?>deg)" class="img-responsive slider-width center-block booking-icon">
                                     </div>
                                 </div>	
                                 <div class="col-md-6 review">

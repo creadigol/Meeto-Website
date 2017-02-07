@@ -13,6 +13,7 @@ class Seminar extends CI_Controller {
 		//$this->load->library(array('session'));
 		//$this->load->helper(array('url'));
 		$this->load->model('Seminar_model');	
+		$this->load->helper(array('form', 'url'));
 	}
 	
 	public function index() {
@@ -36,15 +37,16 @@ class Seminar extends CI_Controller {
 			if(empty($val1->city_img)){
 				$res1[$i]['cityimage']="";
 			}else{
-				$res1[$i]['cityimage']="http://creadigol.biz/meeto/img/".$val1->city_img;
+				$res1[$i]['cityimage']="http://www.meeto.jp/img/".$val1->city_img;
 			}
 			$i++;
 		}
 		
 		$sliders = $this->db->query("select * from sliders where status=1");
 		$sliders = $sliders->result();
-		
-		if($uid!="")
+		$query = $this->db->query("SELECT count(*) as c FROM `user` where id='".$uid."' ");
+		$result = $query->result();
+		if($uid!="" && $result[0]->{'c'}>0)
 		{
 			$query = $this->db->query("SELECT * FROM `user` where id='".$uid."' ");
 			foreach($query->result() as $val){
@@ -67,7 +69,7 @@ class Seminar extends CI_Controller {
 			$res_message = 'Popular City List';
 		$res['message']=$res_message;
 		$res['List']=$res1;
-		$res['Slider']="http://creadigol.biz/meeto/img/".$sliders[0]->{'name'};
+		$res['Slider']="http://www.meeto.jp/img/".$sliders[0]->{'name'};
 		$res['notification_count']=$notification_count;
 		$res['email_verify']=$email_verify;
 		echo json_encode($res);
@@ -84,7 +86,7 @@ class Seminar extends CI_Controller {
 			if($lang=='ja')
 				$res_message = 'レコードが見つかりませんありません';
 			else
-				$res_message = 'No Record Found';
+				$res_message = 'No Seminars Found ...!';
 			$res['message']=$res_message;
 		}
 		else
@@ -94,20 +96,20 @@ class Seminar extends CI_Controller {
 				$res1[$i]['seminar_id']=$value->id;
 				$res1[$i]['uid']=$value->uid;
 				$res1[$i]['title']=$value->title;
-				if($lang=='ja'){
+				/* if($lang=='ja'){
 					$marutra = explode('"',$this->Seminar_model->translate(str_replace(" ","+",$value->title)));
 					$res1[$i]['title'] = $marutra[1];
-				}
+				} */
 				/*$res1[$i]['tagline']=$value->tagline;
 				$res1[$i]['description']=$value->description;
 				$res1[$i]['total_seat']=$value->total_seat;
 				$res1[$i]['total_booked_seat']=$value->total_booked_seat;
 				$res1[$i]['qualification']=$value->qualification;*/
 				$res1[$i]['address']=$value->address;
-				if($lang=='ja'){
+				/* if($lang=='ja'){
 					$marutra = explode('"',$this->Seminar_model->translate(str_replace(" ","+",$value->address)));
 					$res1[$i]['address'] = $marutra[1];
-				}
+				} */
 				/*$res1[$i]['lat']=$value->lat;
 				$res1[$i]['lng']=$value->lng;
 				$res1[$i]['typeid']=$value->typeid;
@@ -123,10 +125,10 @@ class Seminar extends CI_Controller {
 				$res1[$i]['approval_status']=$value->approval_status;
 				$res1[$i]['created_date']=date("Y-m-d H:i:s a",$value->created_date/1000);
 				$res1[$i]['modified_date']=date("Y-m-d H:i:s a",$value->modified_date/1000);*/
-				$query = $this->db->query("select * from seminar_photos where seminar_id = '".$value->id."' ");
+				$query = $this->db->query("select * from seminar_photos where seminar_id = '".$value->id."' order by id ");
 				if($query->result()){
 					foreach($query->result() as $key => $val){
-						$res1[$i]['seminar_image']="http://creadigol.biz/meeto/img/".$val->image;
+						$res1[$i]['seminar_image']="http://www.meeto.jp/img/".$val->image;
 					}
 				}else{
 					$res1[$i]['seminar_image']="";
@@ -135,7 +137,7 @@ class Seminar extends CI_Controller {
 				$query = $this->db->query("select * from user_detail where uid = '".$value->uid."' ");
 				if($query->result()){
 					foreach($query->result() as $key => $val){
-						$res1[$i]['host_image']="http://creadigol.biz/meeto/img/".$val->photo;
+						$res1[$i]['host_image']="http://www.meeto.jp/img/".$val->photo;
 					}
 				}else{
 					$res1[$i]['host_image']="";
@@ -189,22 +191,50 @@ class Seminar extends CI_Controller {
 					$data['seminar_day']['from_time'] = $row->from_date;
 					$data['seminar_day']['to_time'] = $row->to_date;
 				}
-				$res['status_code']=1;
-				if($lang=='ja')
-					$res_message = 'セミナーを追加しました';
+				
+				$seminaredit=$this->input->post('seminaredit');
+				if(!$seminaredit)
+				{
+					$res['status_code']=1;
+					if($lang=='ja')
+						$res_message = 'セミナーを追加しました。';
+					else
+						$res_message = 'Your Seminar Succesfully Added.';
+					$res['message']=$res_message;
+					$res['seminar_detail']=$data;
+				}
 				else
-					$res_message = 'Seminar Added';
-				$res['message']=$res_message;
-				$res['seminar_detail']=$data;
+				{
+					$res['status_code']=1;
+					if($lang=='ja')
+						$res_message = 'セミナーが成功裏に更新されました。';
+					else
+						$res_message = 'Your Seminar Updated Succesfully.';
+					$res['message']=$res_message;
+					$res['seminar_detail']=$data;
+				}
 			}
 			else
 			{
-				$res['status_code']=0;
-				if($lang=='ja')
-					$res_message = 'セミナー後で試してみてくださいまたはあなたの詳細を確認してください追加されていません';
+				$seminaredit=$this->input->post('seminaredit');
+				if(!$seminaredit)
+				{
+					$res['status_code']=0;
+					if($lang=='ja')
+						$res_message = 'セミナー後で試してみてくださいまたはあなたの詳細を確認してください追加されていません';
+					else
+						$res_message = 'Seminar Not Added Try Later or Check Your Detail';
+					$res['message']=$res_message;
+				}
 				else
-					$res_message = 'Seminar Not Added Try Later or Check Your Detail';
-				$res['message']=$res_message;
+				{
+					$res['status_code']=0;
+					if($lang=='ja')
+						$res_message = 'セミナー後で試してみてくださいまたはあなたの詳細を確認してください追加されていません';
+					else
+						$res_message = 'Seminar Not Updated Try Later or Check Your Detail';
+					$res['message']=$res_message;
+				}
 			}
 		}
 		else
@@ -213,7 +243,7 @@ class Seminar extends CI_Controller {
 			if($lang=='ja')
 				$res_message = 'セミナー後で試してみてくださいまたはあなたの詳細を確認してください追加されていません';
 			else
-				$res_message = 'UID missing.';
+				$res_message = 'User ID missing.';
 			$res['message']=$res_message;
 		}
 		echo json_encode($res);
@@ -230,37 +260,44 @@ class Seminar extends CI_Controller {
 			{
 				$data1['seminar_id']=$val->id;
 				$data1['seminar_name']=$val->title;
-				if($lang=='ja'){
+				/* if($lang=='ja'){
 					$marutra = explode('"',$this->Seminar_model->translate(str_replace(" ","+",$val->title)));
 					$data1['seminar_name'] = $marutra[1];
-				}
+				} */
 				$data1['tagline']=$val->tagline;
-				if($lang=='ja'){
+				/* if($lang=='ja'){
 					$marutra = explode('"',$this->Seminar_model->translate(str_replace(" ","+",$val->tagline)));
 					$data1['tagline'] = $marutra[1];
-				}
+				} */
 				$data1['qualification']=$val->qualification;
 				$data1['zipcode']=$val->zipcode;
 				$data1['contact_email']=$val->contact_email;
 				$data1['contact_no']=$val->phoneno;
 				//$puposeid=$val->puposeid;
 				$typeid=$val->typeid;
+				$data1['lat']=$val->lat;
+				$data1['lng']=$val->lng;
+				$data1['countryid']=$val->countryid;
+				$data1['stateid']=$val->stateid;
+				$data1['cityid']=$val->cityid;
 				$data1['seminar_adress']=$val->address;
-				if($lang=='ja'){
+				/* if($lang=='ja'){
 					$marutra = explode('"',$this->Seminar_model->translate(str_replace(" ","+",$val->address)));
 					$data1['seminar_adress'] = $marutra[1];
-				}
+				} */
 				$data1['seminar_host_name']=$val->hostperson_name;
-				if($lang=='ja'){
+				/* if($lang=='ja'){
 					$marutra = explode('"',$this->Seminar_model->translate(str_replace(" ","+",$val->hostperson_name)));
 					$data1['seminar_host_name'] = $marutra[1];
-				}
+				} */
 				$data1['seminar_description']=$val->description;
-				if($lang=='ja'){
+				/* if($lang=='ja'){
 					$marutra = explode('"',$this->Seminar_model->translate(str_replace(" ","+",$val->description)));
 					$data1['seminar_description'] = $marutra[1];
-				}
+				} */
 				$data1['seminar_total_seat']=$val->total_seat;
+				$data1['available_seat']=($val->total_seat)-($val->total_booked_seat);
+				
 				
 				if($val->uid==$uid)
 				{
@@ -294,17 +331,17 @@ class Seminar extends CI_Controller {
 					foreach($result as $value)
 					{
 						$review[$i]['review']=$value->notes;
-						if($lang=='ja'){
+						/* if($lang=='ja'){
 							$marutra = explode('"',$this->Seminar_model->translate(str_replace(" ","+",$value->notes)));
 							$review[$i]['review'] = $marutra[1];
-						}
+						} */
 						$usrnam = $this->db->query("select * from user where id='".$value->uid."' ");
 						$usrnam = $usrnam->result();
 						$review[$i]['user_name']=trim($usrnam[0]->fname)." ".trim($usrnam[0]->lname);
-						if($lang=='ja'){
+						/* if($lang=='ja'){
 							$marutra = explode('"',$this->Seminar_model->translate(str_replace(" ","+",$review[$i]['user_name'])));
 							$review[$i]['user_name'] = $marutra[1];
-						}
+						} */
 						$i++;
 					}
 				}
@@ -313,11 +350,11 @@ class Seminar extends CI_Controller {
 				if($result = $query->result())
 				{
 					$data1['seminar_host_description']=$result[0]->{'yourself'};
-					if($lang=='ja'){
+					/* if($lang=='ja'){
 						$marutra = explode('"',$this->Seminar_model->translate(str_replace(" ","+",$result[0]->{'yourself'})));
 						$data1['seminar_host_description'] = $marutra[1];
-					}
-					$data1['seminar_host_pic']="http://creadigol.biz/meeto/img/".$result[0]->{'photo'};
+					} */
+					$data1['seminar_host_pic']="http://www.meeto.jp/img/".$result[0]->{'photo'};
 					
 					$chkimg = $this->db->query("select * from user where id='".$val->uid."' ");
 					if($chkimg = $chkimg->result())
@@ -383,8 +420,8 @@ class Seminar extends CI_Controller {
 			$seminar_pic=array();
 			foreach($result as $value)
 			{
-				$seminar_pic[$i]['seminar_pic']="http://creadigol.biz/meeto/img/".$value->image;
-				//$data1['seminar_pic']['seminar_pic_'.$i]="http://creadigol.biz/meeto/img/".$value->image;
+				$seminar_pic[$i]['seminar_pic']="http://www.meeto.jp/img/".$value->image;
+				//$data1['seminar_pic']['seminar_pic_'.$i]="http://www.meeto.jp/img/".$value->image;
 				$i++;
 			}
 			$data3['seminar_pic']=$seminar_pic;
@@ -473,13 +510,13 @@ class Seminar extends CI_Controller {
 					$query = $this->db->query("select * from user_detail where uid='".$val->uid."' ");
 					if($result = $query->result()){
 						$data2[$h]['seminar_host_description']=$result[0]->{'yourself'};
-						$data2[$h]['seminar_host_pic']="http://creadigol.biz/meeto/img/".$result[0]->{'photo'};
+						$data2[$h]['seminar_host_pic']="http://www.meeto.jp/img/".$result[0]->{'photo'};
 					}*/
 					
 					$query = $this->db->query("select * from seminar_photos where seminar_id='".$val->id."' ");
 					if($result = $query->result())
 					{
-						$data2[$h]['seminar_pic']="http://creadigol.biz/meeto/img/".$result[0]->{'image'};
+						$data2[$h]['seminar_pic']="http://www.meeto.jp/img/".$result[0]->{'image'};
 					}
 					else
 					{
@@ -533,7 +570,7 @@ class Seminar extends CI_Controller {
 			if($lang=='ja')
 				$res_message = 'セミナーが見つかりません';
 			else
-				$res_message = 'Seminar Not Found';
+				$res_message = 'No Seminars Found ...!';
 			$res['message']=$res_message;
 			$res['seminar_detail']="";
 		}
@@ -552,37 +589,41 @@ class Seminar extends CI_Controller {
 			{
 				$data1['seminar_id']=$val->id;
 				$data1['seminar_name']=$val->title;
-				if($lang=='ja'){
+				/* if($lang=='ja'){
 					$marutra = explode('"',$this->Seminar_model->translate(str_replace(" ","+",$val->title)));
 					$data1['seminar_name'] = $marutra[1];
-				}
+				} */
 				$data1['tagline']=$val->tagline;
-				if($lang=='ja'){
+				/* if($lang=='ja'){
 					$marutra = explode('"',$this->Seminar_model->translate(str_replace(" ","+",$val->tagline)));
 					$data1['tagline'] = $marutra[1];
-				}
+				} */
 				$data1['qualification']=$val->qualification;
 				$data1['zipcode']=$val->zipcode;
 				$data1['contact_email']=$val->contact_email;
 				$data1['contact_no']=$val->phoneno;
 				//$puposeid=$val->puposeid;
 				$typeid=$val->typeid;
+				$data1['countryid']=$val->countryid;
+				$data1['stateid']=$val->stateid;
+				$data1['cityid']=$val->cityid;
 				$data1['seminar_adress']=$val->address;
-				if($lang=='ja'){
+				/* if($lang=='ja'){
 					$marutra = explode('"',$this->Seminar_model->translate(str_replace(" ","+",$val->address)));
 					$data1['seminar_adress'] = $marutra[1];
-				}
+				} */
 				$data1['seminar_host_name']=$val->hostperson_name;
-				if($lang=='ja'){
+				/* if($lang=='ja'){
 					$marutra = explode('"',$this->Seminar_model->translate(str_replace(" ","+",$val->hostperson_name)));
 					$data1['seminar_host_name'] = $marutra[1];
-				}
+				} */
 				$data1['seminar_description']=$val->description;
-				if($lang=='ja'){
+				/* if($lang=='ja'){
 					$marutra = explode('"',$this->Seminar_model->translate(str_replace(" ","+",$val->description)));
 					$data1['seminar_description'] = $marutra[1];
-				}
+				} */
 				$data1['seminar_total_seat']=$val->total_seat;
+				$data1['available_seat']=($val->total_seat)-($val->total_booked_seat);
 				
 				if($val->uid==$uid)
 				{
@@ -616,17 +657,17 @@ class Seminar extends CI_Controller {
 					foreach($result as $value)
 					{
 						$review[$i]['review']=$value->notes;
-						if($lang=='ja'){
+						/* if($lang=='ja'){
 							$marutra = explode('"',$this->Seminar_model->translate(str_replace(" ","+",$val->notes)));
 							$review[$i]['review'] = $marutra[1];
-						}
+						} */
 						$usrnam = $this->db->query("select * from user where id='".$value->uid."' ");
 						$usrnam = $usrnam->result();
 						$review[$i]['user_name']=trim($usrnam[0]->fname)." ".trim($usrnam[0]->lname);
-						if($lang=='ja'){
+						/* if($lang=='ja'){
 							$marutra = explode('"',$this->Seminar_model->translate(str_replace(" ","+",$review[$i]['user_name'])));
 							$review[$i]['user_name'] = $marutra[1];
-						}
+						} */
 						$i++;
 					}
 				}
@@ -635,11 +676,11 @@ class Seminar extends CI_Controller {
 				if($result = $query->result())
 				{
 					$data1['seminar_host_description']=$result[0]->{'yourself'};
-					if($lang=='ja'){
+					/* if($lang=='ja'){
 						$marutra = explode('"',$this->Seminar_model->translate(str_replace(" ","+",$result[0]->{'yourself'})));
 						$data1['seminar_host_description'] = $marutra[1];
-					}
-					$data1['seminar_host_pic']="http://creadigol.biz/meeto/img/".$result[0]->{'photo'};
+					} */
+					$data1['seminar_host_pic']="http://www.meeto.jp/img/".$result[0]->{'photo'};
 					
 					$chkimg = $this->db->query("select * from user where id='".$val->uid."' ");
 					if($chkimg = $chkimg->result())
@@ -705,8 +746,8 @@ class Seminar extends CI_Controller {
 			$seminar_pic=array();
 			foreach($result as $value)
 			{
-				$seminar_pic[$i]['seminar_pic']="http://creadigol.biz/meeto/img/".$value->image;
-				//$data1['seminar_pic']['seminar_pic_'.$i]="http://creadigol.biz/meeto/img/".$value->image;
+				$seminar_pic[$i]['seminar_pic']="http://www.meeto.jp/img/".$value->image;
+				//$data1['seminar_pic']['seminar_pic_'.$i]="http://www.meeto.jp/img/".$value->image;
 				$i++;
 			}
 			$data3['seminar_pic']=$seminar_pic;
@@ -795,13 +836,13 @@ class Seminar extends CI_Controller {
 					$query = $this->db->query("select * from user_detail where uid='".$val->uid."' ");
 					if($result = $query->result()){
 						$data2[$h]['seminar_host_description']=$result[0]->{'yourself'};
-						$data2[$h]['seminar_host_pic']="http://creadigol.biz/meeto/img/".$result[0]->{'photo'};
+						$data2[$h]['seminar_host_pic']="http://www.meeto.jp/img/".$result[0]->{'photo'};
 					}*/
 					
 					$query = $this->db->query("select * from seminar_photos where seminar_id='".$val->id."' ");
 					if($result = $query->result())
 					{
-						$data2[$h]['seminar_pic']="http://creadigol.biz/meeto/img/".$result[0]->{'image'};
+						$data2[$h]['seminar_pic']="http://www.meeto.jp/img/".$result[0]->{'image'};
 					}
 					else
 					{
@@ -855,7 +896,7 @@ class Seminar extends CI_Controller {
 			if($lang=='ja')
 				$res_message = 'セミナーが見つかりません';
 			else
-				$res_message = 'Seminar Not Found';
+				$res_message = 'No Seminars Found ...!';
 			$res['message']=$res_message;
 			$res['seminar_detail']="";
 		}
@@ -896,7 +937,7 @@ class Seminar extends CI_Controller {
 				$subject = "Seminar Ticket Booked";
 				$headers = 'MIME-Version: 1.0' . "\r\n";
 				$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-				$headers .= 'From: <creadigol.in@gmail.com>' . "\r\n";
+				$headers .= 'From:meeto.japan@gmail.com';
 				
 				$message  = '<html>';	
 				$message .= '<body>';
@@ -934,6 +975,22 @@ class Seminar extends CI_Controller {
 				
 				$sentmail = mail($host_data[0]->{'email'},$subject,$message,$headers);
 				
+				$gcmData['sid'] = $seminar_data[0]->{'id'};
+				$gcmData['bid'] = $ticketdetail[0]->{'id'};
+				$gcmData['sn'] = $seminar_data[0]->{'title'};
+				$gcmData['un'] = $user_data[0]->{'fname'};
+				$gcmData['ty'] = SEMINAR_BOOKING;
+				
+				$data = array(
+					'title'		=> 'Meeto',
+					//'isBackground' 	=> 'false',
+					//'flag'		=> '1',
+					'data'	=> $gcmData
+				);
+								
+				$ids = array( $user_data[0]->{'gcm_id'} );
+				$this->Seminar_model->sendPushNotification($data, $ids);
+		
 				$res['status_code']=1;
 				if($lang=='ja')
 					$res_message = '正常に予約';
@@ -1078,7 +1135,7 @@ class Seminar extends CI_Controller {
 					{
 						$query = $this->db->query("select * from user_detail where uid = '".$val->uid."' ");
 						foreach($query->result() as $key => $value){
-							$res1[$i]['user_pic']="http://creadigol.biz/meeto/img/".$value->photo;
+							$res1[$i]['user_pic']="http://www.meeto.jp/img/".$value->photo;
 						}
 					}
 				}
@@ -1168,7 +1225,7 @@ class Seminar extends CI_Controller {
 			$subject = "Seminar Booking Ticket";
 			$headers = 'MIME-Version: 1.0' . "\r\n";
 			$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-			$headers .= 'From: <creadigol.in@gmail.com>' . "\r\n";
+			$headers .= 'From:meeto.japan@gmail.com';
 			
 			$message  = '<html>';	
 			$message .= '<body>';
@@ -1197,6 +1254,22 @@ class Seminar extends CI_Controller {
 			
 			$sentmail = mail($user_data[0]->{'email'},$subject,$message,$headers);
 			
+			$gcmData['sid'] = $seminar_data[0]->{'id'};
+			$gcmData['bid'] = $ticketdetail[0]->{'id'};
+			$gcmData['st'] = $approval_status;
+			$gcmData['sn'] = $seminar_data[0]->{'title'};
+			$gcmData['ty'] = SEMINAR_BOOKING_APPROVE_DECLINE;
+			
+			$data = array(
+				'title'		=> 'Meeto',
+				//'isBackground' 	=> 'false',
+				//'flag'		=> '1',
+				'data'	=> $gcmData
+			);
+				
+			$ids = array( $user_data[0]->{'gcm_id'} );
+			$this->Seminar_model->sendPushNotification($data, $ids);
+				
 			$res['status_code']=1;
 			if($lang=='ja')
 				$res_message = 'ご予約';
@@ -1225,8 +1298,38 @@ class Seminar extends CI_Controller {
 		
 		if($data = $this->Seminar_model->booking_ticket_download($seminar_id,$uid,$booking_id))
 		{
-			$file = file_get_contents("http://www.creadigol.biz/meeto/tcpdf/examples/print_pdf.php?tp=download&bkid=".$data[0]->id."&sem_id=".$data[0]->seminar_id);
-			file_put_contents("pdf/".$data[0]->id .".pdf",$file);
+			//$file = file_get_contents("http://www.meeto.jp/tcpdf/examples/print_pdf.php?bkid=".$data[0]->id."&sem_id=".$data[0]->seminar_id);
+			//file_put_contents("pdf/".$data[0]->id .".pdf",$file);
+			
+			//load the download helper
+			//$this->load->helper('download');
+			//Get the file from whatever the user uploaded (NOTE: Users needs to upload first), @See http://localhost/CI/index.php/upload
+			//$pdf = file_get_contents("http://www.meeto.jp/tcpdf/examples/print_pdf.php?bkid=".$data[0]->id."&sem_id=".$data[0]->seminar_id);
+			//Read the file's contents
+			//$name = "pdf/".$data[0]->id .".pdf";
+
+			//use this function to force the session/browser to download the file uploaded by the user 
+			//force_download($name, $pdf);
+			
+			//$url  = "http://www.meeto.jp/tcpdf/examples/print_pdf.php?bkid=".$data[0]->id."&sem_id=".$data[0]->seminar_id;
+			//$path = "pdf/".$data[0]->id .".pdf";
+
+			//$ch = curl_init($url);
+			//curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+			//curl_setopt($ch, CURLOPT_REFERER, "http://www.meeto.jp/tcpdf/examples/print_pdf.php?bkid=".$data[0]->id."&sem_id=".$data[0]->seminar_id);
+
+			//$data = curl_exec($ch);
+
+			//curl_close($ch);
+
+			//$result = file_put_contents($path, $data);
+
+				//if(!$result){
+			//			echo "error";
+			//	}else{
+			//			echo "success";
+			//	}
+			
 			
 			$res['status_code']=1;
 			if($lang=='ja')
@@ -1234,7 +1337,7 @@ class Seminar extends CI_Controller {
 			else
 				$res_message = 'Your Booking Ticket';
 			$res['message']=$res_message;
-			$res['pdf_url']= "http://www.creadigol.biz/meeto/API/pdf/".$data[0]->id .".pdf";
+			$res['pdf_url']= "http://www.meeto.jp/tcpdf/examples/print_pdf.php?bkid=".$data[0]->id."&sem_id=".$data[0]->seminar_id;
 		}
 		else
 		{

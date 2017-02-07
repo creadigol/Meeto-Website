@@ -99,7 +99,7 @@ $bookedtiket=mysql_fetch_array(mysql_query("select * from seminar_booking where 
 $bookedseminar=mysql_fetch_array(mysql_query("select * from seminar where id=$_REQUEST[sem_id]"));
 $marutra = explode('"',translate1(str_replace(" ","+",$bookedseminar['title']))); 
 $title=$marutra[1];
-$marutra = explode('"',translate1(str_replace(" ","+",$_SESSION['jpmeetou']['fname'].$_SESSION['jpmeetou']['lname']))); 
+$marutra = explode('"',translate1(str_replace(" ","+",$_SESSION['jpmeetou']['fname']." ".$_SESSION['jpmeetou']['lname']))); 
 $name=$marutra[1];
 
 $ffdate=date("d-m-Y",$bookedtiket['from_date']/1000);

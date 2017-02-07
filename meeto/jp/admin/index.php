@@ -20,7 +20,7 @@ function countmaru(c1, id)
                     clearInterval(a);
                 }
             }       
-    }, 300);
+    }, 1);
 };
 </script>
 <body >

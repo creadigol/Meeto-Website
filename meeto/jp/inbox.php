@@ -41,16 +41,15 @@ a.inbox_menu, a.inbox_menu:hover{
 							<div class="col-md-12 tabel-scroll">
 								<table width="95%" border="0" cellspacing="0" cellpadding="0" class="center-block li-padding" id=" ">
 								    <thead>
+									  <h3 class="Required-head">セミナー予約リスト</h3>
  										<tr class="border-n inbox table-head inbox-table">
-											<td width="5%"><strong>
-セムなし</strong></td>
+											<td width="5%"><strong>セムなし</strong></td>
 											<td width="13%"><strong>日付</strong></td>
 											<td width="17%"><strong>セミナー</strong></td>
 											<td width="17%"><strong>ユーザー</strong></td>
 											<td width="17%"><strong>総席</strong></td>
 											<td width="13%"><strong>予約</strong></td>
-											<td width="17%"><strong>
-アクション</strong></td>
+											<td width="17%"><strong>アクション</strong></td>
 										</tr>
 									</thead>
 									<tbody>
@@ -58,8 +57,8 @@ a.inbox_menu, a.inbox_menu:hover{
 									    $i=1;
 									    while($seminar=mysql_fetch_array($seminardetail))
 										{
-									   $bkseminars=mysql_query("select * from seminar_booking where seminar_id='".$seminar['id']."' ");
-										
+									   $bkseminars=mysql_query("select * from seminar_booking where seminar_id='".$seminar['id']."' order by id desc ");
+										 
 										  while($bookseminar=mysql_fetch_array($bkseminars))
 										  {
 											
@@ -74,25 +73,42 @@ a.inbox_menu, a.inbox_menu:hover{
 											<td><?php $marutra = explode('"',translate(str_replace(" ","+", $bookseminar['book_seat']))); echo $marutra[1] ;?></td>
 											<td><?php echo $bookseminar['booking_no']; ?></td>
                                           <td id="status">
-                                            <?php
+										  <?php
 											if($bookseminar['approval_status']=='pending')
 											{
 											?>
-											  <button type="button" value="accepted" class="green-button color" onclick="seminarstatus('<?php echo $bookseminar['id'];?>',this.value);">受け入れます</button>
-											 <button type="button" value="declined" class="red-button color" onclick="seminarstatus('<?php echo $bookseminar['id'];?>',this.value);">低下</button>
-											<?
+											<button type="button" value="accepted" class="green-button" onclick="seminarstatus('<?php echo $bookseminar['id'];?>',this.value);">受け入れます</button>
+											<button type="button" value="declined" class="red-button" onclick="seminarstatus('<?php echo $bookseminar['id'];?>',this.value);">低下</button>
+											<?php
+											}
+											elseif($bookseminar['approval_status']=='accepted')
+											{
+											$status=$bookseminar['approval_status'];
+											$marutra = explode('"',translate(str_replace(" ","+",$status))); 
+											?>
+                                            <p style="color:green;font-weight:bold;"> <? echo $marutra[1]; ?> </p>                                            
+											<?php
 											}
 											else
 											{
-											$status=$bookseminar['approval_status'];
-											$marutra = explode('"',translate(str_replace(" ","+",$status))); echo $marutra[1] ;
-											}?>
+												$status=$bookseminar['approval_status'];
+												$marutra = explode('"',translate(str_replace(" ","+",$status))); 
+											?>
+                                            <p style="color:red;font-weight:bold;"> <? echo $marutra[1]; ?> </p>                                            
+											<?php 
+											}
+											?>
+                                            
 											</td>
 										 </tr>
 										<?php
 										$i++;
 										  }
-										}?>
+										 
+										
+										  
+										}
+								?>
 									</tbody>
 								</table>
 							</div>

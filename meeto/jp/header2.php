@@ -41,12 +41,24 @@ $(document).ready(function(e) {
 	});
 });
 </script>
+<?php
+$seluserdetail=mysql_query("select * from user_detail where uid='".$_SESSION['jpmeetou']['id']."'");
+$fetuserdetail=mysql_fetch_array($seluserdetail);
+$_SESSION['jpmeetou']['profileimage']=$fetuserdetail['photo'];
+?>
 <!--<script async="" src="https://sb.scorecardresearch.com/beacon.js"></script>
 <script type="text/javascript" async="" src="https://housing-rm.housingcdn.com/tmgr/main.min.js"></script>
 <script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="backbone/requirejs/css" src="https://assets-0.housingcdn.com/website/javascripts/backbone/requirejs/css-0306cb5fc4bb215d1abed50eebaf2abf.js"></script>
 <script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="shared/react/containers/SearchOverlay/SearchOverlay" src="https://assets-0.housingcdn.com/website/javascripts/shared/react/containers/SearchOverlay/SearchOverlay-05fea460356c860fb5161a6feb9c82a8.js"></script>
 <script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="shared/react/containers/homePage/homePage" src="https://assets-0.housingcdn.com/website/javascripts/shared/react/containers/homePage/homePage-731d46ee7dee99fe5ec59816540c7947.js"></script>-->
 <!-------------------------------Script End------------------------->
+<?php
+$seluserdetail=mysql_query("select * from user_detail where uid='".$_SESSION['jpmeetou']['id']."'");
+$fetuserdetail=mysql_fetch_array($seluserdetail);
+$fetuser=mysql_fetch_array(mysql_query("select * from user where id='".$_SESSION['jpmeetou']['id']."'"));
+$_SESSION['jpmeetou']['profileimage']=$fetuserdetail['photo'];
+$_SESSION['jpmeetou']['fname']=$fetuser['fname'];
+?>
 <title>Meeto</title>
 </head>
 
@@ -150,10 +162,10 @@ $(document).ready(function(e) {
                         <a class="dropdown-item f-left sing-menu" href="view-profile.php?id=<?php echo $_SESSION['jpmeetou']['id'];?>">ダッシュボード</a>
                         <a class="dropdown-item f-left sing-menu" href="your-listing.php">あなたの掲載</a>
                        <!-- <a class="dropdown-item f-left sing-menu" href="your-listing.php">Your Reservation</a>-->
-                        <a class="dropdown-item f-left sing-menu" href="booking.php">ご予約</a>
+                        <a class="dropdown-item f-left sing-menu" href="booking.php">私の予約</a>
                         <a class="dropdown-item f-left sing-menu" href="my-wish-list.php">欲しい物のリスト</a>
-                        <a class="dropdown-item f-left sing-menu" href="Editprofile.php">プロファイル編集</a>
-                        <a class="dropdown-item f-left sing-menu" href="account.php">アカウント</a>
+                        <!--<a class="dropdown-item f-left sing-menu" href="Editprofile.php">プロファイル編集</a>-->
+                        <a class="dropdown-item f-left sing-menu" href="Editprofile.php">アカウント</a>
                         <a class="dropdown-item f-left sing-menu" href="logout.php">ログアウト</a>
                     </div>
 				</div>
@@ -177,11 +189,11 @@ $(document).ready(function(e) {
                         { 
                     ?>
                 <div class="header-item app-btn-elem">
-                    <a href="#" class="link-btn h-track" data-toggle="modal" data-target=".bs-example-modal-sm">サインアップ</a>
+                    <a href="#" class="link-btn h-track main_signup">サインアップ</a><!-- data-toggle="modal" data-target=".bs-example-modal-sm"-->
                 </div>
             	
             	<div class="header-item header-item-blog">
-                    <a id="some-id" class="link-btn h-track" href="#logindiv" data-toggle="modal" data-target=".bc-example-modal-sm">ログイン</a>
+                    <a id="some-id" class="link-btn h-track main_login" href="#logindiv">ログイン</a><!-- data-toggle="modal" data-target=".bc-example-modal-sm"-->
                 </div>
                 
             	<!--<div class="header-item dropdown shortlist-content header-item-shortlist">
@@ -198,14 +210,14 @@ $(document).ready(function(e) {
 				  <?php 
                      } 
                   ?>
-                <div class="header-item btn-display">
-                    <a href="list_space.php" class="blue-button">あなたのスペースを一覧表示</a>
+                <div class="header-item btn-display" style="margin-top:15px;">
+                    <a href="list_space.php" class="blue-button">あなたのセミナーを一覧表示する</a>
                 </div>
              
             </div>
             <div class="city-select-overlay"></div>
             <div class="city-toggle btn-display">
-                <!-- react-text: 46 -->スラト <!-- /react-text -->
+                <!-- react-text: 46 -->日本 <!-- /react-text -->
                 <i class="icon-arrow-down"></i>
             </div>
             <div class="header-item header-nearby-filter"></div>
@@ -214,8 +226,8 @@ $(document).ready(function(e) {
             	<i class="icon-search"></i>
             </div>
         </header>
-				<div class="header-item roundbtn-display">
-                    <a href="list_space.php" class="blue-button">List Your Space</a>
+				<div class="header-item roundbtn-display" style="margin-top:15px;">
+                    <a href="list_space.php" class="blue-button">あなたのセミナーを一覧表示する</a>
                 </div>
     </div>
 </body>

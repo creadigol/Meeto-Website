@@ -39,7 +39,7 @@ $row = mysql_fetch_array(mysql_query("select * from `seminar_booking` where semi
 				
 				<div class="row hedding-row tabcontent" id="Listings" style="display:block;">				
 						<div class="col-md-12 Required-head listing-menu-button">
-							
+							<h4>セミナーの予約履歴</h4>	
 						</div>
 							<div class="clearfix"></div>	
 							<div class="row" id="viewlisting">

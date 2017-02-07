@@ -11,7 +11,7 @@ echo '<script type="text/javascript">window.location.href="' . $url . '";</scrip
 	echo '<script type="text/javascript">window.location.href="' . $url . '";</script>';
 }*/
 $fgh=0;
-	if($_POST)
+	if(isset($_POST['signup']))
 	{	
 		$fname = $_POST['user_fname'];
 		$lname = $_POST['user_lname'];	
@@ -21,20 +21,27 @@ $fgh=0;
 		$created_at = round(microtime(true) * 1000);		
 		if(isset($_POST['email']) && isset($_POST['email']) != '' && isset($_POST['user_fname']) && isset($_POST['user_fname']) != '')
 		{		
-			$checkemail = mysql_query("select * from user where email = '".$email."' and type ='1'");	
+			$checkemail = mysql_query("select * from user where email = '".$email."'");	
 			if(mysql_num_rows($checkemail) > 0)	
 			{		
-				//echo "<script>alert('Email Id Already Exist..!');</script>";
-				$fgh=1;			
+					$checkemail1 = mysql_query("select * from user where email = '".$email."' and type ='1'");	
+					if(mysql_num_rows($checkemail1) > 0)	
+					{		
+						//echo "<script>alert('Email Id Already Exist..!');</script>";
+						$fgh=1;			
+					}else{
+						//echo "<script>alert('This Email id attached with other account!');</script>";
+						$fgh=3;	
+					}		
 			}		
 			else	
 			{	
-				$insert_edetail = mysql_query("insert into user (fname,lname,email,password,type,fb_id,email_verify,status,created_date,modified_date) values('".$fname."','".$lname."','".$email."','".$password_hash."',1,'',0,1,'".$created_at."','".$created_at."')");	
+				$insert_edetail = mysql_query("insert into user (fname,lname,email,password,type,fb_id,email_verify,status,created_date,modified_date) values('".$fname."','".$lname."','".$email."','".$password_hash."',1,0,0,1,'".$created_at."','".$created_at."')");	
 				//echo "insert into user (fname,lname,email,password,type,fb_id,email_verify,status,created_date,modified_date) values('".$fname."','".$lname."','".$email."','".$password_hash."',1,'',0,1,'".$created_at."','".$created_at."')";
 			}		
 			if($insert_edetail==1)
-			{		
-				$checkemail = mysql_query("select * from user where id in (select max(id) from user)");	
+			{
+			    $checkemail = mysql_query("select * from user where id in (select max(id) from user)");	
 				$fet=mysql_fetch_array($checkemail);
 				$_SESSION['jpmeetou']['id']=$fet['id'];
 				$seluserdetail=mysql_query("select * from user_detail where uid=$fet[id]");
@@ -43,6 +50,30 @@ $fgh=0;
 				$_SESSION['jpmeetou']['fname']=$fet['fname'];
 				$_SESSION['jpmeetou']['lname']=$fet['lname'];
 				$_SESSION['jpmeetou']['profileimage']=$fetuserdetail['photo'];
+				
+			$uid=$_SESSION['jpmeetou']['id'];
+            $key= md5($email);
+	        $url = "http://www.meeto.jp/Verification.php?uid=".$uid."&key=".$key;
+			//echo "<script>alert('".$url."');</script>"; 
+			$subject = "Email Verification";
+			$to = $email;
+			$headers = 'MIME-Version: 1.0' . "\r\n";
+			$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+			$headers .= 'From:meeto.japan@gmail.com';
+			$message  = '<html>';	
+			$message .= '<body>';
+			$message .= '<h2>To Verification your account please click on Activate buttton</h2>';
+			$message .= '<table>';
+			$message .= '<tr>';
+			$message .= '<td align="center" width="300" height="40" bgcolor="#000091" style="border-radius:5px;color:#ffffff;display:block"><a href='.trim($url).' style="color:#ffffff;font-size:16px;font-weight:bold;font-family:Helvetica,Arial,sans-serif;text-decoration:none;line-height:40px;width:100%;display:inline-block">Verify Your Account</a></td>';
+			$message .= '</tr>';
+			$message .= '</table>';
+			$message .= '</div>';
+			$message .= '</body>';
+			$message .= '</html>';
+			$sentmail = mail($to,$subject,$message,$headers);
+
+				
 				
 				echo "<script>window.location.href='index.php'</script>";		
 			}	
@@ -87,24 +118,35 @@ $fgh=0;
 		$fb_id = $_SESSION['jpmeetou']['fb_id'];
 		$created_at = round(microtime(true) * 1000);
 		$_SESSION['jpmeetou']['type'] ="2";
-		$checkemail = mysql_query("select * from user where fb_id = '".$fb_id."'");	
-			if(mysql_num_rows($checkemail) > 0)	
+	   $checkfbid = mysql_query("select * from user where fb_id = '".$fb_id."'");	
+			if(mysql_num_rows($checkfbid) > 0)	
 			{		
-				$fet=mysql_fetch_array($checkemail);
+		
+				$fet=mysql_fetch_array($checkfbid);
 				if($fet['status']==1)
 				{
 					$selfbuser = mysql_query("select * from user where fb_id='".$fb_id."'");	
 					$fetfbuser=mysql_fetch_array($selfbuser);
 					$_SESSION['jpmeetou']['id']=$fetfbuser['id'];
+					
+					$uppro=mysql_query("update user_detail set photo='".$_SESSION['jpmeetou']['user_picture']."' where uid='".$fetfbuser['id']."'");
 				}
 				else
 				{
 					$fgh=2;
 				}
-					
 			}		
 			else	
 			{	
+		        $checkemail = mysql_query("select * from user where email = '".$email."'");
+		       if(mysql_num_rows($checkemail) > 0)
+		       {
+			    echo "<script>alert('This Email id attached with other account.');</script>";
+				unset($_SESSION['jpmeetou']);
+				echo "<script>window.location.href='index.php'</script>";
+		       }
+			   else
+			   {
 				$insert_edetail = mysql_query("insert into user (fname,lname,email,password,type,fb_id,email_verify,status,created_date,modified_date) values('".$fname."','".$lname."','".$email."','',2,'".$fb_id."',0,1,'".$created_at."','".$created_at."')");
 				
 				$selfbuser = mysql_query("select * from user where fb_id='".$fb_id."'");	
@@ -112,10 +154,35 @@ $fgh=0;
 				$_SESSION['jpmeetou']['id']=$fetfbuser['id'];
 				
 				$insertuserdetail=mysql_query("insert into user_detail (uid,gender,dob,phoneno,countryid,stateid,cityid,address,yourself,photo) values ('".$fetfbuser['id']."','','','','','','','','','".$_SESSION['jpmeetou']['user_picture']."')");
-				
-				
-			}	
-		  
+		    if(!empty($fetfbuser['email']))
+			{
+			   
+			$uid=$_SESSION['jpmeetou']['id'];
+            $key= md5($email);
+	        $url = "http://www.meeto.jp/Verification.php?uid=".$uid."&key=".$key;
+			//echo "<script>alert('".$url."');</script>"; 
+			$subject = "Email Verification";
+			$to = $email;
+			$headers = 'MIME-Version: 1.0' . "\r\n";
+			$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+			$headers .= 'From:meeto.japan@gmail.com';
+			$message  = '<html>';	
+			$message .= '<body>';
+			$message .= '<h2>To Verification your account please click on Activate buttton</h2>';
+			$message .= '<table>';
+			$message .= '<tr>';
+			$message .= '<td align="center" width="300" height="40" bgcolor="#000091" style="border-radius:5px;color:#ffffff;display:block"><a href='.trim($url).' style="color:#ffffff;font-size:16px;font-weight:bold;font-family:Helvetica,Arial,sans-serif;text-decoration:none;line-height:40px;width:100%;display:inline-block">Verify Your Account</a></td>';
+			$message .= '</tr>';
+			$message .= '</table>';
+			$message .= '</div>';
+			$message .= '</body>';
+			$message .= '</html>';
+			$sentmail = mail($to,$subject,$message,$headers);
+			
+			echo "<script>window.location.href='index.php'</script>";
+			}		
+		   }
+	     }				
 	}
 	$milliseconds = round(microtime(true) * 1000);
 	//$dttt=date("Y-m-d");
@@ -144,7 +211,7 @@ $fgh=0;
 <script> 
 	
 	var i=0;
-	  	var j=219;
+	  	var j=0;
  /*function hideserchcity()
  {
 	  $("#citysuggetion").hide();
@@ -183,16 +250,20 @@ $fgh=0;
 		}
 		});
   }
- function gonext()
+ function gonext(totalSeminar)
  {
 		
 		//alert("hii");
+		var totalSeminar = totalSeminar-4;
 		i++;
-		var k=i*275;
+		var k=i*293;
+		var ts=totalSeminar*293;
 		var res=j-k;
-		if(res==-2531)
+		//if(res<=-2531)
+		if(res<=-ts)
 		{
 			$("#gonext").hide();
+			$("#goback").show();
 		}
 		else
 		{
@@ -210,9 +281,10 @@ $fgh=0;
 		i--;
 		var k=i*275;
 		var res=j-k;
-		if(res==219)
+		if(res==0)
 		{
 			$("#goback").hide();
+			$("#gonext").show();
 		}
 		else
 		{
@@ -253,28 +325,29 @@ $fgh=0;
 	if($fgh==1)
 	{
 		$fgh=0;
-		?>
+	?>
 		<div class="" id='hidenewfac12' style='width:100%;height:149%;background: rgba(0,0,0,0.5);padding: 2%;position: fixed;z-index: 999;'>
-		<div class="row" >
-			<div class="col-md-12">
-			<br><br><br><br><br><br><br><br><br><br><br><br>
-				<div class="col-md-5 col-md-offset-4" style="border:1px solid #333; background:#fff">
-					
+            <div class="row" >
+                <div class="col-md-12">
+                <br><br><br><br><br><br><br><br><br><br><br><br>
+                    <div class="col-md-5 col-md-offset-4" style="border:1px solid #333; background:#fff">
+                        
+                        
+                        <div class="col-md-12" id="deleteusermsg" style="padding:20px;"> 
+                            <h4 style="color:red;font-weight:bolder;">Email Id Already Exist..!</h4>
+                            <div class="col-md-2 col-md-offset-10 btn btn-primary" style="color:black;font-weight:bolder;" onclick="$('#hidenewfac12').hide();">
+                            Ok</div>
+                        </div>
+                 
+                    </div>
                     
-					<div class="col-md-12" id="deleteusermsg" style="padding:20px;"> 
-						<h4 style="color:red;font-weight:bolder;">Email Id Already Exist..!</h4>
-						<div class="col-md-2 col-md-offset-10 btn btn-primary" style="color:black;font-weight:bolder;" onclick="$('#hidenewfac12').hide();">
-						Ok</div>
-					</div>
-             
-				</div>
-				
-			</div>
+                </div>
+            </div>
 		</div>
-</div>
-		<?php
+	<?php
 	}
-?>
+	?>
+    
     <?php
 	if($fgh==2)
 	{
@@ -290,6 +363,34 @@ $fgh=0;
                     
 					<div class="col-md-12" id="deleteusermsg" style="padding:20px;"> 
 						<h4 style="color:red;font-weight:bolder;">Your Account Block By Admin...</h4>
+						<div class="col-md-2 col-md-offset-10 btn btn-primary" style="color:black;font-weight:bolder;" onclick="$('#hidenewfac123').hide();">
+						Ok</div>
+					</div>
+             
+				</div>
+				
+			</div>
+		</div>
+</div>
+		<?php
+	}
+?>
+
+ <?php
+	if($fgh==3)
+	{
+		unset($_SESSION['jpmeetou']);
+		$fgh=0;
+		?>
+		<div class="" id='hidenewfac123' style='width:100%;height:149%;background: rgba(0,0,0,0.5);padding: 2%;position: fixed;z-index: 999;'>
+		<div class="row" >
+			<div class="col-md-12">
+			<br><br><br><br><br><br><br><br><br><br><br><br>
+				<div class="col-md-5 col-md-offset-4" style="border:1px solid #333; background:#fff">
+					
+                    
+					<div class="col-md-12" id="deleteusermsg" style="padding:20px;"> 
+						<h4 style="color:red;font-weight:bolder;">This Email id attached with other account!</h4>
 						<div class="col-md-2 col-md-offset-10 btn btn-primary" style="color:black;font-weight:bolder;" onclick="$('#hidenewfac123').hide();">
 						Ok</div>
 					</div>
@@ -467,49 +568,58 @@ $(document).ready(function(e) {
                 <div class="go-previous goto-nav">
                 	<div class="goto-prev nav-btn" style="display:none;" id="goback" onclick="goback()"><i class="icon-forward-arrow goto-prev-icon"></i></div>
                 </div>
-            	<div class="slider-wrapper" style="transform: translateX(219px);">
-					<?php
-					$i=0;
-					$selseminar=mysql_query("select * from seminar where status=1 and approval_status='approved' order by id DESC limit 0,10");
-					while($fetseminar=mysql_fetch_array($selseminar))
-					{
-						$selsemiphoto=mysql_query("select * from seminar_photos where seminar_id=$fetseminar[id] limit 0,1");
-						$fetsemiphoto=mysql_fetch_array($selsemiphoto);
-						$selsemitype=mysql_query("select * from seminar_type where id=$fetseminar[typeid]");
-						$fetsemitype=mysql_fetch_array($selsemitype);
-						$seluserdetail=mysql_query("select * from user_detail where uid=$fetseminar[uid]");
-						$fetuserdetail=mysql_fetch_array($seluserdetail);
-						$selcity=mysql_query("select * from cities where id=$fetseminar[cityid]");
-						$fetcity=mysql_fetch_array($selcity);
-						?>
-						<div class="slide center-slide" data-index="<?php echo $i; ?>">
-                		<div class="slide-content">
-                            <div class="fp-wrapper">
-                                <div class="fp-content">
-                                    <a class="fp-link h-track" href="infomation.php?id=<?php echo $fetseminar['id']; ?>" data-bypass="true" data-category="home_screen" data-action="open_card" data-label="{&quot;card_type&quot;:&quot;featured_projects&quot;,&quot;id&quot;:4932,&quot;uuid&quot;:&quot;94194ed7fe3a7423e9e5&quot;}">
-                                        <div class="ic fp-image">
-                                            <div class="ic-image" style="transform:rotate(<?php echo $fetsemiphoto['rotateval']; ?>deg); background-image: url('<?php echo "img/".$fetsemiphoto[image]; ?>');">
-                                            </div>
+                <div class="row">
+                    <div class="slider-wrapper"><!-- style="transform: translateX(219px);"-->
+                    	<div class="dis_flex">
+								<?php
+                                $i=0;
+                                $selseminar=mysql_query("select * from seminar where status=1 and approval_status='approved' order by id DESC limit 0,10");
+                                $totalSeminar=mysql_num_rows($selseminar);
+                                while($fetseminar=mysql_fetch_array($selseminar))
+                                {
+                                    $selsemiphoto=mysql_query("select * from seminar_photos where seminar_id=$fetseminar[id] limit 0,1");
+                                    $fetsemiphoto=mysql_fetch_array($selsemiphoto);
+                                    $selsemitype=mysql_query("select * from seminar_type where id=$fetseminar[typeid]");
+                                    $fetsemitype=mysql_fetch_array($selsemitype);
+                                    $seluserdetail=mysql_query("select * from user_detail where uid=$fetseminar[uid]");
+                                    $fetuserdetail=mysql_fetch_array($seluserdetail);
+                                    $selcity=mysql_query("select * from cities where id=$fetseminar[cityid]");
+                                    $fetcity=mysql_fetch_array($selcity);
+                                ?>
+							
+                            <!--<div class="center-slide col-xs-12 col-sm-6 col-md-3" style="width:12%;" data-index="<?php /*echo $i;*/ ?>" style="display:table;">--><!--slide -->
+                            <a href="infomation.php?id=<?php echo $fetseminar['id']; ?>" data-bypass="true" data-category="home_screen" data-action="open_card" data-label="{&quot;card_type&quot;:&quot;featured_projects&quot;,&quot;id&quot;:4932,&quot;uuid&quot;:&quot;94194ed7fe3a7423e9e5&quot;}" class="center-slide col-xs-12 col-sm-6 col-md-3" style="width:12%;" data-index="<?php echo $i; ?>" style="display:table;">
+							<!--<a href="infomation.php?id=<?php echo $fetseminar['id']; ?>">-->
+                                <div class="slide-content">
+                                    <div class="fp-wrapper">
+                                        <div class="fp-content">
+                                            <!--<a class="fp-link h-track" href="infomation.php?id=<?php echo $fetseminar['id']; ?>" data-bypass="true" data-category="home_screen" data-action="open_card" data-label="{&quot;card_type&quot;:&quot;featured_projects&quot;,&quot;id&quot;:4932,&quot;uuid&quot;:&quot;94194ed7fe3a7423e9e5&quot;}">-->
+                                                <div class="ic fp-image">
+                                                    <div class="ic-image" style="transform:rotate(<?php echo $fetsemiphoto['rotateval']; ?>deg); background-image: url('<?php echo "img/".$fetsemiphoto[image]; ?>');">
+                                                    </div>
+                                                </div>
+                                                <div class="fp-name"><?php echo $fetseminar['title']; ?></div>
+                                                <div class="fp-developer">by <?php echo $fetseminar['hostperson_name']; ?>.</div>
+                                                <div class="fp-configs grey-color"><?php echo $fetseminar['tagline']; ?></div>
+                                               
+                                                <div class="fp-price"><span><?php echo $fetcity['name']; ?></span></div>
+                                             <!--</a>-->
                                         </div>
-                                        <div class="fp-name"><?php echo $fetseminar['title']; ?></div>
-                                        <div class="fp-developer">by <?php echo $fetseminar['hostperson_name']; ?>.</div>
-                                        <div class="fp-configs grey-color"><?php echo $fetseminar['tagline']; ?></div>
-                                       
-                                        <div class="fp-price"><span><?php echo $fetcity['name']; ?></span></div>
-                                     </a>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-						</div>
-						<?php
-						$i++;
-					}
-					?>
-                	
+								<!--</a>-->
+                            <!--</div>-->
+                            </a>
+								<?php
+                                $i++;
+                                }
+                                ?>
+                        
+                    	</div>
+                    </div>
                 </div>
-                
                 <div class="go-next goto-nav">
-                	<div class="goto-next nav-btn" id="gonext" onclick="gonext()"><i class="icon-forward-arrow goto-next-icon"></i></div>
+                	<div class="goto-next nav-btn" id="gonext" onclick="gonext(<? echo $totalSeminar; ?>)"><i class="icon-forward-arrow goto-next-icon"></i></div>
                 </div>
             </div>
         </div>

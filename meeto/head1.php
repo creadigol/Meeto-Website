@@ -39,7 +39,7 @@
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
     <script src="js/ie-emulation-modes-warning.js"></script>
 	<script src="js/all.js"></script>
-    <script type="text/javascript" src='http://maps.google.com/maps/api/js?libraries=places'></script>
+   <!--<script type="text/javascript" src='http://maps.google.com/maps/api/js?libraries=places'></script>-->
 	<!-- price-slider -->
     
     

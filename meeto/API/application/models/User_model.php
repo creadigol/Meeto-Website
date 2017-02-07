@@ -71,9 +71,39 @@ class User_model extends CI_Model {
 		return $this->db->update("user", $data);
 	}
 
-	public function sendmail($email, $newpassword) 
+	public function sendmail($email, $newpassword, $uid) 
 	{
-		mail($email,"New Password For MEETTO","Your New Password For MEETTO Login Authenticatiuon..\nNEW PASSWORD :- ".$newpassword);
+		
+		    $num = mt_rand(100000,999999);
+			$key = md5($num);
+	        $url = "http://www.meeto.jp/reset_pass.php?uid=".$uid."&key=".$key;
+			$subject = "Forget password";
+			$to = $email;
+			$headers = 'MIME-Version: 1.0' . "\r\n";
+			$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+			$headers .= 'From:meeto.japan@gmail.com';
+			$message  = '<html>';	
+			$message .= '<body>';
+			$message .= '<h2>Forget Your account password... Click the Button for Reset Your Password</h2>';
+			$message .= '<table>';
+			$message .= '<tr>';
+			$message .= '<td align="center" width="300" height="40" bgcolor="#000091" style="border-radius:5px;color:#ffffff;display:block"><a href='.trim($url).' style="color:#ffffff;font-size:16px;font-weight:bold;font-family:Helvetica,Arial,sans-serif;text-decoration:none;line-height:40px;width:100%;display:inline-block">Reset  Your Account Password</a></td>';
+			$message .= '</tr>';
+			$message .= '</table>';
+			$message .= '</div>';
+			$message .= '</body>';
+			$message .= '</html>';
+			$sentmail = mail($to,$subject,$message,$headers);
+			
+					$data = array(
+					'password_varify'=>$key
+					);
+					$this->db->set($data);  
+		            $this->db->where("email", $email);
+		          return $this->db->update("user", $data);
+		
+		/*
+		mail($email,"New Password For MEETO","Your New Password For MEETO Login Authenticatiuon..\nNEW PASSWORD :- ".$newpassword);
 		
 		$data = array(
 			'password'=>md5($newpassword),
@@ -82,6 +112,7 @@ class User_model extends CI_Model {
 		$this->db->set($data);  
 		$this->db->where("email", $email);
 		return $this->db->update("user", $data);
+	  */
 	}
 
 	public function userprofile($uid,$type)
@@ -98,6 +129,7 @@ class User_model extends CI_Model {
 			{
 				$fname = $this->input->post('fname');
 				$lname = $this->input->post('lname');
+				$email = $this->input->post('email');
 				/*if(empty($fname))
 					$fname=$result[0]->fname;
 				if(empty($fname))
@@ -121,6 +153,7 @@ class User_model extends CI_Model {
 				$data = array(
 					'fname'=>$fname,
 					'lname'=>$lname,
+					'email'=>$email,
 					'modified_date'=>(int)round(microtime(true)*1000),
 				);
 				$this->db->set($data);  
@@ -243,6 +276,7 @@ class User_model extends CI_Model {
 				if(!empty($language))
 				{
 					$language = explode(',',$language);
+					$language = array_unique($language);
 					$this->db->where('uid', $uid);
 					$this->db->delete('user_language');
 					$langcount = count($language);
@@ -304,11 +338,17 @@ class User_model extends CI_Model {
 		return $this->db->delete('wishlist');
 	}
 	
-	public function deletebooking($uid,$seminar_id)
+	public function deletebooking($uid,$seminar_id,$booking_id)
 	{
+		$data = array(
+			'approval_status'=>'declined',
+		);
+		$this->db->set($data);  
 		$this->db->where('uid', $uid);
 		$this->db->where('seminar_id', $seminar_id);
-		return $this->db->delete('seminar_booking');
+		$this->db->where('id', $booking_id);
+		return $this->db->update("seminar_booking", $data);
+		
 	}
 	
 	public function deleteseminar($uid,$seminar_id)
@@ -340,7 +380,6 @@ class User_model extends CI_Model {
 		return $this->db->update("user", $data);
 	}
 	
-	
 	public function loginwithfb($name,$email,$fb_id)
 	{
 		$query=$this->db->query("select * from user where fb_id = '".$fb_id."' and status=1 ");
@@ -370,32 +409,22 @@ class User_model extends CI_Model {
 		}
 	}
 	
-	
 	public function user_review($uid,$seminar_id,$review)
 	{
-		$query = $this->db->query("select * from review where uid='".$uid."' and seminar_id='".$seminar_id."' ");
-		if($query->result())
-		{
-			return false;
-		}
-		else
-		{
-			$data = array(
-			'seminar_id' => $seminar_id,
-			'uid' => $uid,
-			'notes' => $review,
-			'status' => 1,
-			'created_date'=>(int)round(microtime(true)*1000),
-			'modified_date'=>(int)round(microtime(true)*1000),
-			);
-			return $this->db->insert('review', $data);
-		}
+		$data = array(
+		'seminar_id' => $seminar_id,
+		'uid' => $uid,
+		'notes' => $review,
+		'status' => 1,
+		'created_date'=>(int)round(microtime(true)*1000),
+		'modified_date'=>(int)round(microtime(true)*1000),
+		);
+		return $this->db->insert('review', $data);
 	}
 	
-
 	public function user_review_detail($uid)
 	{
-		$query = $this->db->query("select * from review where uid='".$uid."' or seminar_id in (select id from seminar where uid ='".$uid."') ");
+		$query = $this->db->query("select * from review where uid='".$uid."' or (seminar_id in (select id from seminar where uid ='".$uid."') and status=1) ");
 		
 		if($query->result())
 		{
@@ -407,7 +436,6 @@ class User_model extends CI_Model {
 		}
 	}
 	
-
 	public function table_data($uid)
 	{
 		$query = $this->db->query("select * from review where uid='".$uid."' or seminar_id in (select id from seminar where uid ='".$uid."') ");
@@ -422,5 +450,55 @@ class User_model extends CI_Model {
 		}
 	}
 	
+	public function sendPushNotification($data, $ids)
+	{
+		// Insert real GCM API key from the Google APIs Console
+		// https://code.google.com/apis/console/        
+		$apiKey = API_KEY;
 
+		// Set POST request body
+		$post = array(
+						'registration_ids'  => $ids,
+						'data'              => $data,
+					 );
+
+		// Set CURL request headers 
+		$headers = array( 
+							'Authorization: key=' . $apiKey,
+							'Content-Type: application/json'
+						);
+
+		// Initialize curl handle       
+		$ch = curl_init();
+
+		// Set URL to GCM push endpoint     
+		curl_setopt($ch, CURLOPT_URL, 'https://gcm-http.googleapis.com/gcm/send');
+
+		// Set request method to POST       
+		curl_setopt($ch, CURLOPT_POST, true);
+
+		// Set custom request headers       
+		curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+		// Get the response back as string instead of printing it       
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+		// Set JSON post data
+		curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($post));
+
+		// Actually send the request    
+		$result = curl_exec($ch);
+
+		// Handle errors
+		if (curl_errno($ch))
+		{
+			echo 'GCM error: ' . curl_error($ch);
+		}
+
+		// Close curl handle
+		curl_close($ch);
+
+		// Debug GCM response       
+		//echo $result;
+	}
 }

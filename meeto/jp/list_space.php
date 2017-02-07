@@ -62,17 +62,17 @@
 				$insemiimg=mysql_query("insert into seminar_photos (seminar_id,image,rotateval) values ($sid,'$curname','$rtr')");
 				//echo "insert into seminar_photos (seminar_id,image) values ($sid,'$curname')";
 				move_uploaded_file($_FILES['semiimage']['tmp_name'][$i], $newname);  
-			
 			}
-				mysql_query("delete from seminar_photos where rotateval=0");
-		}		
+			
+		}	
+   //	mysql_query("delete from seminar_photos where rotateval=0");		
 		if($inseminar)	
 		{       
 		    if($inseminarday)
 			 {		
 		       if($insemiimg)	
 		     	{			
-		          echo "<script>alert('あなたのセミナーは正常に上場します..');</script>";
+		          echo "<script>alert('あなたのセミナーが成功裏に追加されました。');</script>";
 		        }						
 			}	      					 	
 		}
@@ -195,6 +195,13 @@ function facilityshow(id,aa)
     }
     });
 	 }
+	 
+	function validateEmail(email) {
+    var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+    if (!emailReg.test(email)) {
+        alert('Please Enter Valid Email ID');
+      } 
+}
 	</script>
 	 <style>
         .upperdivche,.img-remove
@@ -211,7 +218,7 @@ function facilityshow(id,aa)
                     <div class="col-md-12 page-header">
 						<div  class="col-md-6" align="left" style="color:black;">
                         <h3>
-                            Seminar Image
+                            セミナー画像
                         </h3>
 						</div>
 						<div  class="col-md-6 " align="right" >
@@ -497,7 +504,7 @@ function facilityshow(id,aa)
 							<div class="row price-border price-margin Location-row">
 								<div class="col-md-8 center">
 									 <h3>基本</h3>
-									 <p>日々の価格の賃借人は、あなたのリストを参照するデフォルトを設定します。 </p>
+									 <p>セミナーリストの連絡先の詳細を設定する</p>
 								</div>
 								<div class="col-md-9">
 									<div class="overview_title">									
@@ -508,7 +515,7 @@ function facilityshow(id,aa)
 									<div class="bottom-margin-20"> </div>
 									<div class="overview_title">									
 										<label class="overview-label">連絡先メールアドレス</label>
-										<input name="contactemail" type="email" id="contactemail" placeholder="連絡先メールアドレス" class="overview-input" required>
+										<input name="contactemail" type="email" onmouseout="validateEmail(this.value);" id="contactemail" placeholder="連絡先メールアドレス" class="overview-input" required>
 									</div>
 									<div class="bottom-margin-20"> </div>
 									<div class="overview_title">									
@@ -533,7 +540,7 @@ function facilityshow(id,aa)
 
 									 <h3>日</h3>
 
-									 <p>日々の価格の賃借人は、あなたのリストを参照するデフォルトを設定します。 </p>
+									 <p>セミナーリストのセミナーの詳細を設定します。 </p>
 
 								</div>
 
@@ -564,7 +571,7 @@ function facilityshow(id,aa)
 										<label class="overview-label">時間に</label>
 
 										<input id="timepicker1" style="cursor:pointer;" class="timepicker1" type="text" name="totime" placeholder="Select Time"/>
-                                        <label class="overview-label">" 例：午前11時または午後11時00分"</label>
+                                        <!--<label class="overview-label">" 例：午前11時または午後11時00分"</label>-->
 									</div>
 
 									<div class="bottom-margin-20"> </div>
@@ -600,8 +607,7 @@ function facilityshow(id,aa)
 									 <h3>
 概要</h3>
 
-									 <p>
-日々の価格の賃借人は、あなたのリストを参照するデフォルトを設定します。</p>
+									 <p>セミナーリストのセミナーの詳細を設定します。</p>
 
 								</div>
 
@@ -678,8 +684,7 @@ function facilityshow(id,aa)
 										 <h3>
 写真または2を追加！ </h3>
 
-										 <span>
-または3つ、またはそれ以上！賃借人は、あなたのスペースの特徴を強調写真と場所に行くことを好みます。</span>
+										 <span>セミナーの写真を設定するセミナーのリスト</span>
 <span id="choosefileset"></span>
 												<input class="add-photo choose-img" id="jsimgid0" type="file" name="semiimage[]" onchange="setimg(0, this);addimgmaru()"/>
 												<input type="hidden" id="rotateniid0" value="360" name="txtrotatevalue[]">
@@ -792,7 +797,7 @@ function facilityshow(id,aa)
 
 									 <h3>ファシリティ</h3>
 
-									 <p>ほとんどのホストのリストで、一般的な設備。</p>
+									 <p>ほとんどのホストリストには共通の設備があります。</p>
 								</div>
 								<div class="col-md-12">
 									<ul class="nav facility">
@@ -803,7 +808,8 @@ function facilityshow(id,aa)
 											?>
 											<li>
 											<input type="checkbox" class="checkbox-check" name="facility[]" id="facility" value="<?php echo $fetfaci['id']; ?>">
-											<span><?php $marutra = explode('"',translate(str_replace(" ","+",$fetfaci['name']))); echo $marutra[1] ; ?></span>
+											<span><?php $marutra = explode('"',translate(str_replace(" ","+",$fetfaci['name']))); echo $marutra[1] ; ?>
+											</span>
 										    </li>
 											<?php
 										}
@@ -843,7 +849,7 @@ function facilityshow(id,aa)
 												<select id="country" class="overview-input"  name="country" onchange="setstate(this.value);">
 														 <option value="">-  国を選択  -</option>
 													<?php
-															$selcountry=mysql_query("select * from countries");
+															$selcountry=mysql_query("select * from countries where id!=101");
 															while($fetcountry=mysql_fetch_array($selcountry))
 															{
 														?>
@@ -1020,7 +1026,7 @@ function facilityshow(id,aa)
 										  }
 
 										</script>
-											<script src="https://maps.googleapis.com/maps/api/js?libraries=places&callback=initAutocomplete"
+											<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAnWG6DJ5dpqNjBC1CZI8xdS3L769lQHuc&libraries=places&callback=initAutocomplete"
 											async defer></script>
 												</div>
 

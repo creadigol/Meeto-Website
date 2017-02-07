@@ -12,16 +12,19 @@
   ?>
 <!DOCTYPE html><html lang="en"> 
  <?php	require_once('head1.php');   ?>
- 
-
+ <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAnWG6DJ5dpqNjBC1CZI8xdS3L769lQHuc&callback=initMap"
+  type="text/javascript"></script>
+<!--<script type="text/javascript" src="http://maps.google.com/maps/api/js?key=AIzaSyAnWG6DJ5dpqNjBC1CZI8xdS3L769lQHuc"></script>-->
 <script>
+
 $(window).scroll(function () {
 		var sc = $(window).scrollTop()
 		var divheight = $("#left_section").height();
 		var footerheight = $("#footer").height();
 		var footerheight = footerheight+15;
 		//alert(divheight);
-		if (sc > 195) {
+		//if (sc > 195) {
+		if (sc > 480) {
 			//alert("top"+sc);
 			$(".map_div").removeClass("bottom_fix");
 			$(".map_div").removeAttr("style");
@@ -33,7 +36,8 @@ $(window).scroll(function () {
 			$(".map_div").removeAttr("style");
 		}
 		
-		if(sc > divheight-425){
+		//if(sc > divheight-425){
+		if(sc > divheight-225){
 			//alert("bottom"+sc);
 			$(".map_div").removeClass("fixed_map");
 			$(".map_div").addClass("bottom_fix");

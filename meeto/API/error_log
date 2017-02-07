@@ -1,0 +1,88 @@
+[24-Jan-2017 20:19:26 Asia/Tokyo] PHP Parse error:  syntax error, unexpected ';', expecting ')' in /home/yukimatsuzuka1/public_html/API/application/controllers/User.php on line 395
+[24-Jan-2017 20:19:34 Asia/Tokyo] PHP Parse error:  syntax error, unexpected ';', expecting ')' in /home/yukimatsuzuka1/public_html/API/application/controllers/User.php on line 395
+[24-Jan-2017 20:20:17 Asia/Tokyo] PHP Parse error:  syntax error, unexpected ';', expecting ')' in /home/yukimatsuzuka1/public_html/API/application/controllers/User.php on line 395
+[24-Jan-2017 20:27:50 Asia/Tokyo] PHP Parse error:  syntax error, unexpected ';', expecting ')' in /home/yukimatsuzuka1/public_html/API/application/controllers/User.php on line 395
+[24-Jan-2017 20:31:34 Asia/Tokyo] PHP Parse error:  syntax error, unexpected ';', expecting ')' in /home/yukimatsuzuka1/public_html/API/application/controllers/User.php on line 395
+[24-Jan-2017 22:47:38 Asia/Tokyo] PHP Parse error:  syntax error, unexpected end of file, expecting variable (T_VARIABLE) or '$' in /home/yukimatsuzuka1/public_html/API/application/controllers/User.php on line 108
+[24-Jan-2017 22:47:44 Asia/Tokyo] PHP Parse error:  syntax error, unexpected end of file, expecting variable (T_VARIABLE) or '$' in /home/yukimatsuzuka1/public_html/API/application/controllers/User.php on line 108
+[24-Jan-2017 22:49:09 Asia/Tokyo] PHP Parse error:  syntax error, unexpected end of file in /home/yukimatsuzuka1/public_html/API/application/controllers/User.php on line 240
+[24-Jan-2017 22:49:11 Asia/Tokyo] PHP Parse error:  syntax error, unexpected end of file in /home/yukimatsuzuka1/public_html/API/application/controllers/User.php on line 240
+[24-Jan-2017 22:49:22 Asia/Tokyo] PHP Parse error:  syntax error, unexpected end of file in /home/yukimatsuzuka1/public_html/API/application/controllers/User.php on line 240
+[24-Jan-2017 22:49:39 Asia/Tokyo] PHP Parse error:  syntax error, unexpected end of file in /home/yukimatsuzuka1/public_html/API/application/controllers/User.php on line 240
+[24-Jan-2017 22:49:43 Asia/Tokyo] PHP Parse error:  syntax error, unexpected end of file in /home/yukimatsuzuka1/public_html/API/application/controllers/User.php on line 240
+[24-Jan-2017 22:49:50 Asia/Tokyo] PHP Parse error:  syntax error, unexpected end of file in /home/yukimatsuzuka1/public_html/API/application/controllers/User.php on line 240
+[24-Jan-2017 22:50:11 Asia/Tokyo] PHP Parse error:  syntax error, unexpected end of file in /home/yukimatsuzuka1/public_html/API/application/controllers/User.php on line 240
+[24-Jan-2017 22:50:26 Asia/Tokyo] PHP Parse error:  syntax error, unexpected end of file in /home/yukimatsuzuka1/public_html/API/application/controllers/User.php on line 240
+[24-Jan-2017 22:51:52 Asia/Tokyo] PHP Parse error:  syntax error, unexpected end of file in /home/yukimatsuzuka1/public_html/API/application/controllers/User.php on line 240
+[24-Jan-2017 23:20:14 Asia/Tokyo] PHP Parse error:  syntax error, unexpected 'else' (T_ELSE) in /home/yukimatsuzuka1/public_html/API/application/controllers/User.php on line 589
+[25-Jan-2017 23:52:29 Asia/Tokyo] PHP Warning:  Unterminated comment starting line 102 in /home/yukimatsuzuka1/public_html/API/application/controllers/Seminar.php on line 102
+[25-Jan-2017 23:52:29 Asia/Tokyo] PHP Parse error:  syntax error, unexpected end of file in /home/yukimatsuzuka1/public_html/API/application/controllers/Seminar.php on line 105
+[27-Jan-2017 22:17:02 Asia/Tokyo] PHP Parse error:  syntax error, unexpected '}' in /home/yukimatsuzuka1/public_html/API/application/controllers/Seminar.php on line 1303
+[27-Jan-2017 22:17:14 Asia/Tokyo] PHP Parse error:  syntax error, unexpected '}' in /home/yukimatsuzuka1/public_html/API/application/controllers/Seminar.php on line 1303
+[27-Jan-2017 22:17:15 Asia/Tokyo] PHP Parse error:  syntax error, unexpected '}' in /home/yukimatsuzuka1/public_html/API/application/controllers/Seminar.php on line 1303
+[27-Jan-2017 22:17:16 Asia/Tokyo] PHP Parse error:  syntax error, unexpected '}' in /home/yukimatsuzuka1/public_html/API/application/controllers/Seminar.php on line 1303
+[27-Jan-2017 22:17:17 Asia/Tokyo] PHP Parse error:  syntax error, unexpected '}' in /home/yukimatsuzuka1/public_html/API/application/controllers/Seminar.php on line 1303
+[27-Jan-2017 22:17:20 Asia/Tokyo] PHP Parse error:  syntax error, unexpected '}' in /home/yukimatsuzuka1/public_html/API/application/controllers/Seminar.php on line 1303
+[27-Jan-2017 22:17:24 Asia/Tokyo] PHP Parse error:  syntax error, unexpected '}' in /home/yukimatsuzuka1/public_html/API/application/controllers/Seminar.php on line 1303
+[27-Jan-2017 22:17:29 Asia/Tokyo] PHP Parse error:  syntax error, unexpected '}' in /home/yukimatsuzuka1/public_html/API/application/controllers/Seminar.php on line 1303
+[27-Jan-2017 22:17:31 Asia/Tokyo] PHP Parse error:  syntax error, unexpected '}' in /home/yukimatsuzuka1/public_html/API/application/controllers/Seminar.php on line 1303
+[27-Jan-2017 22:17:35 Asia/Tokyo] PHP Parse error:  syntax error, unexpected '}' in /home/yukimatsuzuka1/public_html/API/application/controllers/Seminar.php on line 1303
+[27-Jan-2017 22:17:41 Asia/Tokyo] PHP Parse error:  syntax error, unexpected '}' in /home/yukimatsuzuka1/public_html/API/application/controllers/Seminar.php on line 1303
+[27-Jan-2017 22:17:45 Asia/Tokyo] PHP Parse error:  syntax error, unexpected '}' in /home/yukimatsuzuka1/public_html/API/application/controllers/Seminar.php on line 1303
+[27-Jan-2017 22:17:53 Asia/Tokyo] PHP Parse error:  syntax error, unexpected '}' in /home/yukimatsuzuka1/public_html/API/application/controllers/Seminar.php on line 1303
+[27-Jan-2017 22:18:11 Asia/Tokyo] PHP Parse error:  syntax error, unexpected '}' in /home/yukimatsuzuka1/public_html/API/application/controllers/Seminar.php on line 1303
+[27-Jan-2017 22:18:33 Asia/Tokyo] PHP Parse error:  syntax error, unexpected '}' in /home/yukimatsuzuka1/public_html/API/application/controllers/Seminar.php on line 1303
+[27-Jan-2017 22:18:35 Asia/Tokyo] PHP Parse error:  syntax error, unexpected '}' in /home/yukimatsuzuka1/public_html/API/application/controllers/Seminar.php on line 1303
+[27-Jan-2017 22:18:38 Asia/Tokyo] PHP Parse error:  syntax error, unexpected '}' in /home/yukimatsuzuka1/public_html/API/application/controllers/Seminar.php on line 1303
+[27-Jan-2017 22:18:40 Asia/Tokyo] PHP Parse error:  syntax error, unexpected '}' in /home/yukimatsuzuka1/public_html/API/application/controllers/Seminar.php on line 1303
+[27-Jan-2017 22:18:41 Asia/Tokyo] PHP Parse error:  syntax error, unexpected '}' in /home/yukimatsuzuka1/public_html/API/application/controllers/Seminar.php on line 1303
+[27-Jan-2017 22:18:42 Asia/Tokyo] PHP Parse error:  syntax error, unexpected '}' in /home/yukimatsuzuka1/public_html/API/application/controllers/Seminar.php on line 1303
+[27-Jan-2017 22:18:43 Asia/Tokyo] PHP Parse error:  syntax error, unexpected '}' in /home/yukimatsuzuka1/public_html/API/application/controllers/Seminar.php on line 1303
+[27-Jan-2017 22:18:45 Asia/Tokyo] PHP Parse error:  syntax error, unexpected '}' in /home/yukimatsuzuka1/public_html/API/application/controllers/Seminar.php on line 1303
+[27-Jan-2017 22:18:48 Asia/Tokyo] PHP Parse error:  syntax error, unexpected '}' in /home/yukimatsuzuka1/public_html/API/application/controllers/Seminar.php on line 1303
+[27-Jan-2017 22:18:48 Asia/Tokyo] PHP Parse error:  syntax error, unexpected '}' in /home/yukimatsuzuka1/public_html/API/application/controllers/Seminar.php on line 1303
+[27-Jan-2017 22:18:49 Asia/Tokyo] PHP Parse error:  syntax error, unexpected '}' in /home/yukimatsuzuka1/public_html/API/application/controllers/Seminar.php on line 1303
+[27-Jan-2017 22:18:50 Asia/Tokyo] PHP Parse error:  syntax error, unexpected '}' in /home/yukimatsuzuka1/public_html/API/application/controllers/Seminar.php on line 1303
+[27-Jan-2017 22:18:50 Asia/Tokyo] PHP Parse error:  syntax error, unexpected '}' in /home/yukimatsuzuka1/public_html/API/application/controllers/Seminar.php on line 1303
+[27-Jan-2017 22:18:50 Asia/Tokyo] PHP Parse error:  syntax error, unexpected '}' in /home/yukimatsuzuka1/public_html/API/application/controllers/Seminar.php on line 1303
+[27-Jan-2017 22:18:51 Asia/Tokyo] PHP Parse error:  syntax error, unexpected '}' in /home/yukimatsuzuka1/public_html/API/application/controllers/Seminar.php on line 1303
+[27-Jan-2017 22:18:52 Asia/Tokyo] PHP Parse error:  syntax error, unexpected '}' in /home/yukimatsuzuka1/public_html/API/application/controllers/Seminar.php on line 1303
+[27-Jan-2017 22:18:52 Asia/Tokyo] PHP Parse error:  syntax error, unexpected '}' in /home/yukimatsuzuka1/public_html/API/application/controllers/Seminar.php on line 1303
+[27-Jan-2017 22:18:52 Asia/Tokyo] PHP Parse error:  syntax error, unexpected '}' in /home/yukimatsuzuka1/public_html/API/application/controllers/Seminar.php on line 1303
+[27-Jan-2017 22:18:53 Asia/Tokyo] PHP Parse error:  syntax error, unexpected '}' in /home/yukimatsuzuka1/public_html/API/application/controllers/Seminar.php on line 1303
+[27-Jan-2017 22:18:53 Asia/Tokyo] PHP Parse error:  syntax error, unexpected '}' in /home/yukimatsuzuka1/public_html/API/application/controllers/Seminar.php on line 1303
+[27-Jan-2017 22:18:53 Asia/Tokyo] PHP Parse error:  syntax error, unexpected '}' in /home/yukimatsuzuka1/public_html/API/application/controllers/Seminar.php on line 1303
+[27-Jan-2017 22:18:54 Asia/Tokyo] PHP Parse error:  syntax error, unexpected '}' in /home/yukimatsuzuka1/public_html/API/application/controllers/Seminar.php on line 1303
+[27-Jan-2017 22:18:55 Asia/Tokyo] PHP Parse error:  syntax error, unexpected '}' in /home/yukimatsuzuka1/public_html/API/application/controllers/Seminar.php on line 1303
+[27-Jan-2017 22:18:55 Asia/Tokyo] PHP Parse error:  syntax error, unexpected '}' in /home/yukimatsuzuka1/public_html/API/application/controllers/Seminar.php on line 1303
+[27-Jan-2017 22:18:56 Asia/Tokyo] PHP Parse error:  syntax error, unexpected '}' in /home/yukimatsuzuka1/public_html/API/application/controllers/Seminar.php on line 1303
+[27-Jan-2017 22:18:56 Asia/Tokyo] PHP Parse error:  syntax error, unexpected '}' in /home/yukimatsuzuka1/public_html/API/application/controllers/Seminar.php on line 1303
+[27-Jan-2017 22:18:57 Asia/Tokyo] PHP Parse error:  syntax error, unexpected '}' in /home/yukimatsuzuka1/public_html/API/application/controllers/Seminar.php on line 1303
+[27-Jan-2017 22:18:57 Asia/Tokyo] PHP Parse error:  syntax error, unexpected '}' in /home/yukimatsuzuka1/public_html/API/application/controllers/Seminar.php on line 1303
+[27-Jan-2017 22:18:57 Asia/Tokyo] PHP Parse error:  syntax error, unexpected '}' in /home/yukimatsuzuka1/public_html/API/application/controllers/Seminar.php on line 1303
+[27-Jan-2017 22:18:57 Asia/Tokyo] PHP Parse error:  syntax error, unexpected '}' in /home/yukimatsuzuka1/public_html/API/application/controllers/Seminar.php on line 1303
+[27-Jan-2017 22:19:04 Asia/Tokyo] PHP Parse error:  syntax error, unexpected '}' in /home/yukimatsuzuka1/public_html/API/application/controllers/Seminar.php on line 1303
+[27-Jan-2017 22:19:04 Asia/Tokyo] PHP Parse error:  syntax error, unexpected '}' in /home/yukimatsuzuka1/public_html/API/application/controllers/Seminar.php on line 1303
+[27-Jan-2017 22:19:05 Asia/Tokyo] PHP Parse error:  syntax error, unexpected '}' in /home/yukimatsuzuka1/public_html/API/application/controllers/Seminar.php on line 1303
+[27-Jan-2017 22:19:05 Asia/Tokyo] PHP Parse error:  syntax error, unexpected '}' in /home/yukimatsuzuka1/public_html/API/application/controllers/Seminar.php on line 1303
+[27-Jan-2017 22:19:05 Asia/Tokyo] PHP Parse error:  syntax error, unexpected '}' in /home/yukimatsuzuka1/public_html/API/application/controllers/Seminar.php on line 1303
+[27-Jan-2017 22:19:12 Asia/Tokyo] PHP Parse error:  syntax error, unexpected end of file in /home/yukimatsuzuka1/public_html/API/application/controllers/Seminar.php on line 1066
+[27-Jan-2017 22:54:29 Asia/Tokyo] PHP Parse error:  syntax error, unexpected '.' in /home/yukimatsuzuka1/public_html/API/application/controllers/User.php on line 1141
+[27-Jan-2017 22:54:41 Asia/Tokyo] PHP Parse error:  syntax error, unexpected '.' in /home/yukimatsuzuka1/public_html/API/application/controllers/User.php on line 1141
+[27-Jan-2017 22:54:48 Asia/Tokyo] PHP Parse error:  syntax error, unexpected '.' in /home/yukimatsuzuka1/public_html/API/application/controllers/User.php on line 1141
+[27-Jan-2017 22:55:19 Asia/Tokyo] PHP Parse error:  syntax error, unexpected '.' in /home/yukimatsuzuka1/public_html/API/application/controllers/User.php on line 1141
+[27-Jan-2017 22:56:41 Asia/Tokyo] PHP Parse error:  syntax error, unexpected '.' in /home/yukimatsuzuka1/public_html/API/application/controllers/User.php on line 1141
+[27-Jan-2017 22:57:24 Asia/Tokyo] PHP Parse error:  syntax error, unexpected '"'"' (T_CONSTANT_ENCAPSED_STRING) in /home/yukimatsuzuka1/public_html/API/application/controllers/User.php on line 1141
+[27-Jan-2017 22:57:32 Asia/Tokyo] PHP Parse error:  syntax error, unexpected '"'"' (T_CONSTANT_ENCAPSED_STRING) in /home/yukimatsuzuka1/public_html/API/application/controllers/User.php on line 1141
+[27-Jan-2017 23:03:52 Asia/Tokyo] PHP Parse error:  syntax error, unexpected '.' in /home/yukimatsuzuka1/public_html/API/application/controllers/User.php on line 1143
+[28-Jan-2017 14:09:06 Asia/Tokyo] PHP Warning:  Unterminated comment starting line 252 in /home/yukimatsuzuka1/public_html/API/application/models/Seminar_model.php on line 252
+[28-Jan-2017 14:09:06 Asia/Tokyo] PHP Parse error:  syntax error, unexpected end of file in /home/yukimatsuzuka1/public_html/API/application/models/Seminar_model.php on line 265
+[28-Jan-2017 14:15:35 Asia/Tokyo] PHP Parse error:  syntax error, unexpected '}' in /home/yukimatsuzuka1/public_html/API/application/models/Seminar_model.php on line 63
+[28-Jan-2017 14:15:48 Asia/Tokyo] PHP Parse error:  syntax error, unexpected '}' in /home/yukimatsuzuka1/public_html/API/application/models/Seminar_model.php on line 63
+[28-Jan-2017 14:15:49 Asia/Tokyo] PHP Parse error:  syntax error, unexpected '}' in /home/yukimatsuzuka1/public_html/API/application/models/Seminar_model.php on line 63
+[28-Jan-2017 14:15:53 Asia/Tokyo] PHP Parse error:  syntax error, unexpected end of file in /home/yukimatsuzuka1/public_html/API/application/models/Seminar_model.php on line 64
+[28-Jan-2017 14:25:42 Asia/Tokyo] PHP Parse error:  syntax error, unexpected end of file, expecting variable (T_VARIABLE) or ${ (T_DOLLAR_OPEN_CURLY_BRACES) or {$ (T_CURLY_OPEN) in /home/yukimatsuzuka1/public_html/API/application/models/Seminar_model.php on line 78
+[28-Jan-2017 15:52:16 Asia/Tokyo] PHP Parse error:  syntax error, unexpected ''rot' (T_ENCAPSED_AND_WHITESPACE), expecting ')' in /home/yukimatsuzuka1/public_html/API/application/models/Seminar_model.php on line 586
+[28-Jan-2017 16:52:49 Asia/Tokyo] PHP Parse error:  syntax error, unexpected end of file in /home/yukimatsuzuka1/public_html/API/application/models/User_model.php on line 307
+[01-Feb-2017 19:45:29 Asia/Tokyo] PHP Parse error:  syntax error, unexpected '->' (T_OBJECT_OPERATOR), expecting ')' in /home/yukimatsuzuka1/public_html/API/application/controllers/User.php on line 313
+[06-Feb-2017 09:22:33 UTC] PHP Warning:  Unterminated comment starting line 34 in /home/yukimatsuzuka1/public_html/API/application/config/constants.php on line 34

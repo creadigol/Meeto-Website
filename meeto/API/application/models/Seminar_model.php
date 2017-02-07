@@ -30,19 +30,27 @@ class Seminar_model extends CI_Model {
 	{
 		$city = $this->input->post('city');
 		$type = $this->input->post('type');
-		$facility = $this->input->post('facility');
+		//$facility = $this->input->post('facility');
 		$purpose = $this->input->post('purpose');
 		$industry = $this->input->post('industry');
-		$from_date = $this->input->post('from_date');
-		$to_date = $this->input->post('to_date');
+		$from_date = strtotime($this->input->post('from_date'))*1000;
+		$to_date = (strtotime($this->input->post('to_date'))*1000)+86399;
 		$from_time = $this->input->post('from_time');
 		$to_time = $this->input->post('to_time');
 		$seat = $this->input->post('seat');
 		$seminartype = $this->input->post('seminartype');
-		
+		$lang=$this->input->post('lang');
+		if($lang=='ja')
+		{
+			$cityname = 'jp_name';
+		}
+		else
+		{
+			$cityname = 'name';
+		}
 		if($type=='NOFILTER')
 		{
-			$query = $this->db->query("select * from seminar where approval_status='approved' and status=1 and cityid in (select id from cities where name like '%".$city."%' ) or title like '%".$city."%' or tagline like '%".$city."%' or description like '%".$city."%' ");
+			$query = $this->db->query("select * from seminar where approval_status='approved' and status=1 and cityid in (select id from cities where $cityname like '%".$city."%' ) or title like '%".$city."%' or tagline like '%".$city."%' or description like '%".$city."%' ");
 		}
 		if($type=='CITY')
 		{
@@ -52,11 +60,87 @@ class Seminar_model extends CI_Model {
 		{
 			if(empty($city))
 			{
-				$query = $this->db->query("select * from seminar where approval_status='approved' and status=1 and (typeid in ('$seminartype') or (id in (select seminar_id from seminar_facility where facility_id in ('$facility')) or id in (select seminar_id from seminar_day where from_date BETWEEN '$from_date' and '$to_date') or id in (select seminar_id from seminar_purpose where attendees_id in ('$purpose') ) or id in (select seminar_id from seminar_industry where industry_id in ('$industry') ))) ");
+				$filter="";
+				if(!empty($seminartype))
+				{
+					$seminartype = rtrim($seminartype, ",");
+					$seminartype = str_replace(",","','",$seminartype);
+					$filter .= "typeid in ('$seminartype') and ";
+				}
+				/* if(!empty($facility))
+				{
+					$facility = rtrim($facility, ",");
+					$facility = str_replace(",","','",$facility);
+					$filter .= "id in (select seminar_id from seminar_facility where facility_id in ('$facility')) and ";
+				} */
+				if(!empty($from_date) && $to_date>86399)
+				{
+					$filter .= "id in (select seminar_id from seminar_day where from_date BETWEEN '$from_date' and '$to_date') and ";
+				}
+				if(!empty($purpose))
+				{
+					$purpose = rtrim($purpose, ",");
+					$purpose = str_replace(",","','",$purpose);
+					$filter .= "id in (select seminar_id from seminar_purpose where attendees_id in ('$purpose') ) and ";
+				}
+				if(!empty($industry))
+				{
+					$industry = rtrim($industry, ",");
+					$industry = str_replace(",","','",$industry);
+					$filter .= "id in (select seminar_id from seminar_industry where industry_id in ('$industry') and ";
+				}
+				if(!empty($filter))
+				{
+					$filter = rtrim($filter, " and ");
+					$query = $this->db->query("select * from seminar where approval_status='approved' and status=1 and ($filter) ");
+				}
+				else
+				{
+					$query = $this->db->query("select * from seminar where approval_status='approved' and status=1 ");
+				}
 			}
 			else
 			{
-				$query = $this->db->query("select * from seminar where approval_status='approved' and status=1 and (cityid in (select id from cities where name like '%$city%') or typeid in ('$seminartype') or (id in (select seminar_id from seminar_facility where facility_id in ('$facility')) or id in (select seminar_id from seminar_day where from_date BETWEEN '$from_date' and '$to_date') or id in (select seminar_id from seminar_purpose where attendees_id in ('$purpose') ) or id in (select seminar_id from seminar_industry where industry_id in ('$industry') ))) ");
+				$filter="";
+				if(!empty($seminartype))
+				{
+					$seminartype = rtrim($seminartype, ",");
+					$seminartype = str_replace(",","','",$seminartype);
+					$filter .= "typeid in ('$seminartype') and ";
+				}
+				/* if(!empty($facility))
+				{
+					$facility = rtrim($facility, ",");
+					$facility = str_replace(",","','",$facility);
+					$filter .= "id in (select seminar_id from seminar_facility where facility_id in ('$facility')) and ";
+				} */
+				if(!empty($from_date) && $to_date>86399)
+				{
+					$filter .= "id in (select seminar_id from seminar_day where (from_date BETWEEN '$from_date' and '$to_date') OR (to_date BETWEEN '$from_date' and '$to_date') OR (from_date <= '$from_date' AND to_date >= '$to_date') ) and ";
+				}
+				if(!empty($purpose))
+				{
+					$purpose = rtrim($purpose, ",");
+					$purpose = str_replace(",","','",$purpose);
+					$filter .= "id in (select seminar_id from seminar_purpose where attendees_id in ('$purpose') ) and ";
+				}
+				if(!empty($industry))
+				{
+					$industry = rtrim($industry, ",");
+					$industry = str_replace(",","','",$industry);
+					$filter .= "id in (select seminar_id from seminar_industry where industry_id in ('$industry') ) and ";
+				}
+				if(!empty($filter))
+				{
+					$filter = rtrim($filter, "and ");
+					//echo $filter;
+					//echo "select * from seminar where approval_status='approved' and status=1 and cityid in (select id from cities where name like '%$city%') and ($filter) ";
+					$query = $this->db->query("select * from seminar where approval_status='approved' and status=1 and cityid in (select id from cities where $cityname like '%$city%') and ($filter) ");
+				}
+				else
+				{
+					$query = $this->db->query("select * from seminar where approval_status='approved' and status=1 and cityid in (select id from cities where $cityname like '%$city%')");
+				}
 			}
 		}
 		
@@ -176,6 +260,7 @@ class Seminar_model extends CI_Model {
 				if(!empty($facility_id))
 				{
 					$facility_id = explode(',',$facility_id);
+					$facility_id = array_unique($facility_id);
 					$facility_id_count = count($facility_id);
 					$i=1;
 					foreach($facility_id as $val)
@@ -200,6 +285,7 @@ class Seminar_model extends CI_Model {
 				if(!empty($purpose_id))
 				{
 					$purpose_id = explode(',',$purpose_id);
+					$purpose_id = array_unique($purpose_id);
 					$purpose_id_count = count($purpose_id);
 					$i=1;
 					foreach($purpose_id as $val)
@@ -224,6 +310,7 @@ class Seminar_model extends CI_Model {
 				if(!empty($industry_id))
 				{
 					$industry_id = explode(',',$industry_id);
+					$industry_id = array_unique($industry_id);
 					$industry_id_count = count($industry_id);
 					$i=1;
 					foreach($industry_id as $val)
@@ -246,7 +333,7 @@ class Seminar_model extends CI_Model {
 				$photo_count=$this->input->post('photo_count');
 				for($i=1;$i<=$photo_count;$i++)
 				{
-					$rotateval=$this->input->post('rotateval_'.$i);
+					/* $rotateval=$this->input->post('rotateval_'.$i);
 					$photo = $this->input->post('photo_'.$i);
 					$image = base64_decode($photo);
 					//$name = time().$i."seminarimg.jpeg";
@@ -259,20 +346,22 @@ class Seminar_model extends CI_Model {
 						'image' => $name,
 						'rotateval' => $rotateval,
 					);
-					$this->db->insert('seminar_photos', $data_photos);
+					$this->db->insert('seminar_photos', $data_photos); */
 					
-					/*$photo = time()."_".$_FILES['photo_'.$i.'']['name'];
+					$rotateval=$this->input->post('rotateval_'.$i);
+					//$photo = time()."_".$_FILES['photo_'.$i]['name'];
 					$photo = "semiimage".time().$i.".jpeg";
 					$path = "../img/";
 					$fpath = $path.$photo;
-					move_uploaded_file($_FILES['photo_'.$i.'']['tmp_name'],$fpath);
+					move_uploaded_file($_FILES['photo_'.$i]['tmp_name'],$fpath);
 					
 					$data_photos = array(
-					'seminar_id' => $seminar_id,
-					'image' => $photo,
+						'seminar_id' => $seminar_id,
+						'image' => $photo,
+						'rotateval' => $rotateval,
 					);
 					
-					$this->db->insert('seminar_photos', $data_photos);*/
+					$this->db->insert('seminar_photos', $data_photos);
 				}
 				
 				$query = $this->db->query("select * from seminar where id='".$seminar_id."' ");
@@ -295,6 +384,8 @@ class Seminar_model extends CI_Model {
 			//$total_booked_seat=$this->input->post('total_booked_seat');
 			//$qualification=$this->input->post('qualification');
 			$address=$this->input->post('address');
+			$latitude=$this->input->post('latitude');
+			$longitude=$this->input->post('longitude');
 			$typeid=$this->input->post('typeid');
 			$countryid=$this->input->post('countryid');
 			$stateid=$this->input->post('stateid');
@@ -306,7 +397,7 @@ class Seminar_model extends CI_Model {
 			//$status=$this->input->post('status');
 			//$approval_status=$this->input->post('approval_status');
 			
-			function getLatLong($address)
+			/* function getLatLong($address)
 			{
 				if(!empty($address)){
 					//Formatted address
@@ -330,7 +421,7 @@ class Seminar_model extends CI_Model {
 			
 			$latLong = getLatLong($address);
 			$latitude = $latLong['latitude'];
-			$longitude = $latLong['longitude'];
+			$longitude = $latLong['longitude']; */
 
 			$data_seminar = array(
 			'title' => $title,
@@ -383,6 +474,7 @@ class Seminar_model extends CI_Model {
 			if(!empty($facility_id))
 			{
 				$facility_id = explode(',',$facility_id);
+				$facility_id = array_unique($facility_id);
 				$facility_id_count = count($facility_id);
 				$i=1;
 				foreach($facility_id as $val)
@@ -410,6 +502,7 @@ class Seminar_model extends CI_Model {
 			if(!empty($purpose_id))
 			{
 				$purpose_id = explode(',',$purpose_id);
+				$purpose_id = array_unique($purpose_id);
 				$purpose_id_count = count($purpose_id);
 				$i=1;
 				foreach($purpose_id as $val)
@@ -437,6 +530,7 @@ class Seminar_model extends CI_Model {
 			if(!empty($industry_id))
 			{
 				$industry_id = explode(',',$industry_id);
+				$industry_id = array_unique($industry_id);
 				$industry_id_count = count($industry_id);
 				$i=1;
 				foreach($industry_id as $val)
@@ -456,13 +550,24 @@ class Seminar_model extends CI_Model {
 			}
 			
 			//UPDATE INTO SEMINAR_PHOTOS
-			$this->db->where('seminar_id', $seminar_id);
-			$this->db->delete('seminar_photos');
+			//$this->db->where('seminar_id', $seminar_id);
+			//$this->db->delete('seminar_photos');
+			$deleteImage=$this->input->post('deleteImage');
+			if(!empty($deleteImage))
+			{
+				$deleteImageExpload = explode(",",$deleteImage);
+				foreach($deleteImageExpload as $deleteImageExploadFE){
+					$deleteImageExploadUnlink = explode("/img/",$deleteImageExploadFE);
+					$this->db->where('seminar_id', $seminar_id);
+					$this->db->where('image', $deleteImageExploadUnlink[1]);
+					$this->db->delete('seminar_photos');
+				}
+			}
 			
 			$photo_count=$this->input->post('photo_count');
 			for($i=1;$i<=$photo_count;$i++)
 			{
-				$rotateval=$this->input->post('rotateval_'.$i);
+				/* $rotateval=$this->input->post('rotateval_'.$i);
 				$photo = $this->input->post('photo_'.$i);
 				$image = base64_decode($photo);
 				//$name = time().$i."seminarimg.jpeg";
@@ -475,8 +580,22 @@ class Seminar_model extends CI_Model {
 					'image' => $name,
 					'rotateval' => $rotateval,
 				);
-				$this->db->insert('seminar_photos', $data_photos);
+				$this->db->insert('seminar_photos', $data_photos); */
 				
+				$rotateval=$this->input->post('rotateval_'.$i);
+				//$photo = time()."_".$_FILES['photo_'.$i]['name'];
+				$photo = "semiimage".time().$i.".jpeg";
+				$path = "../img/";
+				$fpath = $path.$photo;
+				move_uploaded_file($_FILES['photo_'.$i]['tmp_name'],$fpath);
+				
+				$data_photos = array(
+					'seminar_id' => $seminar_id,
+					'image' => $photo,
+					'rotateval' => $rotateval,
+				);
+				
+				$this->db->insert('seminar_photos', $data_photos);
 				/*$photo = time()."_".$_FILES['photo_'.$i.'']['name'];
 				$photo = "semiimage".time().$i.".jpeg";
 				$path = "../img/";
@@ -525,9 +644,9 @@ class Seminar_model extends CI_Model {
 		);
 		
 		$this->db->insert('seminar_booking', $data_seminar);
-		return $this->db->insert_id();
+		$this->db->insert_id();
 		
-		$seminar = $this->db->query("select * seminar where id='".$seminar_id."' ");
+		$seminar = $this->db->query("select * from seminar where id='".$seminar_id."' ");
 		$seminar_r = $seminar->result();
 		
 		$data = array(
@@ -601,6 +720,7 @@ class Seminar_model extends CI_Model {
 			$this->db->set($data);
 			$this->db->where('seminar_id',$seminar_id);
 			$this->db->where('uid',$uid);
+			$this->db->where('booking_no',$booking_no);
 			return $this->db->update('seminar_booking',$data);
 		}
 		else
@@ -622,5 +742,55 @@ class Seminar_model extends CI_Model {
 		}
 	}
 	
-	
+	public function sendPushNotification($data, $ids)
+	{
+		// Insert real GCM API key from the Google APIs Console
+		// https://code.google.com/apis/console/        
+		$apiKey = API_KEY;
+
+		// Set POST request body
+		$post = array(
+						'registration_ids'  => $ids,
+						'data'              => $data,
+					 );
+
+		// Set CURL request headers 
+		$headers = array( 
+							'Authorization: key=' . $apiKey,
+							'Content-Type: application/json'
+						);
+
+		// Initialize curl handle       
+		$ch = curl_init();
+
+		// Set URL to GCM push endpoint     
+		curl_setopt($ch, CURLOPT_URL, 'https://gcm-http.googleapis.com/gcm/send');
+
+		// Set request method to POST       
+		curl_setopt($ch, CURLOPT_POST, true);
+
+		// Set custom request headers       
+		curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+
+		// Get the response back as string instead of printing it       
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+		// Set JSON post data
+		curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($post));
+
+		// Actually send the request    
+		$result = curl_exec($ch);
+
+		// Handle errors
+		if (curl_errno($ch))
+		{
+			echo 'GCM error: ' . curl_error($ch);
+		}
+
+		// Close curl handle
+		curl_close($ch);
+
+		// Debug GCM response       
+		//echo $result;
+	}
 }

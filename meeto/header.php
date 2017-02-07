@@ -77,16 +77,16 @@
 				<li>
 					<a href="inbox.php" class="header-nev" style="font-size:25px;color:#000;"><i class="fa fa-envelope"></i></a>
 				</li>
-                <li><a href="list_space.php" class="blue-button list-button"> List Your Space</a></li>
+                <li><a href="list_space.php" class="blue-button list-button"> List Your Seminar</a></li>
 					<?php
 				}
 				else
 				{
 					?>
-					 <li><a href="#" data-toggle="modal" data-target=".bs-example-modal-sm">Sign Up</a></li>
-                <li><a id="some-id" href="#logindiv" data-toggle="modal" data-target=".bc-example-modal-sm">Login</a></li>
+					 <li><a class="link-btn h-track main_signup">Sign Up</a><!-- data-toggle="modal" data-target=".bs-example-modal-sm"--></li>
+                <li><a id="some-id" href="#logindiv" class="link-btn h-track main_login">Login</a><!-- data-toggle="modal" data-target=".bc-example-modal-sm"--></li>
                 <li><a href="how-work.php">How It Works</a></li>
-                <li><a href="list_space.php" class="blue-button"> List Your Space</a></li>
+                <li><a href="list_space.php" class="blue-button"> List Your Seminar</a></li>
 					<?php
 				}
 				?>

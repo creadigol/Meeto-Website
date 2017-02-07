@@ -41,6 +41,13 @@ $(document).ready(function(e) {
 	});
 });
 </script>
+<?php
+$seluserdetail=mysql_query("select * from user_detail where uid='".$_SESSION['jpmeetou']['id']."'");
+$fetuserdetail=mysql_fetch_array($seluserdetail);
+$fetuser=mysql_fetch_array(mysql_query("select * from user where id='".$_SESSION['jpmeetou']['id']."'"));
+$_SESSION['jpmeetou']['profileimage']=$fetuserdetail['photo'];
+$_SESSION['jpmeetou']['fname']=$fetuser['fname'];
+?>
 <title>Meeto</title>
 </head>
 <body class="buy-service-home-page home-page locality-selection-page city-select-on" data-device-type='' onLoad="hideselect();">
@@ -141,12 +148,12 @@ $(document).ready(function(e) {
 					
                     <div class="dropdown-menu sing-menu">
                         <a class="dropdown-item f-left sing-menu" href="view-profile.php?id=<?php echo $_SESSION['jpmeetou']['id'];?>">Dashboard</a>
-                        <a class="dropdown-item f-left sing-menu" href="your-listing.php">Your Listings</a>
+                        <a class="dropdown-item f-left sing-menu" href="your-listing.php">My Listings</a>
                        <!-- <a class="dropdown-item f-left sing-menu" href="your-listing.php">Your Reservation</a>-->
-                        <a class="dropdown-item f-left sing-menu" href="booking.php">Your Bookings</a>
+                        <a class="dropdown-item f-left sing-menu" href="booking.php">My Bookings</a>
                         <a class="dropdown-item f-left sing-menu" href="my-wish-list.php">Wish List</a>
-                        <a class="dropdown-item f-left sing-menu" href="Editprofile.php">Edit Profile</a>
-                        <a class="dropdown-item f-left sing-menu" href="account.php">Account</a>
+                        <!--<a class="dropdown-item f-left sing-menu" href="Editprofile.php">Edit Profile</a>-->
+                        <a class="dropdown-item f-left sing-menu" href="Editprofile.php">Account</a>
                         <a class="dropdown-item f-left sing-menu" href="logout.php">Log Out</a>
                     </div>
 				</div>
@@ -170,11 +177,11 @@ $(document).ready(function(e) {
                         { 
                     ?>
                 <div class="header-item app-btn-elem">
-                    <a href="#" class="link-btn h-track" data-toggle="modal" data-target=".bs-example-modal-sm">Sign Up</a>
+                    <a class="link-btn h-track main_signup">Sign Up</a><!-- data-toggle="modal" data-target=".bs-example-modal-sm"-->
                 </div>
             	
             	<div class="header-item header-item-blog">
-                    <a id="some-id" class="link-btn h-track" href="#logindiv" data-toggle="modal" data-target=".bc-example-modal-sm">Login</a>
+                    <a id="some-id" class="link-btn h-track main_login" href="#logindiv">Login</a><!-- data-toggle="modal" data-target=".bc-example-modal-sm"-->
                 </div>
                 
             	<!--<div class="header-item dropdown shortlist-content header-item-shortlist">
@@ -191,8 +198,8 @@ $(document).ready(function(e) {
 				  <?php 
                      } 
                   ?>
-                <div class="header-item btn-display">
-                    <a href="list_space.php" class="blue-button">List Your Space</a>
+                <div class="header-item btn-display" style="margin-top:15px;">
+                    <a href="list_space.php" class="blue-button">List Your Seminar</a>
                 </div>
              
             </div>
@@ -208,7 +215,7 @@ $(document).ready(function(e) {
             </div>
         </header>
 				<div class="header-item roundbtn-display">
-                    <a href="list_space.php" class="blue-button">List Your Space</a>
+                    <a href="list_space.php" class="blue-button">List Your Seminar</a>
                 </div>
     </div>
 </body>

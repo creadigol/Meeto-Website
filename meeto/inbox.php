@@ -47,6 +47,9 @@ a.inbox_menu, a.inbox_menu:hover{
 							<div class="col-md-12 tabel-scroll">
 								<table width="95%" border="0" cellspacing="0" cellpadding="0" class="center-block li-padding" id=" ">
 								    <thead>
+										
+									     <h3 class="Required-head">Your Seminar Booking List</h3>
+										 
  										<tr class="border-n inbox table-head inbox-table">
 											<td width="5%"><strong>Sno</strong></td>
 											<td width="13%"><strong>Date</strong></td>
@@ -58,17 +61,17 @@ a.inbox_menu, a.inbox_menu:hover{
 										</tr>
 									</thead>
 									<tbody>
-									<?php
-									     $i=1;
-									    while($seminar=mysql_fetch_array($seminardetail))
-										{
-										 $bkseminars=mysql_query("select * from seminar_booking where seminar_id='".$seminar['id']."' ");
-										
-										  while($bookseminar=mysql_fetch_array($bkseminars))
-										  {
-											
-										  $date = date("d-m-Y",$bookseminar['created_date']/1000);
-											$bookseminaruser=mysql_fetch_array(mysql_query("select * from user where id='".$bookseminar['uid']."' "));  
+										<?php
+                                             $i=1;
+                                            while($seminar=mysql_fetch_array($seminardetail))
+                                            {
+                                             $bkseminars=mysql_query("select * from seminar_booking where seminar_id='".$seminar['id']."' order by id desc ");
+                                       
+                                              while($bookseminar=mysql_fetch_array($bkseminars))
+                                              {
+                                                
+                                              $date = date("d-m-Y",$bookseminar['created_date']/1000);
+                                                $bookseminaruser=mysql_fetch_array(mysql_query("select * from user where id='".$bookseminar['uid']."'"));  
 											  
 										?>
 										 <tr class="border-n inbox table-head">
@@ -83,22 +86,36 @@ a.inbox_menu, a.inbox_menu:hover{
 											if($bookseminar['approval_status']=='pending')
 											{
 											?>
-											<button type="button" value="accepted" class="green-button color" onclick="seminarstatus('<?php echo $bookseminar['id'];?>',this.value);">Accept</button>
-											<button type="button" value="declined" class="red-button color" onclick="seminarstatus('<?php echo $bookseminar['id'];?>',this.value);">Decline</button>
-											<?
+											<button type="button" value="accepted" class="green-button" onclick="seminarstatus('<?php echo $bookseminar['id'];?>',this.value);">Accept</button>
+											<button type="button" value="declined" class="red-button" onclick="seminarstatus('<?php echo $bookseminar['id'];?>',this.value);">Decline</button>
+											<?php
+											}
+											elseif($bookseminar['approval_status']=='accepted')
+											{
+											$status=$bookseminar['approval_status'];
+											?>
+                                            <p style="color:green;font-weight:bold;"> <? echo $status; ?> </p>                                            
+											<?php
 											}
 											else
 											{
-											$status=$bookseminar['approval_status'];
-											echo $status;
+												$status=$bookseminar['approval_status'];
+											?>
+                                            <p style="color:red;font-weight:bold;"> <? echo $status; ?> </p>                                            
+											<?php 
 											}
+											
+				
 											?>
 											</td>
 										 </tr>
 										<?php
 										$i++;
-										 } 
-										}?>
+										 }
+										
+										}
+									
+										?>
 									</tbody>
 								</table>
 							</div>

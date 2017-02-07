@@ -57,23 +57,29 @@ a.booking_menu, a.booking_menu:hover{
 							
 							<div class="col-md-12 reservation tabel-scroll">
 								<table width="100%">
+								   <?php
+								    $bkd=$_SESSION['jpmeetou']['id'];
+									$selbooking=mysql_query("select * from seminar_booking where uid=$bkd and seminar_id in (select id from seminar where status=1) order by created_date DESC");
+									$numrowss=mysql_num_rows($selbooking);
+									if($numrowss>=1)
+									{
+									?>
 									<thead>
 										<tr height="40px" class="table-padding table-head">
-											<td style="width:100px;"><strong><strong>Booked On</strong></strong></td>
+											<td style="width:100px;"><strong>Seminar Image<strong></strong></strong></td>
 											<td style="width:100px"><strong>Seminar Name</strong></td>
-											<td style="width:100px"><strong>Host</strong></td>
-											<td style="width:140px"><strong>Dates and Location</strong></td>
-											
+											<td style="width:80px"><strong>Host</strong></td>
+											<td style="width:160px"><strong>Dates and Location</strong></td>
 											<td style="width:50px"><strong>Host Approval</strong></td>
 											
 										</tr>
 									</thead>		
 									<?php			
-									$bkd=$_SESSION['jpmeetou']['id'];
-									$selbooking=mysql_query("select * from seminar_booking where uid=$bkd order by created_date DESC");
+									
 									while($fetbooking=mysql_fetch_array($selbooking))		
 										{							
-									$selseminar=mysql_query("select * from seminar where id=$fetbooking[seminar_id] and status=1");	
+									$selseminar=mysql_query("select * from seminar where id=$fetbooking[seminar_id] and status=1");
+									
 									$row=mysql_num_rows($selseminar);
 									$fetseminar=mysql_fetch_array($selseminar);
 										if($row>=1)
@@ -82,30 +88,59 @@ a.booking_menu, a.booking_menu:hover{
 									$fetsemiphoto=mysql_fetch_array($selsemiphoto);			
 									?>									
 									<tbody>									
-									<tr class="table-padding">										
-									<td><?php echo date('d-m-Y',$fetbooking['created_date']/1000); ?></td><td><img src="img/<?php echo $fetsemiphoto['image']; ?>" width="100" height="100" style="transform:rotate(<?php echo $fetsemiphoto['rotateval']; ?>deg)" alt="Big Office - Electra City Tower"class="table-img"><a href="infomation.php?id=<?php echo $fetseminar['id']; ?>"><br><?php echo $fetseminar['title']; ?></a></td>							
-									<td><?php echo $fetseminar['hostperson_name']; ?></td>											
-									<td class="text-left"><br><b>From Date :</b> <br>
-									<?php echo date("d-m-Y",$fetbooking['from_date']/1000); ?><br>
-									<b>To Date :</b> <br><?php  echo date("d-m-Y",$fetbooking['to_date']/1000); ?> <br>
-									<b>Address: </b><br><?php echo $fetseminar['address']; ?><br><label style="font-weight:bold;">Booking No :</label><?php echo $fetbooking['booking_no']; ?>
+									<tr class="table-padding">
+								 <?php											
+									if($fetsemiphoto['image']=="" || !file_exists("img/".$fetsemiphoto['image']))	
+									{?>	
+									<td>
+									   <img src="img/no-photo.jpg" class="img-responsive center-block" style="width:100px;height:100px;"/>
+									</td> 
+									<?
+									}						
+									else
+									{?>
+								     <td>
+								     <img src="img/<?php echo $fetsemiphoto['image']; ?>"  style="transform:rotate(<?php echo $fetsemiphoto['rotateval']; ?>deg);width:100px;height:100px;" alt="Big Office - Electra City Tower"></td>
+									<?
+									}?>
+									<td><b><a href="infomation.php?id=<?php echo $fetseminar['id']; ?>"><?php echo $fetseminar['title']; ?></a></b></td>	
+									
+									<td><b><?php echo $fetseminar['hostperson_name']; ?></b></td>											
+									<td class="text-left">
+									<b>Booked On : </b><?php echo date('d-m-Y',$fetbooking['created_date']/1000); ?><br>
+									<b>From Date : </b><?php echo date("d-m-Y",$fetbooking['from_date']/1000); ?><br>
+									<b>To Date : </b><?php  echo date("d-m-Y",$fetbooking['to_date']/1000); ?> <br>
+									<b>Address : </b><?php echo $fetseminar['address']; ?><br>
+									<b>Booking No : </b> <?php echo $fetbooking['booking_no']; ?><br>
 									</td>															
-									<td><p style=" color: #000; font-weight: bold; "><?php echo $fetbooking['approval_status']; ?> </p>
 									<?php if($fetbooking['approval_status']=='accepted')
 									 {
-									 
 									?>
+									<td><p style=" color:green; font-weight: bold; "><?php echo $fetbooking['approval_status']; ?> </p>
 									<div class="text-uppercase dawonlod-ticket" data-toggle="modal" data-target="#myModal" onclick="booked('<?php echo $fetbooking['id'];?>');" >Download Ticket
 									</div>
+									</td>	
 									 <?php
-									 }										
-									?>
-									</td>														
+									 }	
+									else
+									{?>
+										<td><p style=" color: #FF0000; font-weight: bold; "><?php echo $fetbooking['approval_status']; ?> </p>
+									<?}										
+									?>													
 									</tr>						
 									</tbody>				
 									<?php					
 									}	
-										}									
+									}
+									 }
+									else
+									{?>
+	                                   <div style="color:red;font-weight:bold;padding:10px;" align="center">
+			                             No Seminars Found ...!
+	                                  </div>
+									<?
+									}	
+									
 									?>
 								</table>
 								

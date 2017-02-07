@@ -158,7 +158,7 @@ include('config.php');
 									
                                             <label>タイトル</label>
 												<input class="form-control" type="text" name="addnewfac" required="" placeholder="
-新しい場所を追加します。" pattern="[a-zA-Z]+" style="width:50%;">
+新しい場所を追加します。" style="width:50%;">
 											</div>
 											
 											<div class="col-md-3 col-md-offset-5">

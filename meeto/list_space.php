@@ -73,7 +73,7 @@
 			
 			}
 		}
-		mysql_query("delete from seminar_photos where rotateval=0");
+		// mysql_query("delete from seminar_photos where rotateval=0");
 		
 		if($inseminar)	
 		{       
@@ -81,8 +81,7 @@
 			 {		
 		       if($insemiimg)	
 		     	{			
-		          echo "<script>alert('Your Seminar Succesfully Listed..');</script>";	
-                 				  
+		          echo "<script>alert('Your Seminar Succesfully Added.');</script>";					  
 		        }							
 			 }	      				 	
 		}
@@ -201,6 +200,13 @@ function facilityshow(id,aa)
     }
     });
 	 }
+	 
+   function validateEmail(email) {
+    var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+    if (!emailReg.test(email)) {
+        alert('Please Enter Valid Email ID');
+      } 
+}
 	</script>
 	 <style>
         .upperdivche,.img-remove
@@ -370,7 +376,7 @@ function facilityshow(id,aa)
 					?>
 					<li class="field_btn list-seminar-box">
 							<a href="#">
-								<img src="img/<?php echo $fetindustry['image']; ?>" class="list-img img-responsive">	
+								<img width="28" src="img/<?php echo $fetindustry['image']; ?>" class="list-img img-responsive">	
 								<span class="img-name">
 								<?php echo $fetindustry['name']; ?>
 								<input type="checkbox" class="semipurpose1 checkbox-button" name="industry[]" id="industry" value="<?php echo $fetindustry['id']; ?>">			
@@ -480,15 +486,15 @@ function facilityshow(id,aa)
 
 			
 
-			<div class="col-md-9 col-sm-9 col-xs-12">
-				<div class="row">
+			<div  class="col-md-9 col-sm-9 col-xs-12">
+				<div class="row" >
 					<div id="Pricing" class="tabcontent">
 						<div class="col-md-12 right_side">
 						<div class="clearfix"></div>
 							<div class="row price-border price-margin Location-row">
 								<div class="col-md-8 center">
 									 <h3>Basic</h3>
-									 <p>Set the default daily price renters will see for your listing. </p>
+									 <p>Set the contact detail for seminar listing</p>
 								</div>
 								<div class="col-md-9">
 									<div class="overview_title">									
@@ -498,7 +504,7 @@ function facilityshow(id,aa)
 									<div class="bottom-margin-20"> </div>
 									<div class="overview_title">									
 										<label class="overview-label">Contact Email</label>
-										<input name="contactemail" type="email" id="contactemail" placeholder="Contact Email" class="overview-input">
+										<input name="contactemail" type="email" id="contactemail" placeholder="Contact Email" onmouseout="validateEmail(this.value);" class="overview-input">
 									</div>
 									<div class="bottom-margin-20"> </div>
 									<div class="overview_title">									
@@ -522,7 +528,7 @@ function facilityshow(id,aa)
 
 									 <h3>Day</h3>
 
-									 <p>Set the default daily price renters will see for your listing. </p>
+									 <p>Set Day & Time detail for seminar listing</p>
 
 								</div>
 
@@ -590,7 +596,7 @@ function facilityshow(id,aa)
 
 									 <h3>Overview</h3>
 
-									 <p>Set the default daily price renters will see for your listing. </p>
+									 <p>Set Seminar detail for seminar listing. </p>
 
 								</div>
 
@@ -658,7 +664,7 @@ function facilityshow(id,aa)
 
 										 <h3>Add a photo or two! </h3>
 
-										 <span>Or three, or more! Renters prefer to go to places with photos that highlight the features of your space.</span>
+										 <span>Set Seminar photo's For seminar listing</span>
 												<span id="choosefileset"></span>
 												<input class="add-photo choose-img" id="jsimgid0" type="file" name="semiimage[]" onchange="setimg(0, this);addimgmaru()"/>
 												<input type="hidden" id="rotateniid0" value="360" name="txtrotatevalue[]">
@@ -819,7 +825,7 @@ function facilityshow(id,aa)
 													<select id="country" class="overview-input"  name="country" onchange="setstate(this.value);">
 														 <option value="">--Select Country--</option>
 														<?php
-															$selcountry=mysql_query("select * from countries");
+															$selcountry=mysql_query("select * from countries where id!=101");
 															while($fetcountry=mysql_fetch_array($selcountry))
 															{
 														?>
@@ -985,7 +991,7 @@ function facilityshow(id,aa)
 										  }
 
 										</script>
-											<script src="https://maps.googleapis.com/maps/api/js?libraries=places&callback=initAutocomplete"
+											<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAnWG6DJ5dpqNjBC1CZI8xdS3L769lQHuc&libraries=places&callback=initAutocomplete"
 											async defer></script>
 										</div>
 

@@ -154,6 +154,7 @@ function checkvalid()
 			  if(s.length>0)
 			    {*/
 				$('#secondscreen').show();$('#firstscreen').show();$('#firstscreenhead').show();
+				$('#Pricing').show();
 				$("#continue").hide();
 				$("#seatvalidation").hide();
 		      /*}

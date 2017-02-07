@@ -1,3 +1,6 @@
+body{
+	padding-right:0 !important;
+}
 .width100{
 	width:100%;
 }
@@ -7,6 +10,28 @@
 .noPadding{
 	padding:0;
 }
+.modal{
+	/*background:rgba(0,0,0,0.6);*/
+}
+.modal-open, .modal-open .modal{
+	padding-right:0 !important;
+}
+.modal-dialog{
+	position: absolute;
+    top: 50%;
+    left: 50%;
+	transform:translate(-50%,-50%);
+	-webkit-transform:translate(-50%,-50%);
+	-moz-transform:translate(-50%,-50%);
+	-ms-transform:translate(-50%,-50%);
+	-o-transform:translate(-50%,-50%);
+	z-index:3;
+}
+.modal-backdrop{
+	opacity:0.6;
+	z-index:2;
+}
+
 /*===========================Header Start========================*/
 .header-item .blue-button{
 	padding: 10px 25px;
@@ -21,7 +46,15 @@ header .header-item.shortlist-content .shortlist{
 
 /*============================Login Start=====================*/
 .modal.in .modal-dialog{
-	margin:10% auto;
+	/*margin:10% auto;*/
+	position:absolute;
+	top:50%;
+	left:50%;
+	transform:translate(-50%,-50%);
+	-webkit-transform:translate(-50%,-50%);
+	-moz-transform:translate(-50%,-50%);
+	-ms-transform:translate(-50%,-50%);
+	-o-transform:translate(-50%,-50%);
 }
 /*============================Login End=====================*/
 

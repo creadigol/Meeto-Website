@@ -1,10 +1,8 @@
-<?php 
-require_once('db.php');  
-
-?>
 <!DOCTYPE html>
 <html lang="en">  
-<?php	require_once('head1.php'); ?>
+<?php	
+require_once('db.php'); 
+require_once('head1.php'); ?>
 	
 <style>
 body{color:#5b5b5b;
@@ -38,6 +36,7 @@ a.dashboard_menu, a.dashboard_menu:hover{
     <!-- NAVBAR================================================== -->
 <body>   
 <?php require_once('header1.php');   ?>
+<?php	require_once('loginsignup.php'); ?>
 <!-- pop up start -->
 	<div class="container-flude full-container">	
 	  <div class="container left_margin" style="width:80%;">		

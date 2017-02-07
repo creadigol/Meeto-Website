@@ -56,10 +56,16 @@ $rowusercompany=mysql_fetch_array(mysql_query("select * from user_company where 
 				<ul class="nav edit">	
 				<li class="activet">	
 					<a href="#">Edit Profile</a>
-				</li>						
+				</li>	
+			<?php 
+           if($_SESSION['jpmeetou']['type']==1)
+            {?>   
 				<li>						
 					<a href="photos.php" class="">Photos</a>	
-				</li>			
+				</li>
+			<?
+			}
+		  ?>			
 				<li>	
 					<a href="Verification.php" class="">Trust and Verification</a>				
 				</li>			
@@ -76,7 +82,8 @@ $rowusercompany=mysql_fetch_array(mysql_query("select * from user_company where 
 				<div class="top-margin-20"></div>			
 				<div class="row hedding-row">
 				<div class="col-md-12 Required-head">	
-				   <h5>Photos</h5>		
+				   <h5>Photos</h5>	  
+					
 				   </div>					
 						<div class="col-md-8 photo-right">
 							<div class="top-margin-20"></div>
@@ -94,7 +101,7 @@ $rowusercompany=mysql_fetch_array(mysql_query("select * from user_company where 
 							<div class="clearfix"></div>
 							<div class="top-margin-10"></div>
 							
-							<button type="submit" name="subbtn" class="blue-button border-n">Save Settings</button>
+							<button type="submit" name="subbtn" class="blue-button border-n">Update Photo</button>
 							
 							<div class="top-margin-10">&nbsp;</div>
 							</center>

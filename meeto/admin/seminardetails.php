@@ -157,8 +157,51 @@ function changesempic(input)
 		}
 		});
 	}
+	
+	function attendees(sid){
+		$.ajax({
+		url: "miss.php?kon=attendees&sid="+sid, 
+		type: "POST",
+		success: function(data)
+		{
+			$("#attendees").html(data);
+		}
+		});
+	}
+	
+	function attendeesstatus(status,id,sid){
+		$.ajax({
+		url: "miss.php?kon=attendeesstatus&status="+status+"&id="+id, 
+		type: "POST",
+		success: function(data)
+		{
+			attendees(sid);
+		}
+		});
+	}
+	function industrytype(sid){
+		$.ajax({
+		url: "miss.php?kon=industrytype&sid="+sid, 
+		type: "POST",
+		success: function(data)
+		{
+			$("#industrytype").html(data);
+		}
+		});
+	}
+	function industrystatus(status,id,sid){
+		$.ajax({
+		url: "miss.php?kon=industrystatus&status="+status+"&id="+id, 
+		type: "POST",
+		success: function(data)
+		{
+			industrytype(sid);
+		}
+		});
+	}
+	
 </script>
-<body onload="seminardetails('<? echo $_REQUEST['sid']; ?>');seminarfacility('<? echo $_REQUEST['sid']; ?>');">
+<body onload="seminardetails('<? echo $_REQUEST['sid']; ?>');seminarfacility('<? echo $_REQUEST['sid']; ?>');attendees('<? echo $_REQUEST['sid']; ?>');industrytype('<? echo $_REQUEST['sid']; ?>');">
     <div id="wrapper">
         <? include('navbar.php'); ?>
         <div id="page-wrapper" >
@@ -172,12 +215,14 @@ function changesempic(input)
                     </div>
                 </div> 
                  <!-- /. ROW  -->
-				 <div class="seminardetails" id="seminardetails" >
-				
+			    <div class="seminardetails" id="seminardetails" >
                 </div>
-
-                <div class="seminarfacility" id="seminarfacility" >
-				
+                
+				<div class="attendees" id="attendees">
+                </div>
+				<div class="industrytype" id="industrytype" >
+                </div>
+				<div class="seminarfacility" id="seminarfacility" >
                 </div>
 			<?php include('footer.php');?>
 			</div>

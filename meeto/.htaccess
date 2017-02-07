@@ -1,14 +1,3 @@
-<IfModule mod_rewrite.c>
-  Options +FollowSymLinks
-  RewriteEngine On
-  RewriteBase /
- 
-# Remove .php extension from url
-  RewriteCond %{REQUEST_FILENAME} !-f
-  RewriteRule ^([^\.]+)$ $1.php [NC,L] 
- 
-# Remove .html extension from url
-  RewriteCond %{REQUEST_FILENAME} !-f
-  RewriteRule ^([^\.]+)$ $1.html [NC,L] 
- 
- </IfModule>
+RewriteEngine On
+RewriteCond %{HTTP_HOST} ^meeto.jp$
+RewriteRule (.*) http://www.meeto.jp$1 [R=301]

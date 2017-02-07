@@ -141,7 +141,7 @@ include('config.php');
                     <div class="col-md-12 page-header">
 						<div  class="col-md-6" align="left" style="color:black;">
                         <h3>
-                            Add New Purpose
+                            Add New Attendees
                         </h3>
 						</div>
 						<div  class="col-md-6 " align="right" >
@@ -159,7 +159,7 @@ include('config.php');
 											<div class="form-group col-md-9 col-md-offset-4">
 									
                                             <label>Title</label>
-												<input class="form-control" type="text" name="addnewfac" required="" placeholder="Add New Purpose" pattern="[a-zA-Z]+" style="width:50%;">
+												<input class="form-control" type="text" name="addnewfac" required="" placeholder="Add New Purpose"  style="width:50%;">
 											</div>
 											
 											<div class="col-md-3 col-md-offset-5">
@@ -187,12 +187,12 @@ include('config.php');
                     <div class="col-md-12 page-header">
 						<div  class="col-md-6" align="left">
                         <h1>
-                            Purpose
+                            Attendees
                         </h1>
 						</div>
 						<div  class="col-md-6 " align="right" >
 						<div class="col-md-5 col-md-offset-7 btn btn-primary" onclick="facilityshow();">
-							 Add New Purpose <i class="fa fa-plus" style="font-size:10px;"></i>
+							 Add New Attendees <i class="fa fa-plus" style="font-size:10px;"></i>
 						</div>
 						</div>
                     </div>
@@ -204,7 +204,7 @@ include('config.php');
                     <!-- Advanced Tables -->
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                             Purpose List
+                             Attendees List
                         </div>
                         <div class="panel-body">
                             <div class="table-responsive" id="admin_purpose">

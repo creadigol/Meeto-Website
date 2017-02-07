@@ -64,21 +64,23 @@ a.booking_menu, a.booking_menu:hover{
 							</div>-->
 							<div class="col-md-12 reservation tabel-scroll">
 								<table width="100%">
+								<?php
+								    $bkd=$_SESSION['jpmeetou']['id'];
+									$selbooking=mysql_query("select * from seminar_booking where uid=$bkd and seminar_id in (select id from seminar where status=1) order by created_date DESC");
+									$numrowss=mysql_num_rows($selbooking);
+									if($numrowss>=1)
+									{
+									?>
 									<thead>
-										<tr height="40px" class="table-padding table-head">
-											<td style="width:100px;"><strong><strong>
-で予約</strong></strong></td>
-											<td style="width:100px"><strong>
-セミナー名</strong></td>
-											<td style="width:100px"><strong>
-ホスト</strong></td>
-											<td style="width:140px"><strong>
-日付と場所</strong></td>
+									<tr height="40px" class="table-padding table-head">
+											<td style="width:100px;"><strong>セミナー画像<strong></strong></strong></td>
+											<td style="width:100px"><strong>セミナー名</strong></td>
+											<td style="width:80px"><strong>ホスト</strong></td>
+											<td style="width:160px"><strong>日付と場所</strong></td>
+											<td style="width:50px"><strong>ホストの承認</strong></td>
 											
-											<td style="width:50px"><strong>
-ホストの承認</strong></td>
-											
-										</tr>
+									</tr>
+										
 									</thead>		
 									<?php			
 										$bkd=$_SESSION['jpmeetou']['id'];
@@ -95,33 +97,60 @@ a.booking_menu, a.booking_menu:hover{
 									$fetsemiphoto=mysql_fetch_array($selsemiphoto);			
 									?>									
 									<tbody>									
-									<tr class="table-padding">										
-									<td><?php echo $date=date('d-m-Y',$fetbooking['created_date']/1000); ?></td>					<td><img src="../img/<?php echo $fetsemiphoto['image']; ?>" width="100" style="transform:rotate(<?php echo $fetsemiphoto['rotateval']; ?>deg)" height="100" alt="Big Office - Electra City Tower"class="table-img"><a href="infomation.php?id=<?php echo $fetseminar['id']; ?>"><br><?php $marutra = explode('"',translate(str_replace(" ","+",$fetseminar['title']))); echo $marutra[1];  ?></a></td>							
-									<td><?php $marutra = explode('"',translate(str_replace(" ","+",$fetseminar['hostperson_name']))); echo $marutra[1]; ?></td>											
-									<td class="text-left"><br> <b>日から :</b> <br>
-									<?php echo date("d-m-Y",$fetbooking['from_date']/1000); ?> <br>
-									<b>
-現在まで:</b> <br><?php echo date("d-m-Y",$fetbooking['to_date']/1000); ?> <br>
-									<b>
-住所: </b><br><?php $marutra = explode('"',translate(str_replace(" ","+",$fetseminar['address']))); echo $marutra[1];  ?><br><label style="font-weight:bold;">
-予約なし :</label><?php $marutra = explode('"',translate(str_replace(" ","+",$fetbooking['booking_no']))); echo $marutra[1];  ?>
+									<tr class="table-padding">
+									<?php											
+									if($fetsemiphoto['image']=="" || !file_exists("../img/".$fetsemiphoto['image']))	
+									{?>	
+									<td>
+									   <img src="../img/no-photo.jpg" class="img-responsive center-block" style="width:100px;height:100px;"/>
+									</td> 
+									<?
+									}						
+									else
+									{?>
+								     <td>
+								     <img src="../img/<?php echo $fetsemiphoto['image']; ?>"  style="transform:rotate(<?php echo $fetsemiphoto['rotateval']; ?>deg);width:100px;height:100px;" alt="Big Office - Electra City Tower"></td>
+									<?
+									}?>
+									 <td><b><a href="infomation.php?id=<?php echo $fetseminar['id']; ?>"><?php $marutra = explode('"',translate(str_replace(" ","+",$fetseminar['title']))); echo $marutra[1];  ?></a></b></td>
+									 
+									<td><?php $marutra = explode('"',translate(str_replace(" ","+",$fetseminar['hostperson_name']))); echo $marutra[1]; ?></td>										
+									<td class="text-left">
+									<b>予約された : </b><?php echo $date=date('d-m-Y',$fetbooking['created_date']/1000); ?><br>
+									<b>日から : </b><?php echo date("d-m-Y",$fetbooking['from_date']/1000); ?> <br>
+									<b>現在まで : </b> <?php echo date("d-m-Y",$fetbooking['to_date']/1000); ?> <br>
+									<b>住所 : </b><?php $marutra = explode('"',translate(str_replace(" ","+",$fetseminar['address']))); echo $marutra[1]; ?><br>
+									<b>予約なし : </b> <?php echo $fetbooking['booking_no']; ?><br>
 									</td>																
-									<td><p style=" color: #000; font-weight: bold; "><?php $marutra = explode('"',translate(str_replace(" ","+",$fetbooking['approval_status']))); echo $marutra[1];  ?> </p>
 									<?php if($fetbooking['approval_status']=='accepted')
 									{
-									 
 									?>
+									<td><p style=" color: green; font-weight: bold; "><?php $marutra = explode('"',translate(str_replace(" ","+",$fetbooking['approval_status']))); echo $marutra[1];  ?></p>
 									<div class="text-uppercase dawonlod-ticket" data-toggle="modal" data-target="#myModal" onclick="booked('<?php echo $fetbooking['id'];?>');" >ダウンロードチケット
 									</div>
+									</td>
 									<?php
-									}										
-									?>
-									</td>														
+									}
+									else
+									{?>
+									 <td><p style=" color: #FF0000; font-weight: bold; "><?php $marutra = explode('"',translate(str_replace(" ","+",$fetbooking['approval_status']))); echo $marutra[1];  ?></p></td>
+									<?
+									}
+									?>														
 									</tr>						
 									</tbody>				
 									<?php					
 									}		
-										}									
+									}
+							   }
+									else
+									{?>
+	                                   <div style="color:red;font-weight:bold;padding:10px;" align="center">
+			                            セミナーが見つかりません...！
+	                                  </div>
+									<?
+									}	
+																			
 									?>
 								</table>
 								

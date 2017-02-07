@@ -32,7 +32,7 @@ $hostuser=mysql_fetch_array(mysql_query("select * from user where id='".$fetsemi
 			$subject = "Seminar Ticket Booked";
 			$headers = 'MIME-Version: 1.0' . "\r\n";
 			$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-			$headers .= 'From: <creadigol.in@gmail.com>' . "\r\n";
+			$headers .= 'From:meeto.japan@gmail.com';
 			
 			$message  = '<html>';	
 			$message .= '<body>';
@@ -142,7 +142,7 @@ $(window).scroll(function () {
                             <div class="col-md-12">
                                 <div class="col-md-6">
                                     <div class="row">
-                                        <img src="../img/<?php echo $fetsemiphoto['image']; ?>" class="img-responsive slider-width center-block booking-icon">
+                                        <img src="../img/<?php echo $fetsemiphoto['image']; ?>" style="transform:rotate(<?php echo $fetsemiphoto['rotateval']; ?>deg)" class="img-responsive slider-width center-block booking-icon">
                                     </div>
                                 </div>	
                                 <div class="col-md-6 review">

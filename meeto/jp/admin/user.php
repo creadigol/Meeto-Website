@@ -151,7 +151,7 @@ if($_REQUEST['deluser']=="dd")
                                     </thead>
                                     <tbody>
 									<?
-										$query=mysql_query("select * from user ");
+										$query=mysql_query("select * from user order by id desc");
 										while($data=mysql_fetch_array($query)){
 											$detailquery = mysql_query("select * from user_detail where uid='".$data['id']."' ");
 											$detaildata=mysql_fetch_array($detailquery);

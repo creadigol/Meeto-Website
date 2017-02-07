@@ -50,7 +50,7 @@
 				<a class="<? if($pos = strpos($_SERVER['REQUEST_URI'], "language.php")) echo "active-menu" ?>" href="language.php"><i class="fa fa-tags"></i> Language </a>
 			</li>
 			<li>
-				<a class="<? if($pos = strpos($_SERVER['REQUEST_URI'], "purpose.php")) echo "active-menu" ?>" href="purpose.php"><i class="fa fa-tags"></i> Purpose </a>
+				<a class="<? if($pos = strpos($_SERVER['REQUEST_URI'], "purpose.php")) echo "active-menu" ?>" href="purpose.php"><i class="fa fa-tags"></i> Attendees </a>
 			</li>
 			<li>
 				<a class="<? if($pos = strpos($_SERVER['REQUEST_URI'], "review.php")) echo "active-menu" ?>" href="review.php"><i class="fa fa-tags"></i> Reviews </a>

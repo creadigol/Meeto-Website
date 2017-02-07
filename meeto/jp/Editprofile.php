@@ -2,12 +2,12 @@
 require_once('db.php'); 
 require_once('condition.php');  
 
-  if($_POST)
+   if($_POST)
  {	
-  $fname = $_POST['user_fname'];	
-  $lname = $_POST['user_lname'];	
-  $gender = $_POST['gender'];		
-  $email = $_POST['email'];	
+  $fname = mysql_real_escape_string($_POST['user_fname']);	
+  $lname = mysql_real_escape_string($_POST['user_lname']);	
+  $gender = mysql_real_escape_string($_POST['gender']);		
+  $email = mysql_real_escape_string($_POST['email']);	
   $dob=$_REQUEST['sel_date']."-".$_REQUEST['sel_month']."-".$_REQUEST['sel_year'];
   
   $mobile = $_POST['phone_no'];	
@@ -20,62 +20,82 @@ require_once('condition.php');
   $created_at = round(microtime(true) * 1000);	
   if(isset($_POST['email']) && isset($_POST['email']) != '' && isset($_POST['user_fname']) && isset($_POST['user_fname']) != '')	
   { 
-    /*
-	$checkemail = mysql_query("select * from registration where email = '".$email."'");			
+    $uppf=$_SESSION['jpmeetou']['id'];
+	$checkemail = mysql_query("select * from user where email = '".$email."' and id!='".$uppf."'");	
 	if(mysql_num_rows($checkemail) > 0)	
 	  {				 
-		echo "<script>alert('Email Id Already Exist..!');</script>";	
-	  }		
-    else		
-	  {			
-			if($_REQUEST['country']=="")
-				$countryid="";
-			if($_REQUEST['state']=="")
-				$stateid="";
-			if($_REQUEST['city']=="")
-				$cityid="";
-			*/
-		$uidd=$_SESSION['jpmeetou']['id'];
-		$updateprofile = mysql_query("update user set fname='".$fname."',lname='".$lname."',email='".$email."', modified_date='".$created_at."' where id = '".$uidd."'"); 
-		$seluserdetailid=mysql_query("select * from user_detail where uid='".$_SESSION['jpmeetou']['id']."'");
+		echo "<script>alert('メールIdはすでに存在しています..！');</script>";	
+	  }	
+    else
+    {
+	   
+		$updateprofile = mysql_query("update user set fname='".$fname."',lname='".$lname."',email='".$email."', modified_date='".$created_at."' where id = '".$uppf."'"); 
+		$seluserdetailid=mysql_query("select * from user_detail where uid='".$uppf."'");
 		if(mysql_num_rows($seluserdetailid) > 0)
 		{
-			$updateuserdetail=mysql_query("update user_detail set gender='".$gender."',phoneno='".$mobile."',dob='".$dob."',address='".$address."',yourself='".$yourself."',countryid='".$_REQUEST['country']."',stateid='".$_REQUEST['state']."',cityid='".$_REQUEST['city']."' where uid = '".$uidd."' ");
+			$updateuserdetail=mysql_query("update user_detail set gender='".$gender."',phoneno='".$mobile."',dob='".$dob."',address='".$address."',yourself='".$yourself."',countryid='".$_REQUEST['country']."',stateid='".$_REQUEST['state']."',cityid='".$_REQUEST['city']."' where uid = '".$uppf."' ");
 		}
 		else
 		{
-			$insertuserdetail=mysql_query("insert into user_detail (uid,gender,dob,phoneno,countryid,stateid,cityid,address,yourself,photo) values ('".$uidd."','".$gender."','".$dob."','".$mobile."','".$_REQUEST['country']."','".$_REQUEST['state']."','".$_REQUEST['city']."','".$address."','".$yourself."','')");
+			$insertuserdetail=mysql_query("insert into user_detail (uid,gender,dob,phoneno,countryid,stateid,cityid,address,yourself,photo) values ('".$uppf."','".$gender."','".$dob."','".$mobile."','".$_REQUEST['country']."','".$_REQUEST['state']."','".$_REQUEST['city']."','".$address."','".$yourself."','')");
 			
 		}
-		$seluserdetailid=mysql_query("select * from user_company where uid='".$_SESSION['jpmeetou']['id']."'");
+		$seluserdetailid=mysql_query("select * from user_company where uid=$uppf");
 		if(mysql_num_rows($seluserdetailid) > 0)
 		{
-			$updateusercompany=mysql_query("update user_company set name='".$companyname."',description='".$companydesc."',organization='".$_REQUEST['Organization']."',faxno='".$faxno."',url='".$url."',timezoneid='".$_REQUEST['timezone']."' where uid = '".$uidd."'");
+			$updateusercompany=mysql_query("update user_company set name='".$companyname."',description='".$companydesc."',organization='".$_REQUEST['Organization']."',faxno='".$faxno."',url='".$url."',timezoneid='".$_REQUEST['timezone']."' where uid = '".$uppf."'");
 		}
 		else
 		{
 			if($_REQUEST['timezone']=="")
 				$timezone="";
-			
-			$insertuserdetail=mysql_query("insert into user_company (uid,name,description,organization,faxno,url,timezoneid) values ('".$uidd."','".$companyname."','".$companydesc."','".$_REQUEST['Organization']."','".$faxno."','".$url."','".$timezone."')");
+			$insertuserdetail=mysql_query("insert into user_company (uid,name,description,organization,faxno,url,timezoneid) values ('".$uppf."','".$companyname."','".$companydesc."','".$_REQUEST['Organization']."','".$faxno."','".$url."','".$timezone."')");
 			
 		}
-		$dellanguage=mysql_query("delete from user_language where uid=$uidd");
+		$dellanguage=mysql_query("delete from user_language where uid=$uppf");
 		$count=count($_REQUEST['languages']);
 		for($i=0;$i<$count;$i++)
 		{
 			$lid=$_REQUEST['languages'][$i];
-			$inlang=mysql_query("insert into user_language (id,uid,lid,created_date,modified_date) values(0,$uidd,$lid,'$created_at','$created_at')");
+			$inlang=mysql_query("insert into user_language (id,uid,lid,created_date,modified_date) values(0,$uppf,$lid,'$created_at','$created_at')");
 		}
-		if($updateprofile==1)		
-		{				
-			echo "<script>alert('正常にプロファイルを更新..！');</script>";	
-		}	         
-			    
-	 
-	}	 
+		$checkemail = mysql_query("select * from user where email ='".$email."' and  id='".$uppf."'");
+		if(mysql_num_rows($checkemail) > 0)	
+	     {
+			 
+		 }
+		 else
+		 {
+			 $updateprofile = mysql_query("update user set  email_verify='0' where id = '".$uppf."'"); 
+            $key= md5($email);
+	        $url = "http://www.meeto.jp/Verification.php?uid=".$uppf."&key=".$key;
+			//echo "<script>alert('".$url."');</script>"; 
+			$subject = "Email Verification";
+			$to = $email;
+			$headers = 'MIME-Version: 1.0' . "\r\n";
+			$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+			$headers .= 'From:meeto.japan@gmail.com';
+			$message  = '<html>';	
+			$message .= '<body>';
+			$message .= '<h2>To Verification your account please click on Activate buttton</h2>';
+			$message .= '<table>';
+			$message .= '<tr>';
+			$message .= '<td align="center" width="300" height="40" bgcolor="#000091" style="border-radius:5px;color:#ffffff;display:block"><a href='.trim($url).' style="color:#ffffff;font-size:16px;font-weight:bold;font-family:Helvetica,Arial,sans-serif;text-decoration:none;line-height:40px;width:100%;display:inline-block">Verify Your Account</a></td>';
+			$message .= '</tr>';
+			$message .= '</table>';
+			$message .= '</div>';
+			$message .= '</body>';
+			$message .= '</html>';
+			$sentmail = mail($to,$subject,$message,$headers);
+			
+				
+		}
+     echo "<script>alert('プロフィールを正常に更新..！');</script>";		
+    }	   
+  		   	 	  
+  }	 
 }
-
+$usid=$_SESSION['jpmeetou']['id'];
 $row = mysql_fetch_array(mysql_query("select * from user where id = '".$_SESSION['jpmeetou']['id']."'")); 
 $rowuserdetail= mysql_fetch_array(mysql_query("select * from user_detail where uid = '".$_SESSION['jpmeetou']['id']."'")); 
 $rowusercompany=mysql_fetch_array(mysql_query("select * from user_company where uid = '".$_SESSION['jpmeetou']['id']."'")); 
@@ -101,7 +121,7 @@ a.Editprofile_menu, a.Editprofile_menu:hover{
 	<!-- NAVBAR================================================== -->
 	<body>   
 	<?php	require_once('header1.php');   ?>
-	<?php	require_once('usermenu.php');   ?>
+	<?php	require_once('usermenu.php');  ?>
 	<!-- pop up start -->
 	<div class="container-flude container-margin background-container">	
 	  <div class="container">		
@@ -113,11 +133,16 @@ a.Editprofile_menu, a.Editprofile_menu:hover{
 				<ul class="nav edit">	
 				<li class="activet">	
 					<a href="#">プロファイル編集</a>
-				</li>						
+				</li>
+		<?php 
+           if($_SESSION['jpmeetou']['type']==1)
+            {?>   
 				<li>						
-					<a href="photos.php" class="">
-写真</a>	
-				</li>			
+					<a href="photos.php" class="">写真</a>	
+				</li>
+			<?
+			}
+		  ?>						
 				<li>	
 					<a href="Verification.php" class="">
 信頼と検証</a>				
@@ -366,9 +391,9 @@ a.Editprofile_menu, a.Editprofile_menu:hover{
 									<select id="Organization" class="input-name" name="Organization">
 										 <option value="">
 - 組織を選択します -</option>
-										 <option value="営利団体" <?php if($rowusercompany['organization']=='Profit Organization') echo "selected";?>>
+										 <option value="営利団体" <?php if($rowusercompany['organization']=='Profit Organization' || $rowusercompany['organization']=='組織を選択します') echo "selected";?>>
 営利団体</option>
-										 <option value="非営利団体" <?php if($rowusercompany['organization']=='Non-Profit Organization') echo "selected";?>>
+										 <option value="非営利団体" <?php if($rowusercompany['organization']=='Non-Profit Organization' || $rowusercompany['organization']=='営利団体') echo "selected";?>>
 非営利団体</option>
 									</select>
 								</li>
@@ -385,9 +410,13 @@ URL：</label>
 									<label class="users">
 タイムゾーン：</label>
 									<select class="input-name time-zone" id="" name="timezone">
-										<option value="">
-選択します</option>
 										<?php
+									$seltimedfl=mysql_fetch_array(mysql_query("select * from timezone where id='1'")); 
+									$marutra = explode('"',translate(str_replace(" ","+",$seltimedfl['name'])));
+									?>
+									<option selected value="<?echo $seltimedfl['id']; ?>"><?echo $marutra[1]; ?></option>
+										<?php
+										/*
 										$seltime=mysql_query("select * from timezone");
 										while($fettime=mysql_fetch_array($seltime))
 										{
@@ -396,7 +425,7 @@ URL：</label>
 											<option <?php if($fettime['id']==$rowusercompany['timezoneid'])echo "selected"; ?> value="<?php echo $fettime['id']; ?>"><?php echo $marutra[1]; ?></option>
 										<?php
 										}
-										?>
+										*/?>
 									</select>
 
 									<span class="tips-text">
@@ -408,17 +437,30 @@ URL：</label>
 									<label class="users">言語</label>
 									<span class="no-numbr">
 										<ul class="nav">
-											<li>なし </li>
-											<li><a data-toggle="modal" data-target="#myModal" class="add-more multiselect-add-more"><i class="fa fa-plus" aria-hidden="true"></i> さらに追加</a></li>
-											<li><span style="width:100%" class="tips-text">
-あなたが話す言語</span></li>
+										 <?php
+											$seluserlang=mysql_query("select * from user_language where uid=$usid");
+											$arr=array();
+											while($fetuserlang=mysql_fetch_array($seluserlang))
+											{
+												array_push($arr,$fetuserlang['lid']);
+											}
+											
+											$sellang=mysql_query("select * from language where status='1'");
+											while($fetlang=mysql_fetch_array($sellang))
+											{
+											?>
+											<li>
+												<input <?php if(in_array($fetlang['id'],$arr))echo "checked"; ?> type="checkbox" name="languages[]" value="<?php echo $fetlang['id']; ?>" alt="<?php echo $fetlang['name']; ?>">
+												<label><?php echo $fetlang['name']; ?></label>
+											</li>
+											<?php	
+											}
+										   ?>
+											<li><span style="width:100%" class="tips-text">あなたが話す言語</span></li>
 										</ul>
 									</span>
 								</li>
 								<div class="clearfix"></div>
-								<?php
-								//echo "update user_company set name='$companyname',description='$companydesc',timezoneid=$_REQUEST[timezone] where uid = '".$_SESSION['id']."' ";
-								?>
 								<li class="li-input">
 									<div class="col-md-8 col-md-offset-4 col-sm-8 col-sm-offset-4 col-xs-8 col-xs-offset-4">
 									<button type="submit" name="save" class="blue-button save border-n">セーブ</button>
@@ -427,55 +469,6 @@ URL：</label>
 								
 									<div class="top-margin-20">&nbsp;</div>
 							</ul>
-						<div class="modal fade" id="myModal" role="dialog">
-							<div class="modal-dialog">
-							  <!-- Modal content-->
-							  <div class="modal-content modal-c">
-								<div class="modal-header model-head">
-								  <button type="button" class="close" data-dismiss="modal">&times;</button>
-								  <h4 class="modal-title">
-使用可能言語</h4>
-								</div>
-								<div class="modal-body">
-								  <p>
-あなたはどの言語を話せますか？異なる言語を話すあなたの人々に来ることができます。あなたの助けを借りて、彼らはあなたに話すことをどの言語を知っていました</p>
-								  <div class="row">
-									<div class="col-md-6">
-										<ul class="nav label-font">
-											<?php
-											$seluserlang=mysql_query("select * from user_language where uid=$_SESSION[jpmeetou][id]");
-											$arr=array();
-											while($fetuserlang=mysql_fetch_array($seluserlang))
-											{
-												array_push($arr,$fetuserlang['lid']);
-											}
-											
-											$sellang=mysql_query("select * from language");
-											while($fetlang=mysql_fetch_array($sellang))
-											{
-												$marutra = explode('"',translate(str_replace(" ","+",$fetlang['name']))); 
-											?>
-											<li>
-												<input <?php if(in_array($fetlang['id'],$arr))echo "checked"; ?> type="checkbox" name="languages[]" value="<?php echo $fetlang['id']; ?>" alt="<?php echo $marutra[1]; ?>">
-												<label><?php echo $marutra[1]; ?></label>
-											</li>
-											<?php	
-											}
-											?>
-										</ul>	
-									</div>
-								  </div>
-								</div>
-								<div class="modal-footer model-head">
-								  <button type="button" class="blue-button f-left red-button border-n" data-dismiss="modal">
-閉じる</button>
-								  <button type="button" class="blue-button f-right green-button border-n" data-dismiss="modal">セーブ</button>
-								</div>
-							  </div>
-							  
-							</div>
-					    </div>
-						
 					</div>
 				</div>
 			</form>				

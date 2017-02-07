@@ -1,8 +1,65 @@
-<?php 
+<?php
 session_start();
+
+if($_REQUEST['for']=='login')
+{
+	?>
+	<script>
+	$(document).ready(function(e) {
+		$("#logindiv").css("display","block");
+	});
+	</script>
+	<?
+}
 ?>
-<div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
-				  <div class="modal-dialog modal-sm" role="document">
+<script>
+	$(document).ready(function(e) {
+		$(".main_signup").click(function() {
+			$(".bs-example-modal-sm").css("display","block");
+		});
+		
+		$(".main_login").click(function() {
+			$(".bc-example-modal-sm").css("display","block");
+		});
+		
+		$(".main_signup_op, .main_signup_login_btn").click(function() {
+			$(".bs-example-modal-sm").css("display","none");
+		});
+		
+		$(".main_signup_op").click(function() {
+			$(".ac-example-modal-sm").css("display","block");
+		});
+		
+		$(".main_signup_login_btn").click(function() {
+			$(".bc-example-modal-sm").css("display","block");
+		});
+		
+		$(".signup_page_btn").click(function() {
+			$(".bc-example-modal-sm").css("display","none");
+		});
+		
+		$(".login_page_btn").click(function() {
+			$(".ac-example-modal-sm").css("display","none");
+			$(".bc-example-modal-sm").css("display","block");
+		});
+		
+		$(".signup_page_btn").click(function() {
+			$(".ac-example-modal-sm").css("display","block");
+			$(".bc-example-modal-sm").css("display","none");
+		});
+		
+		$(".modal-backdrop").click(function() {
+			$(".modal").css("display","none");
+			
+		});
+		
+	});
+</script>
+
+
+<div class="modal bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+	<div class="modal-backdrop"></div>
+				  <div class="modal-dialog modal-sm" role="document" id="firstdiv">
 					<div class="modal-content">						  
 								<div class="social-buttons">
 								<?php
@@ -10,30 +67,35 @@ session_start();
 									$fb = new Facebook\Facebook([
 									  'app_id' => '236568240079026',
 									  'app_secret' => '5b21076154292bdc6b6b05428e0ff3ef',
-									  'default_graph_version' => 'v2.5',
-									  'persistent_data_handler' => 'session'
+									  'default_graph_version' => 'v2.8'
 									]);
 
 									$helper = $fb->getRedirectLoginHelper();
 									$permissions = ['email', 'user_likes']; 
-									$loginUrl = $helper->getLoginUrl('http://www.creadigol.biz/meeto/login-callback.php', $permissions);
-							
+									$loginUrl = $helper->getLoginUrl('http://www.meeto.jp/login-callback.php', $permissions);
+									
 								?>
 									<a href="<? echo $loginUrl;?>" class="btn btn-fb"><i class="fa fa-facebook"></i>&nbsp; Facebook</a>
 									<!--<a href="#" class="btn btn-tw"><i class="fa fa-twitter"></i>&nbsp; Twitter</a>
 									<a href="#"  class="btn btn-go"><i class="fa fa-google-plus"></i>&nbsp; Google</a>
 								<!--	<a href="#" class="btn btn-ln"><i class="fa fa-linkedin"></i>&nbsp; Linkedin</a> -->
 									<a class="text-center center-block margin-main"><span class="text-center">OR</span></a>
-									<a href="#" data-toggle="modal" data-target=".ac-example-modal-sm" class="btn btn-email"><i class="fa fa-envelope-o"></i>&nbsp; Sign With Email</a>
+									<a href="#" class="btn btn-email main_signup_op"><i class="fa fa-envelope-o"></i>&nbsp; Sign With Email</a><!-- data-toggle="modal" data-target=".ac-example-modal-sm"-->
 									<hr />								
-									<span>Already a member?<a href="#" data-toggle="modal" data-target=".bc-example-modal-sm" class="forgot">login</a></span>
+									<span>Already a member?<a href="#" class="forgot main_signup_login_btn">login</a><!-- data-toggle="modal" data-target=".bc-example-modal-sm"--></span>
 								</div>							
 					</div>
 				  </div>
-				</div>			
+				</div>		
+                
+                
+                
 				<!-- Logi in modal -->
-				<div class="modal fade bc-example-modal-sm" id="logindiv" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
-				  <div class="modal-dialog modal-sm" role="document">
+				<div class="modal bc-example-modal-sm" id="logindiv" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+                
+                	<div class="modal-backdrop"></div>
+                
+				  <div class="modal-dialog modal-sm" role="document" id="second">
 					<div class="modal-content">					 
 								<div class="social-buttons">
 									<a href="<?php echo $loginUrl;?>" class="btn btn-fb"><i class="fa fa-facebook"></i>&nbsp; Facebook</a>
@@ -54,16 +116,20 @@ session_start();
 										 
 										<span class="text-right r-left">
 										<a href="forget_pass.php" class="forgot">Forgot Password?</a>
-										</span> 										<button type="submit" name="login" class="btn btn-lo">LOGIN</button> 
+										</span>
+										<button type="submit" name="login" class="btn btn-lo">LOGIN</button> 
 				                     </form>
-									<span>Don't have an account?<a href="#" data-toggle="modal" data-target=".ac-example-modal-sm"  class="forgot">Create Account</a></span>  
+									<span>Don't have an account?<a href="#" class="forgot signup_page_btn">Create Account</a><!-- data-toggle="modal" data-target=".ac-example-modal-sm"--></span>  
 								</div>				
 					</div>
 				  </div>
 				</div>
 			<!-- sing with email - modal -->
-				<div class="modal fade ac-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
-				  <div class="modal-dialog modal-sm" role="document">
+				<div class="modal ac-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+                
+                	<div class="modal-backdrop"></div>
+                    
+				  <div class="modal-dialog modal-sm" role="document" id="third" >
 
 					<div class="modal-content">
 						 
@@ -89,7 +155,7 @@ session_start();
 										<div class="form-group">
 										  <input type="password" name="pass" class="form-control" id="pwd" placeholder="Password" pattern=".{6,}" required title="Password should be minimum 6 character">
 										</div>
-										 <span class=""><input class="check" id="remember" type="checkbox"> &nbsp; Inform me about Latest news</span>
+										 <span class=""><!--<input class="check" id="remember" type="checkbox"> &nbsp; Inform me about Latest news--></span>
 										 
 										 		<div class="top-margin-10"></div>	
 												
@@ -115,9 +181,10 @@ session_start();
 									 
 									<button type="submit" name="signup" class="btn btn-lo">Create Account</button> 									
 									  </form>
-									  <span>Already a member?<a href="#" data-toggle="modal" data-target=".bc-example-modal-sm" class="forgot">Login</a></span>
+									<span>Already a member?<a href="#" class="forgot login_page_btn">Login</a><!-- data-toggle="modal" data-target=".bc-example-modal-sm"--></span>
 								</div>
 								
 					</div>
 				  </div>
 				</div>
+				

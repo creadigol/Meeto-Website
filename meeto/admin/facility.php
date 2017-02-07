@@ -88,7 +88,7 @@ include('config.php');
 						<form method="post" role="form">
 							 <div class="form-group">
                                             <label>Title</label>
-                                            <input class="form-control" type="text" name="addnewfac" required="" placeholder="Add New Facility" pattern="[a-zA-Z]+">
+                                            <input class="form-control" type="text" name="addnewfac" required="" placeholder="Add New Facility" >
                                         </div>
 										<div class="col-lg-12">
 											<center>

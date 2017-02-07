@@ -1,18 +1,19 @@
 <?php 
 require_once('db.php');
- 
-require_once('condition.php'); 
+ $_SESSION['jpmeetou']['id']=$_REQUEST['uid'];
+//require_once('condition.php'); 
 if(isset($_REQUEST['subbtn']))
 {	   
 			$email=$_SESSION['jpmeetou']['uemail'];
 			$uid=$_SESSION['jpmeetou']['id'];
             $key= md5($email);
-	        $url = "http://www.creadigol.biz/meeto/Verification.php?uid=".$uid."&key=".$key;
+	        $url = "http://www.meeto.jp/jp/Verification.php?uid=".$uid."&key=".$key;
 			//echo "<script>alert('".$url."');</script>"; 
 			$subject = "Email Verification";
 			$to = $email;
 			$headers = 'MIME-Version: 1.0' . "\r\n";
 			$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+			$headers .= 'From:meeto.japan@gmail.com';
 			$message  = '<html>';	
 			$message .= '<body>';
 			$message .= '<h2>To Verification your account please click on Activate buttton</h2>';
@@ -42,12 +43,12 @@ if($_REQUEST['uid']==$_SESSION['jpmeetou']['id'] )
 		$upuser=mysql_query("update user set email_verify=1 where id='".$_SESSION['jpmeetou']['id']."'"); 
 		echo "<script>alert('
 メールSucessfullyを確認します');</script>";
-		echo "<script>location.href='Verification.php'</script>";
+		echo "<script>location.href='index.php'</script>";
 	}
 	else
 	{
 	 echo "<script>alert('あなたの電子メールは、すでに検証されます');</script>";
-	 echo "<script>location.href='Verification.php'</script>";
+	 echo "<script>location.href='index.php'</script>";
 	}
 }
 ?>
@@ -72,10 +73,16 @@ if($_REQUEST['uid']==$_SESSION['jpmeetou']['id'] )
 				<ul class="nav edit">	
 				<li class="activet">	
 					<a href="#">プロファイル編集</a>
-				</li>						
+				</li>	
+		<?php 
+           if($_SESSION['jpmeetou']['type']==1)
+            {?>   
 				<li>						
 					<a href="photos.php" class="">写真</a>	
-				</li>			
+				</li>
+			<?
+			}
+		  ?>							
 				<li>	
 					<a href="Verification.php" class="">信頼と検証</a>				
 				</li>			

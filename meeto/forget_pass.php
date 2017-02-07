@@ -12,11 +12,12 @@ if(isset($_REQUEST['submit_butto']))
 		    $num = mt_rand(100000,999999);
 			$key = md5($num);
 			$id = $fetchemail['id']; 
-	        $url = "http://www.creadigol.biz/meeto/reset_pass.php?uid=".$id."&key=".$key;
+	        $url = "http://www.meeto.jp/reset_pass.php?uid=".$id."&key=".$key;
 			$subject = "Forget password";
 			$to = $email;
 			$headers = 'MIME-Version: 1.0' . "\r\n";
 			$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+			$headers .= 'From:meeto.japan@gmail.com';
 			$message  = '<html>';	
 			$message .= '<body>';
 			$message .= '<h2>Forget Your account password... Click the Button for Reset Your Password</h2>';
@@ -37,7 +38,15 @@ if(isset($_REQUEST['submit_butto']))
 	   } 
        else
 	   {
-		  echo "<script>alert('Invalid Email Id');</script>";  
+		 $checkemail = mysql_query("select * from user where email = '".$email."' and type ='2'");	
+		   if(mysql_num_rows($checkemail) > 0)	
+		   {  
+				echo "<script>alert('This Email ID Attach with facebook account.');</script>";  
+		   }
+		   else
+		   {
+			   echo "<script>alert('Invalid Email Id');</script>";  
+		   }
 	   }		   
 }
 ?>			

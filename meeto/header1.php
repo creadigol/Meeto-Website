@@ -7,7 +7,7 @@ function hideselect()
 		$(".city-select").css("top","-315px");
 		$("body").removeClass("city-select-on");
 		$("header .header-group.header-main").css("top","0px");
-		$("header .header-group.header-right").css("top","20px");
+		
 		$(".city-toggle").css("top","335px");
 	
 }
@@ -23,7 +23,7 @@ $(document).ready(function(e) {
 		$("body").removeClass("city-select-on");
 		//$("header .header-group").css("top","335px");
 		$("header .header-group.header-main").css("top","0px");
-		$("header .header-group.header-right").css("top","20px");
+		
 		$(".city-toggle").css("top","335px");
 	});
 	
@@ -41,6 +41,13 @@ $(document).ready(function(e) {
 	});
 });
 </script>
+<?php
+$seluserdetail=mysql_query("select * from user_detail where uid='".$_SESSION['jpmeetou']['id']."'");
+$fetuserdetail=mysql_fetch_array($seluserdetail);
+$fetuser=mysql_fetch_array(mysql_query("select * from user where id='".$_SESSION['jpmeetou']['id']."'"));
+$_SESSION['jpmeetou']['profileimage']=$fetuserdetail['photo'];
+$_SESSION['jpmeetou']['fname']=$fetuser['fname'];
+?>
 
 <title>Meeto</title>
 </head>
@@ -94,12 +101,12 @@ header {transform: translate3d(0,0px,0); height:84px;}
 					
                     <div class="dropdown-menu sing-menu">
                         <a class="dropdown-item f-left sing-menu" href="view-profile.php?id=<?php echo $_SESSION['jpmeetou']['id'];?>">Dashboard</a>
-                        <a class="dropdown-item f-left sing-menu" href="your-listing.php">Your Listings</a>
+                        <a class="dropdown-item f-left sing-menu" href="your-listing.php">My Listings</a>
                        <!-- <a class="dropdown-item f-left sing-menu" href="your-listing.php">Your Reservation</a>-->
-                        <a class="dropdown-item f-left sing-menu" href="booking.php">Your Bookings</a>
+                        <a class="dropdown-item f-left sing-menu" href="booking.php">My Bookings</a>
                         <a class="dropdown-item f-left sing-menu" href="my-wish-list.php">Wish List</a>
-                        <a class="dropdown-item f-left sing-menu" href="Editprofile.php">Edit Profile</a>
-                        <a class="dropdown-item f-left sing-menu" href="account.php">Account</a>
+           
+                        <a class="dropdown-item f-left sing-menu" href="Editprofile.php">Account</a>
                         <a class="dropdown-item f-left sing-menu" href="logout.php">Log Out</a>
                     </div>
 				</div>
@@ -122,11 +129,11 @@ header {transform: translate3d(0,0px,0); height:84px;}
                         { 
                     ?>
                 <div class="header-item app-btn-elem">
-                    <a href="#" class="link-btn h-track" data-toggle="modal" data-target=".bs-example-modal-sm">Sign Up</a>
+                    <a href="#" class="link-btn h-track main_signup">Sign Up</a><!-- data-toggle="modal" data-target=".bs-example-modal-sm"-->
                 </div>
             	
             	<div class="header-item header-item-blog">
-                    <a id="some-id" class="link-btn h-track" href="#logindiv" data-toggle="modal" data-target=".bc-example-modal-sm">Login</a>
+                    <a id="some-id" class="link-btn h-track main_login" href="#logindiv">Login</a><!-- data-toggle="modal" data-target=".bc-example-modal-sm"-->
                 </div>
                 
             	<!--<div class="header-item dropdown shortlist-content header-item-shortlist">
@@ -143,8 +150,8 @@ header {transform: translate3d(0,0px,0); height:84px;}
 				  <?php 
                      } 
                   ?>
-                <div class="header-item btn-display">
-                    <a href="list_space.php" class="blue-button"> List Your Space</a>
+                <div class="header-item btn-display" style="margin-top:15px;">
+                    <a href="list_space.php" class="blue-button"> List Your Seminar</a>
                 </div>
              
             </div>
@@ -160,7 +167,7 @@ header {transform: translate3d(0,0px,0); height:84px;}
             </div>
         </header>
 				<div class="header-item roundbtn-display">
-                    <a href="list_space.php" class="blue-button">List Your Space</a>
+                    <a href="list_space.php" class="blue-button">List Your Seminar</a>
                 </div>		
     </div>
 </body>

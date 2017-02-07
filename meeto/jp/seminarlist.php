@@ -12,7 +12,7 @@
 <!DOCTYPE html><html lang="en"> 
  <?php	require_once('head1.php');   ?>
  
-
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAnWG6DJ5dpqNjBC1CZI8xdS3L769lQHuc&callback=initMap" type="text/javascript"></script>
 <script>
 $(window).scroll(function () {
 		var sc = $(window).scrollTop()
@@ -162,7 +162,8 @@ $(window).scroll(function () {
             </div>
         </div>
 		<script type="text/javascript">
-	codeAddress('<?php $marutra = explode('"',translate(str_replace(" ","+",$fetcity['name']))); echo $marutra[1];?>');
+	//codeAddress('<?php $marutra = explode('"',translate(str_replace(" ","+",$fetcity['name']))); echo $marutra[1];?>');
+	codeAddress('<?php echo $fetcity['name']; ?>');
 	function codeAddress(city) {
 		geocoder = new google.maps.Geocoder();
 		var address = city;

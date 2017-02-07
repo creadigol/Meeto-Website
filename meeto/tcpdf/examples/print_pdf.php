@@ -6,16 +6,21 @@ session_start();
 
 date_default_timezone_set('Asia/Tokyo');
 
-define('DB_HOST', 'jobmatch1.db.12566969.hostedresource.com');
-define('DB_USERNAME', 'jobmatch1');
-define('DB_PASSWORD', 'Job@1234');
+define('DB_HOST', 'localhost');
+define('DB_USERNAME', 'meeto123');
+define('DB_PASSWORD', 'meeto@123');
 define('DB_NAME', 'jobmatch1');
 define('APPROVED', 'approved');
 define('PENDING', 'pending');
 $con = mysql_connect(DB_HOST,DB_USERNAME,DB_PASSWORD);
 mysql_select_db(DB_NAME,$con) or die(mysql_error());
+
+mysql_set_charset('utf8',$con); 
+
+header('Content-Type: text/html; charset=UTF-8');
+
 if($_SESSION['jpmeetou']['email']==''){
-	echo "<script>window.location='../../index.php';</script>";
+	//echo "<script>window.location='../../index.php';</script>";
 }
 
 
@@ -100,9 +105,10 @@ $pdf->SetFont('helvetica', '', 10);
 // add a page
 $pdf->AddPage();
 $bookedtiket=mysql_fetch_array(mysql_query("select * from seminar_booking where id=$_REQUEST[bkid]"));
-$bookedseminar=mysql_fetch_array(mysql_query("select * from seminar where id=$_REQUEST[sem_id]"));
+$bookedseminar=mysql_fetch_array(mysql_query("select * from seminar where id=$bookedtiket[seminar_id]"));
 $title=$bookedseminar['title'];
-$name=$_SESSION['jpmeetou']['fname'].$_SESSION['jpmeetou']['lname'];
+$userdetail=mysql_fetch_array(mysql_query("select * from user where id=$bookedtiket[uid]"));
+$name=$userdetail['fname']." ".$userdetail['lname'];
 $ffdate=date("d-m-Y",$bookedtiket['from_date']/1000);
 $ttdate=date("d-m-Y",$bookedtiket['to_date']/1000);
 $total_book_seat=$bookedtiket['book_seat'];
@@ -176,7 +182,7 @@ $pdf->lastPage();
 // ---------------------------------------------------------
 
 //Close and output PDF document
-$pdf->Output('print_pdf.pdf	', 'I');
+$pdf->Output('print_pdf.pdf', 'I');
 
 //============================================================+
 // END OF FILE

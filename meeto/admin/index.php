@@ -17,7 +17,7 @@ require('condition.php');
 <script>
 function countmaru(c1, id)
 {
-    var st = 1;
+    var st = 0;
     var ed = c1;
     a = setInterval(function () {
             if (st <= ed)
@@ -29,7 +29,7 @@ function countmaru(c1, id)
                     clearInterval(a);
                 }
             }       
-    }, 300);
+    }, 1);
 };
 </script>
 <body >
@@ -42,7 +42,7 @@ function countmaru(c1, id)
                 <div class="row">
                     <div class="col-md-12">
                         <h1 class="page-header">
-                            Dashboard <?php echo $_SESSION[myjp]; ?> <small>Summary of your Web</small>
+                            Dashboard <?php /* echo $_SESSION[myjp]; */ ?> <small>Summary of your Web</small>
                         </h1>
                     </div>
                 </div>
@@ -79,7 +79,7 @@ function countmaru(c1, id)
 								</div>
                             <div class="panel-right pull-right">
 							<?php
-								$sel=mysql_query("select count(*) from registration");
+								$sel=mysql_query("select count(*) from user");
 								$fet=mysql_fetch_array($sel);
 								
 							?>

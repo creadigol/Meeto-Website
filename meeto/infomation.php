@@ -69,7 +69,7 @@ function seldate()
 <?php	require_once('loginsignup.php'); 	?>		
 <!-- pop up end-->
 <?php
-	$seminar_detail = mysql_fetch_array(mysql_query("select * from seminar where id = '".$_REQUEST['id']."' and status='1'"));
+	$seminar_detail = mysql_fetch_array(mysql_query("select * from seminar where id = '".$_REQUEST['id']."' and status='1' and approval_status='approved'"));
 	$seminar_city = mysql_fetch_array(mysql_query("select * from cities where id = '".$seminar_detail['cityid']."'"));
 	
 	$seminar_photo = mysql_query("select * from seminar_photos where seminar_id = '".$seminar_detail['id']."'");  
@@ -108,8 +108,9 @@ function seldate()
                 { 
                   $i++;
             ?>
-        <div class="item <?php if($i==1)echo 'active'; ?>">
-        <img class="img-responsive" src="img/<?php echo $sphoto['image']; ?>" style="transform:rotate(<?php echo $sphoto['rotateval']; ?>deg)" alt="First slide">
+        <div class="item <?php if($i==1)echo 'active'; ?>" style="transform:rotate(<?php echo $sphoto['rotateval']; ?>deg);">
+       <!-- <img class="img-responsive" src="img/<?php /*echo $sphoto['image']; ?>" style="transform:rotate(<?php echo $sphoto['rotateval'];*/ ?>deg) translate(-50%, -50%);max-width:100%;max-height:100%;width:auto;top:50%;left:50%;min-width:auto;" alt="First slide">-->
+        <img class="img-responsive" src="img/<?php echo $sphoto['image']; ?>" style="transform:translate(-50%, -50%);max-width:100%;max-height:100%;width:auto;top:50%;left:50%;min-width:auto;" alt="First slide">
         </div>
 			<?php  
                 }
@@ -175,7 +176,7 @@ function seldate()
                                     <span class="opan-r"><?php echo $seminar_detail['total_seat']; ?> seats</span>
                                 </li>
                                 <li class="icon-margin">
-								   <img src="img/<?php if($usercompany['organization']=='Profit Organization') { echo "profit.png"; } else { echo "nonprofit.png"; } ?>" class="list-img img-responsive">
+								   <img src="img/<?php if($usercompany['organization']=='Profit Organization' || $rowusercompany['organization']=='組織を選択します') { echo "profit.png"; } else { echo "nonprofit.png"; } ?>" class="list-img img-responsive">
                                     <span class="opan-r"><?php echo $usercompany['organization']; ?></span>
                                 </li>
                             </ul>
@@ -221,7 +222,7 @@ function seldate()
                 <div class="body-cont Seminar-Attendees">
 				     <ul class="nav right-space">
                         <?php
-						$attendeesid=mysql_query("select * from seminar_purpose where seminar_id='".$_REQUEST['id']."'");
+						$attendeesid=mysql_query("select * from seminar_purpose where seminar_id='".$_REQUEST['id']."' and status=1");
 						while($selattendees=mysql_fetch_array($attendeesid))
                         { 
 					        $selattendeesname=mysql_fetch_array(mysql_query("select * from purpose where id=$selattendees[attendees_id]"));
@@ -243,7 +244,7 @@ function seldate()
                 <div class="body-cont Seminar-Attendees">
 				     <ul class="nav right-space">
                         <?php
-						$selindustry=mysql_query("select * from seminar_industry where seminar_id='".$_REQUEST['id']."'");
+						$selindustry=mysql_query("select * from seminar_industry where seminar_id='".$_REQUEST['id']."' and status=1");
 						 while($industry=mysql_fetch_array($selindustry))
                          { 
 					         $selindustryname=mysql_fetch_array(mysql_query("select * from industry where id=$industry[industry_id]"));
@@ -264,7 +265,7 @@ function seldate()
 			
             <div class="section_div descri-section">
 					<h2 class="header-cont">Facilities :</h2>
-				<div class="body-cont">	
+				<div class="body-cont" style="display:block;">	
                     <ul class="nav right-space">
                             <?php
                                 $selfacility=mysql_query("select * from seminar_facility where seminar_id=$_REQUEST[id]");
@@ -282,17 +283,34 @@ function seldate()
                     </ul>
                     
                     <div class="descri-section">
+					    <h2 class="header-cont">Seminar Images :</h2>
                         <div class="row">
                                 <?php
                                     $selsemiphoto=mysql_query("select * from seminar_photos where seminar_id=$_REQUEST[id]");
                                     while($fetsemiphoto=mysql_fetch_array($selsemiphoto))
                                     {
                                 ?>
-                            <div class="fancy-img">
-                                <a class="fancybox-thumb" rel="fancybox-thumb" href="img/<?php echo $fetsemiphoto['image']; ?>" style="transform:rotate(<?php echo $fetsemiphoto['rotateval']; ?>deg)!important;"  title="Big Office - Electra City Tower">
-                                    <img src="img/<?php echo $fetsemiphoto['image']; ?>" style="transform:rotate(<?php echo $fetsemiphoto['rotateval']; ?>deg)"  alt="" class="fancy-width"/>
+							<!--<div class="fancy-img">
+                                <a class="fancybox-thumb" rel="fancybox-thumb" href="img/<?php/* echo $fetsemiphoto['image']; ?>" style="transform:rotate(<?php echo $fetsemiphoto['rotateval']; ?>deg)" title="Big Office - Electra City Tower">
+                                    <img src="img/<?php echo $fetsemiphoto['image']; ?>" style="transform:rotate(<?php echo $fetsemiphoto['rotateval'];*/ ?>deg)"  alt="" class="fancy-width"/>
                                 </a>
-                            </div>	
+                            </div>-->
+                            
+                            <div class="fancy-img">
+                                <div style="height:220px;background:#666;box-shadow: 3px 3px 7px #555;border-radius:7px;overflow: hidden;">
+                                    <a class="fancybox-thumb" rel="fancybox-thumb" href="img/<?php echo $fetsemiphoto['image']; ?>" style="transform:rotate(<?php echo $fetsemiphoto['rotateval']; ?>deg)" title="Big Office - Electra City Tower">
+                                        <img src="img/<?php echo $fetsemiphoto['image']; ?>" style="transform:rotate(<?php echo $fetsemiphoto['rotateval']; ?>deg)"  alt="" class="fancy-width"/>
+                                    </a>
+                                </div>
+                            </div>
+                            
+                            <!--<div class="fancy-img" >
+                                <div style="height:220px;background:#666;box-shadow: 3px 3px 7px #555;border-radius:7px;">
+                                    <a class="fancybox-thumb" rel="fancybox-thumb" href="img/<?php /*echo $fetsemiphoto['image']; ?>" style="transform:rotate(<?php echo $fetsemiphoto['rotateval']; ?>deg)!important;"  title="Big Office - Electra City Tower">
+                                        <img src="img/<?php echo $fetsemiphoto['image']; ?>" style="transform:rotate(<?php echo $fetsemiphoto['rotateval'];*/ ?>deg) translate(-50%,-50%);max-width:100%;max-height:100%;top:50%;left:50%;position:relative;width:auto;height:auto;box-shadow:none;"  alt="" class="fancy-width"/>
+                                    </a>
+                                </div>
+                            </div>-->
                                 <?php
                                     }
                                 ?>
@@ -430,7 +448,13 @@ function seldate()
                         ?>
                 </div>
 					<?php
-                        if($avaliable!=0)
+					$admin = mysql_num_rows(mysql_query("select * from seminar where uid='".$_SESSION['jpmeetou']['id']."' and id='".$_REQUEST['id']."'"));
+						if($admin==1)
+						{
+							?>
+								<div class="error_div">You are admin so you are not book this seminar</div>
+							<?php
+						} else if($avaliable!=0)
                         {
                     ?>
                 <form action="book-now.php?id=<?php echo $_REQUEST['id']; ?>" method="POST">
@@ -455,12 +479,12 @@ function seldate()
                 </form>
 					<?php
                         }
-                        else
-                        {
-                    ?>
+						else
+						{
+					?>
                 <div class="error_div">Sorry, Total Available Seats Is : 0</div>
 					<?php
-                        }
+						}
                     ?>
             </div>
         </div> 

@@ -7,7 +7,6 @@ function hideselect()
 		$(".city-select").css("top","-315px");
 		$("body").removeClass("city-select-on");
 		$("header .header-group.header-main").css("top","0px");
-		$("header .header-group.header-right").css("top","20px");
 		$(".city-toggle").css("top","335px");
 	
 }
@@ -23,7 +22,6 @@ $(document).ready(function(e) {
 		$("body").removeClass("city-select-on");
 		//$("header .header-group").css("top","335px");
 		$("header .header-group.header-main").css("top","0px");
-		$("header .header-group.header-right").css("top","20px");
 		$(".city-toggle").css("top","335px");
 	});
 	
@@ -41,6 +39,14 @@ $(document).ready(function(e) {
 	});
 });
 </script>
+<?php
+$seluserdetail=mysql_query("select * from user_detail where uid='".$_SESSION['jpmeetou']['id']."'");
+$fetuserdetail=mysql_fetch_array($seluserdetail);
+$fetuser=mysql_fetch_array(mysql_query("select * from user where id='".$_SESSION['jpmeetou']['id']."'"));
+$_SESSION['jpmeetou']['profileimage']=$fetuserdetail['photo'];
+$_SESSION['jpmeetou']['fname']=$fetuser['fname'];
+?>
+
 <!--<script async="" src="https://sb.scorecardresearch.com/beacon.js"></script>
 <script type="text/javascript" async="" src="https://housing-rm.housingcdn.com/tmgr/main.min.js"></script>
 <script type="text/javascript" charset="utf-8" async="" data-requirecontext="_" data-requiremodule="backbone/requirejs/css" src="https://assets-0.housingcdn.com/website/javascripts/backbone/requirejs/css-0306cb5fc4bb215d1abed50eebaf2abf.js"></script>
@@ -65,7 +71,7 @@ header {transform: translate3d(0,0px,0); height:84px;}
                 </div>
             </div>
 			
-            <div class="header-group header-right pull-right">
+            <div class="header-group header-right pull-right" style="margin-top:15px;">
 					<?php
 						if(isset($_SESSION['jpmeetou']['id']))
 						{
@@ -105,7 +111,7 @@ header {transform: translate3d(0,0px,0); height:84px;}
                         <a class="dropdown-item f-left sing-menu" href="your-listing.php">あなたの掲載</a>
                        <!-- <a class="dropdown-item f-left sing-menu" href="your-listing.php">Your Reservation</a>-->
                         <a class="dropdown-item f-left sing-menu" href="booking.php">
-ご予約</a>
+私の予約</a>
                         <a class="dropdown-item f-left sing-menu" href="my-wish-list.php">
 欲しい物のリスト</a>
                         <a class="dropdown-item f-left sing-menu" href="Editprofile.php">
@@ -157,15 +163,14 @@ header {transform: translate3d(0,0px,0); height:84px;}
 				  <?php 
                      } 
                   ?>
-                <div class="header-item btn-display">
-                    <a href="list_space.php" class="blue-button">あなたのスペースを一覧表示</a>
+                <div class="header-item btn-display" style="margin-top:15px;">
+                    <a href="list_space.php" class="blue-button">あなたのセミナーを一覧表示する</a>
                 </div>
              
             </div>
            
             <div class="city-toggle up-menu btn-display">
-                <!-- react-text: 46 -->
-スラト<!-- /react-text -->
+                <!-- react-text: 46 -->日本<!-- /react-text -->
                 <i class="icon-arrow-down"></i>
             </div>
             <div class="header-item header-nearby-filter"></div>
@@ -174,8 +179,8 @@ header {transform: translate3d(0,0px,0); height:84px;}
             	<i class="icon-search"></i>
             </div>
         </header>
-				<div class="header-item roundbtn-display">
-                    <a href="list_space.php" class="blue-button">List Your Space</a>
+				<div class="header-item roundbtn-display" style="margin-top:15px;">
+                    <a href="list_space.php" class="blue-button">あなたのセミナーを一覧表示する</a>
                 </div>		
     </div>
 </body>

@@ -54,8 +54,8 @@
 											<th>ホストメール</th>
 											<!--<th>Description</th>
                                             <th>Total Seat</th>
-                                            <th>Booked Seat</th>-->
-                                            <th>資格</th>
+                                            <th>Booked Seat</th>
+                                            <th>資格</th>-->
                                             <th>
 承認状況</th>
                                             <th>
@@ -95,8 +95,8 @@
                                             <td><? echo $detaildata['email']; ?></td>
 											<!--<td><? echo $data['description']; ?></td>
                                             <td><? echo $data['total_seat']; ?></td>
-                                            <td><? echo $data['total_booked_seat']; ?></td>-->
-                                            <td><? $marutra = explode('"',translate(str_replace(" ","+",$data['qualification']))); echo $marutra[1] ; ?></td>
+                                            <td><? echo $data['total_booked_seat']; ?></td>
+                                            <td><? $marutra = explode('"',translate(str_replace(" ","+",$data['qualification']))); echo $marutra[1] ; ?></td>-->
                                             <td><center><? if($data['approval_status']=='approved'){
 											?>
 												<i class="fa fa-thumbs-o-up" title="Approved Seminar" style="color:green;cursor:pointer;" onclick="approvalsam('rejected','<?php echo $data['id']; ?>');"></i>

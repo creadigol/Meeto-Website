@@ -314,7 +314,7 @@ function facilityshow(id,aa)
 					<ul class="type_field_btn slider-width">
 						<?php
 						$arrypurpose=array();
-						$seminarpurpose =mysql_query("select * from seminar_purpose where seminar_id = '".$seminar['id']."'");
+						$seminarpurpose =mysql_query("select * from seminar_purpose where seminar_id = '".$seminar['id']."' and status=1");
 					   while($purpose=mysql_fetch_array($seminarpurpose))
 					   {
 					   array_push($arrypurpose,$purpose['attendees_id']);
@@ -355,7 +355,7 @@ function facilityshow(id,aa)
 					<ul class="type_field_btn slider-width">
 					<?php
 					  $arryindustry=array();
-						$seminarindustry =mysql_query("select * from seminar_industry where seminar_id = '".$seminar['id']."'");
+						$seminarindustry =mysql_query("select * from seminar_industry where seminar_id = '".$seminar['id']."' and status=1");
 					   while($industry=mysql_fetch_array($seminarindustry))
 					   {
 					   array_push($arryindustry,$industry['industry_id']);
@@ -1061,7 +1061,7 @@ function facilityshow(id,aa)
 										  }
 
 										</script>
-											<script src="https://maps.googleapis.com/maps/api/js?libraries=places&callback=initAutocomplete"
+											<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAnWG6DJ5dpqNjBC1CZI8xdS3L769lQHuc&libraries=places&callback=initAutocomplete"
 											async defer></script>
 												</div>
 

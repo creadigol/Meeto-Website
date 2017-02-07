@@ -147,12 +147,12 @@ if($_REQUEST['deluser']=="dd")
                                             <th>Email</th>
                                             <th>Phone NO.</th>
 											 <th>Status.</th>
-											 <th>Delete</th>
+											 <?/* <th>Delete</th> */?>
                                         </tr>
                                     </thead>
                                     <tbody>
 									<?
-										$query=mysql_query("select * from user ");
+										$query=mysql_query("select * from user order by id DESC");
 										while($data=mysql_fetch_array($query)){
 											$detailquery = mysql_query("select * from user_detail where uid='".$data['id']."' ");
 											$detaildata=mysql_fetch_array($detailquery);
@@ -186,18 +186,18 @@ if($_REQUEST['deluser']=="dd")
 												<td><center>
 												<i class="fa fa-thumbs-o-up" title="Active" style="color:green;cursor:pointer;" onclick="window.location='user.php?id=<?php echo $data['id'];?>&shuup=dec'"></i>
 												</center></td>
-												<td>
+												<?/* <td>
 												<center><i class="fa fa-trash-o" title="Active" style="color:red;cursor:pointer;"onclick="facilityshow();"></i></center>
-											</td>
+											</td> */?>
 											<?
 											}else{
 											?>
 												<td><center>
 												<i class="fa fa-thumbs-o-down" onclick="window.location='user.php?id=<?php echo $data['id'];?>&shuup=act'" title="Inactive" style="color:red;cursor:pointer;"></i>
 												</center></td>
-												<td>
+												<?/* <td>
 												<center><i class="fa fa-trash-o" title="Active" style="color:red;cursor:pointer;"onclick="marudeleteuser('<?php echo $data['id']; ?>',0)"></i></center>
-											</td>
+											</td> */?>
 											<? } ?>
 											
 											

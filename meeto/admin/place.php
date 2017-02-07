@@ -155,7 +155,7 @@ include('config.php');
 											<div class="form-group col-md-9 col-md-offset-4">
 									
                                             <label>Title</label>
-												<input class="form-control" type="text" name="addnewfac" required="" placeholder="Add New Place" pattern="[a-zA-Z]+" style="width:50%;">
+												<input class="form-control" type="text" name="addnewfac" required="" placeholder="Add New Place"  style="width:50%;">
 											</div>
 											
 											<div class="col-md-3 col-md-offset-5">

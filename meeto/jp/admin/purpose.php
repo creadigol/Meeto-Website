@@ -139,8 +139,7 @@ include('config.php');
                     <div class="col-md-12 page-header">
 						<div  class="col-md-6" align="left" style="color:black;">
                         <h3>
-                            
-新しい目的を追加
+                            新しい出席者を追加
                         </h3>
 						</div>
 						<div  class="col-md-6 " align="right" >
@@ -188,13 +187,12 @@ include('config.php');
                     <div class="col-md-12 page-header">
 						<div  class="col-md-6" align="left">
                         <h1>
-                            目的
+                            出席者
                         </h1>
 						</div>
 						<div  class="col-md-6 " align="right" >
 						<div class="col-md-5 col-md-offset-7 btn btn-primary" onclick="facilityshow();">
-							 
-新しい目的を追加 <i class="fa fa-plus" style="font-size:10px;"></i>
+							 新しい出席者を追加 <i class="fa fa-plus" style="font-size:10px;"></i>
 						</div>
 						</div>
                     </div>
@@ -206,7 +204,7 @@ include('config.php');
                     <!-- Advanced Tables -->
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                             目的のリスト
+                             出席者リスト
                         </div>
                         <div class="panel-body">
                             <div class="table-responsive" id="admin_purpose">

@@ -44,41 +44,60 @@ if($_REQUEST['kon']=='listseminar')
 	elseif($_REQUEST['status']==APPROVED)
 		$seminardetail=mysql_query("select * from seminar where uid = '".$missid."' and approval_status='".APPROVED."' order by created_date DESC");		
 	elseif($_REQUEST['status']==PENDING)
-		$seminardetail=mysql_query("select * from seminar where uid = '".$missid."' and approval_status='".PENDING."' order by created_date DESC");			
+		$seminardetail=mysql_query("select * from seminar where uid = '".$missid."' and approval_status='".PENDING."' order by created_date DESC");	
+     $numrowss=mysql_num_rows($seminardetail);
+	if($numrowss>=1)
+	{		
 	while($seminar=mysql_fetch_array($seminardetail))				
 	{			
 ?>
 
 	<div class="row listing-img-button">	
-		<a href="infomation.php?id=<?php echo $seminar['id']; ?>">
+		<a href="<?php if($seminar['status']==1 && $seminar['approval_status']=='approved' ) { echo "infomation.php?id=$seminar[id]"; } else { echo "#";} ?>">
 		<div class="col-md-3">		
 		<?php						
 			$seminarphoto=mysql_fetch_array(mysql_query("select * from seminar_photos where seminar_id = '".$seminar['id']."' limit 0,1"));		
 			if($seminarphoto['image']=="" || !file_exists("../img/".$seminarphoto['image']))	
 			{?>	
-               <img src="../img/no-photo.jpg" class="img-responsive center-block" style="width:100%; height:150px"  />		
+               <img src="../img/no-photo.jpg" class="img-responsive center-block" style="width:100px; height:100px"  />		
             <?
 			}
 			else
 			{?>							
-			<img src="../img/<?php echo $seminarphoto['image']; ?>" style="transform:rotate(<?php echo $seminarphoto['rotateval']; ?>deg)" class="img-responsive">
+			<img src="../img/<?php echo $seminarphoto['image']; ?>" style="transform:rotate(<?php echo $seminarphoto['rotateval']; ?>deg);width:100px; height:100px" class="img-responsive">
 			<?
 			}
             ?>
 		</div>		
 		</a>
-		<div class="col-md-3">
-		    <a href="infomation.php?id=<?php echo $seminar['id']; ?>">
-			<h4 class="semibold-o black-tetx"><?php $marutra = explode('"',translate(str_replace(" ","+",$seminar['title']))); echo $marutra[1];?></h4>
-			<h5 class="semibold-o black-tetx"><?php $marutra = explode('"',translate(str_replace(" ","+",$seminar['tagline']))); echo $marutra[1];  ?> </h5></a>
-			<?php if($seminar['status']=='0'){?>
-			<h5 class="forgot">*Seminar Expired*</h5>
+		<div class="col-md-3 text-center">
+		  
+			<?php if($seminar['status']=='0')
+			{?>
+		  <?php  $marutra = explode('"',translate(str_replace(" ","+",$seminar['tagline']))); echo  $marutra[1];?>
+			<h4 class="semibold-o link_text"><?php  $marutra = explode('"',translate(str_replace(" ","+",$seminar['title']))); echo  $marutra[1];?></h4>
+			<h5 class="semibold-o gray_text"><?php  $marutra = explode('"',translate(str_replace(" ","+",$seminar['tagline']))); echo  $marutra[1];?></h5> 
+			<h5 class="forgot">*期限切れのセミナー*</h5>
 			<?
+			 }
+			 elseif($seminar['approval_status']=='rejected')
+			 {?>
+			 <h4 class="semibold-o link_text"><?php  $marutra = explode('"',translate(str_replace(" ","+",$seminar['title']))); echo  $marutra[1];?></h4>
+			 <h5 class="semibold-o gray_text"><?php  $marutra = explode('"',translate(str_replace(" ","+",$seminar['tagline']))); echo  $marutra[1];?> </h5>
+			 <h5 class="forgot">あなたのセミナーは管理者によって拒否されました</h5> 
+			 <?
+			 }
+			 else
+			 {?>
+			<a href="<?php if($seminar['status']==1 && $seminar['approval_status']=='approved' ) { echo "infomation.php?id=$seminar[id]"; } else { echo "#";} ?>">
+			<h4 class="semibold-o link_text"><?php  $marutra = explode('"',translate(str_replace(" ","+",$seminar['title']))); echo  $marutra[1];?></h4>
+			<h5 class="semibold-o gray_text"><?php  $marutra = explode('"',translate(str_replace(" ","+",$seminar['tagline']))); echo  $marutra[1];?> </h5></a> 
+			 <?
 			 }
 			?>
 		</div>
 		<div class="col-md-2 text-center steps-button">
-			<a href="Editseminar.php?id=<?php echo $seminar['id']; ?>" class="blue-button steps-button-list"><i class="fa fa-pencil"></i></a>
+		   <a href="<?php if($seminar['status']==1) { echo "Editseminar.php?id=$seminar[id]"; } else { echo "#";} ?>" class="blue-button steps-button-list"><i class="fa fa-pencil"></i></a>
 		</div>
 		<div class="col-md-2 text-center steps-button">
 			<a href="viewlisting.php?id=<?php echo $seminar['id']; ?>" class="blue-button steps-button-list"><i class="fa fa-eye"></i></a>
@@ -88,7 +107,15 @@ if($_REQUEST['kon']=='listseminar')
 		</div>
 	</div>						
 	<?  					
-	}		
+	}
+	}
+	else
+	{?>
+		<div style="color:red;font-weight:bold;padding:10px;" align="center">
+			セミナーが見つかりません...！
+	   </div>
+	<?
+	}
 }				
 ?>
 
@@ -102,7 +129,7 @@ if($_REQUEST['kon']=='viewlisting')
 	
 		
 	<div class="col-md-12 reservation">
-	  <span>
+	  <div>
 	     <?
 	     if($seminarphoto['image']=="" || !file_exists("../img/".$seminarphoto['image']))	
 			{?>	
@@ -115,11 +142,10 @@ if($_REQUEST['kon']=='viewlisting')
 			<?
 			}
 			?>
-		<a class="seminar-title" href="infomation.php?id=<?php echo $_REQUEST['sid'];?>"
-		<h4 class="semibold-o black-tetx"><?php  $marutra = explode('"',translate(str_replace(" ","+",$sam['title']))); echo  $marutra[1];?></h4></a></span>
+		<a class="seminar-title" href="<?php if($sam['status']==1) { echo "infomation.php?id=$sam[id]"; } else { echo "#";} ?>"<h4 class="semibold-o black-tetx"><?php echo  $sam['title'];?></h4></a></div>
 	
 		<?php 
-		$seminardetail=mysql_query("select * from `seminar_booking` where `seminar_id` = $_REQUEST[sid] order by created_date DESC");
+		$seminardetail=mysql_query("select * from `seminar_booking` where `seminar_id` = $_REQUEST[sid] and approval_status = 'accepted' order by created_date DESC");
 		if(mysql_num_rows($seminardetail)>0)
 		{
 		?>
@@ -137,7 +163,7 @@ if($_REQUEST['kon']=='viewlisting')
 	<?php	
 	while($seminar=mysql_fetch_array($seminardetail))				
 	{	
-		$userquery=mysql_query("select * from `user` where `id` = $seminar[uid] ");
+		$userquery=mysql_query("select * from `user` where `id` = $seminar[uid]");
 		$user=mysql_fetch_array($userquery);
 		$userdetailquery=mysql_query("select * from `user_detail` where `uid` = $seminar[uid] ");
 		$userdetail=mysql_fetch_array($userdetailquery);
@@ -148,7 +174,14 @@ if($_REQUEST['kon']=='viewlisting')
 										<td>
 										<?php if($user['type'] == 2){?>
 										<img src="<?php echo $userdetail['photo']; ?>" width="100" height="100" alt="<?php echo $user['fname']." ".$user['lname']." photo"; ?>"class="table-img">
-										<?php }else{?>
+										<?php } 
+										elseif($userdetail['photo']=="" || !file_exists("../img/".$userdetail['photo']))
+                                        {
+                                        ?>
+										<img src="img/no-photo.jpg" class="table-img" width="100" height="100" /></a>
+										<?php
+											}
+										else{?>
 										<img src="../img/<?php echo $userdetail['photo']; ?>" width="100" height="100" alt="<?php echo $user['fname']." ".$user['lname']." photo"; ?>"class="table-img">
 										<?php } ?></td>		
 										<td><?php
@@ -168,8 +201,10 @@ if($_REQUEST['kon']=='viewlisting')
 		           <?
 				   } else
 				   {?>
-					<div class="clearfix"></div><br/><br/>	
-					<div><center>誰を予約しませんでしたセミナー</center></div> 
+					<div class="clearfix"></div><br/><br/>
+						<div style="color:red;font-weight:bold;padding:10px;" align="center">
+			                セミナー誰も予約していない...！
+	                     </div>					
 				   <?
 				   }
 				   ?>
@@ -201,7 +236,7 @@ if($_REQUEST['kon']=='setwishlist')
 			 <?
 		    if($fetsemiphoto['image']=="" || !file_exists("../img/".$fetsemiphoto['image']))	
 			{?>	
-               <img src="../img/no-photo.jpg" class="seminar-title-img img-responsive" style="height:200px;"/>		
+               <img src="../img/no-photo.jpg" class="img-responsive center-block seminar-pop-img" style="height:200px;"/>		
             <?
 			}
 			else
@@ -417,7 +452,16 @@ if($_REQUEST['kon']=='cityseminarlist')
             <div class="box-height">
                 <a class="img_bar" href="infomation.php?id=<?php echo $fetseminar['id']; ?>">
                     <!--<img src="img/<?php /*echo $fetsemiphoto['image'];*/ ?>" class="img-responsive center-block img-width" style="width:100%;height:240px;"/>-->
-                    <div class="img_div" style="background-image:url(../img/<?php echo $fetsemiphoto['image']; ?>);transform:rotate(<?php echo $seminarphoto['rotateval']; ?>deg);"></div>
+					<?php											
+					if($fetsemiphoto['image']=="" || !file_exists("../img/".$fetsemiphoto['image']))	
+					{?>	
+					 <div class="img_div" style="background-image:url(../img/no-photo.jpg);"></div> 
+					<?}						
+					 else
+					{?>
+					  <div class="img_div" style="background-image:url(../img/<?php echo $fetsemiphoto['image']; ?>);transform:rotate(<?php echo $fetsemiphoto['rotateval']; ?>deg);"></div>
+					<?
+				    }?> 
                 </a>
                 <div class="host_info">
                     
@@ -549,7 +593,7 @@ elseif($_REQUEST['kon']=="wishlist")
 		 $deletephoto=mysql_query("delete from wishlist where id=$_REQUEST[did]");
 	}
 	$showwish=$_SESSION['jpmeetou']['id'];
-	 $selwish=mysql_query("select * from wishlist where uid=$showwish");		
+	 $selwish=mysql_query("select * from wishlist where uid=$showwish and seminar_id in (select id from seminar where status=1)");		
 	 if(mysql_num_rows($selwish)>0)
 	{
 	 while($fetwish=mysql_fetch_array($selwish))		
@@ -559,20 +603,20 @@ elseif($_REQUEST['kon']=="wishlist")
 	  $numrow=mysql_num_rows($selsemidetail);
 	  if($numrow>=1)
 	  {
-	  $selsemiphoto=mysql_query("select * from seminar_photos where seminar_id=$fetwish[seminar_id]");		
+	  $selsemiphoto=mysql_fetch_array(mysql_query("select * from seminar_photos where seminar_id=$fetwish[seminar_id]"));		
 ?>		
         <div class="row noMargin main_row">
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">		
                 <div id="myCarousel" class="carousel-small carousel carousel-width slide" data-ride="carousel">					
                 <!-- Indicators -->		
-                    <ol class="carousel-indicators carousel-indicators-small">
-                        <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-                        <li data-target="#myCarousel" data-slide-to="1"></li>		
-                        <li data-target="#myCarousel" data-slide-to="2"></li>		
-                    </ol>					
+                    					
                 <!-- Wrapper for slides -->	
                     <div class="carousel-inner carousel-inner-small" role="listbox">
-                            <?php						
+					<div class="item item-small active">					
+                            <img src="../img/<?php echo $selsemiphoto['image'] ?>"  style="transform:rotate(<?php echo $selsemiphoto['rotateval']; ?>deg)" alt="Chania" >					
+                      </div>
+                            <?php
+						/*							
                             $i=0;						
                             while($fetsemiphoto=mysql_fetch_array($selsemiphoto))	
                                 {					
@@ -584,16 +628,16 @@ elseif($_REQUEST['kon']=="wishlist")
                             <?php		
                                 }				
                                 $i=0;			
-                            ?>				
+                          */  ?>				
                     </div>			
                 <!-- Left and right controls -->	
                     <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">					  
-                        <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>					 
+                       	 
                         <span class="sr-only">
 前</span>				
                     </a>					
                     <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
-                        <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>					  
+                       					  
                         <span class="sr-only">
 次</span>			
                     </a>				
@@ -601,7 +645,8 @@ elseif($_REQUEST['kon']=="wishlist")
             </div>				
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 wish-border wish_detail">			
                 <h4>					
-                    <a href="infomation.php?id=<?php echo $fetwish['seminar_id']; ?>" class=""><?php $marutra = explode('"',translate(str_replace(" ","+",$fetsemidetail['title']))); echo $marutra[1] ; ?></a>				
+                   <!--<a href="infomation.php?id=<?php echo $fetwish['seminar_id']; ?>" class=""><?php $marutra = explode('"',translate(str_replace(" ","+",$fetsemidetail['title']))); echo $marutra[1] ; ?></a>-->	
+					<a href="<?php if($fetsemidetail['status']==1 && $fetsemidetail['approval_status']=='approved' ) { echo "infomation.php?id=$fetsemidetail[id]"; } else { echo "#";} ?>"><?php echo $fetsemidetail['title']; ?></a>
                 </h4>	
                 <span><?php $marutra = explode('"',translate(str_replace(" ","+",$fetsemidetail['tagline']))); echo $marutra[1] ; ?></span>
                 <!--<div class="bottom-margin-10"></div>-->
@@ -633,7 +678,7 @@ if($_REQUEST['kon']=="seminarstatus")
   $bookseminar=mysql_fetch_array(mysql_query("select * from seminar_booking where id='".$bookid."'"));
   $userdetail=mysql_fetch_array(mysql_query("select * from user where id='".$bookseminar['uid']."'"));
   $seminardetail=mysql_fetch_array(mysql_query("select * from seminar where id='".$bookseminar['seminar_id']."'"));
-  if($status=='declined')
+  if($_REQUEST['status'] == "declined")
   {
 	$fetseminar=mysql_fetch_array(mysql_query("select * from seminar where id='".$bookseminar['seminar_id']."'"));
     $totalseats= $fetseminar['total_booked_seat']-$bookseminar['book_seat'];
@@ -651,7 +696,7 @@ if($_REQUEST['kon']=="seminarstatus")
 			$subject = "セミナー予約チケット";
 			$headers = 'MIME-Version: 1.0' . "\r\n";
 			$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-			$headers .= 'From: <creadigol.in@gmail.com>' . "\r\n";
+			$headers .= 'From:meeto.japan@gmail.com';
 			
 			$message  = '<html>';	
 			$message .= '<body>';
@@ -760,8 +805,10 @@ if($_REQUEST['kon']=="review")
 								while($fetreview=mysql_fetch_array($semireview))
 								  {?>
 									<span class="review-user">
-										<label><?php echo $fetreview['fname']; ?></label>
-										<p><i class="fa fa-star" aria-hidden="true"></i><?echo $fetreview['notes'];?></p>
+									 
+										<label><?php $marutra = explode('"',translate(str_replace(" ","+",$fetreview['fname']))); echo $marutra[1]; ?></label>
+										
+										<p><i class="fa fa-star" aria-hidden="true"></i><?php $marutra = explode('"',translate(str_replace(" ","+",$fetreview['notes']))); echo $marutra[1]; ?></p>
 									</span>  
 									<?php
 						             }  
@@ -781,4 +828,8 @@ if($_REQUEST['kon']=="review")
                    </table>
 	<?
 } 
+if($_REQUEST['kon']=="facebookjp")
+{
+   $_SESSION['jpmeetou']['facebookjp']='loginjp';
+}
 ?>

@@ -70,7 +70,7 @@
                                     </thead>
                                     <tbody>
 									<?
-										$query=mysql_query("select * from seminar");
+										$query=mysql_query("select * from seminar order by id DESC");
 										while($data=mysql_fetch_array($query)){
 											$detailquery = mysql_query("select * from user where id='".$data['uid']."' ");
 											$detaildata=mysql_fetch_array($detailquery);

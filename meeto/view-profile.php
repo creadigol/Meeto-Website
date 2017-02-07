@@ -350,10 +350,11 @@ a.dashboard_menu, a.dashboard_menu:hover{
 									  ?>
 									  <thead>
                                         <tr>
-                                            
-                                            <th><center>Reviews</center></th>
+                                            <th><center>Username</center></th> 
 											<th><center>Seminar</center></th>
-											<th><center>Username</center></th>   
+                                            <th><center>Reviews</center></th>
+											
+											  
                                         </tr>
 									
                                     </thead>
@@ -362,9 +363,11 @@ a.dashboard_menu, a.dashboard_menu:hover{
 										?>
                                     <tbody>
                                         <tr class="odd gradeX">
-											<td><?php echo $fetreview['notes']; ?></td>
-                                            <td><?php echo $seminar['title']; ?></td>
-                                            <td><?php echo $user['fname'].$user['lname']; ?></td>
+											 <td><?php echo $user['fname'].$user['lname']; ?></td>
+											 <td><?php echo $seminar['title']; ?></td>
+											 <td><?php echo $fetreview['notes']; ?></td>
+                                            
+                                           
                                         </tr>
 									<?php
 										

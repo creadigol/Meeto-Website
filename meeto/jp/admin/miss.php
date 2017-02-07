@@ -47,9 +47,15 @@ if($_REQUEST['kon']=="setcity")
 	
 	if($_REQUEST['kon'] =='facilitystatus')
 	{
-		$deletesam=mysql_query("UPDATE `seminar_facility` SET status=$_REQUEST[status] WHERE `id` = $_REQUEST[id] ");
-		
-		
+		$deletesam=mysql_query("UPDATE `seminar_facility` SET status=$_REQUEST[status] WHERE `id` = $_REQUEST[id] ");	
+	}
+	if($_REQUEST['kon'] =='attendeesstatus')
+	{
+		$deletesam=mysql_query("UPDATE `seminar_purpose` SET status=$_REQUEST[status] WHERE `id` = $_REQUEST[id] ");
+	}
+	if($_REQUEST['kon'] =='industrystatus')
+	{
+		$deletesam=mysql_query("UPDATE `seminar_industry` SET status=$_REQUEST[status] WHERE `id` = $_REQUEST[id] ");
 	}
 	
 	if($_REQUEST['kon'] =='hostseminar')
@@ -100,7 +106,7 @@ if($_REQUEST['kon']=="setcity")
 											?>
 											</td>
                                             <td><? $marutra = explode('"',translate(str_replace(" ","+",$data['title']))); echo $marutra[1] ; ?></td>
-                                            <td><? $mff= $data['description']." ".$detaildata['lname']; $marutra = explode('"',translate(str_replace(" ","+",$mff))); echo $marutra[1];?></td>
+                                            <td><? $mff= $data['description']; $marutra = explode('"',translate(str_replace(" ","+",$mff))); echo $marutra[1];?></td>
                                             <td><? $marutra = explode('"',translate(str_replace(" ","+",$data['total_seat']))); echo $marutra[1] ; ?></td>
                                             <td><span style="cursor:pointer;" onclick="deletesam('<?php echo $data['id']; ?>','<?php echo $data['uid']; ?>');" ><i class="fa fa-trash-o" aria-hidden="true"></i></span></td>
                                         </tr>
@@ -191,16 +197,14 @@ if($_REQUEST['kon'] =='user')
                                         </div>
 										
 										<div class="form-group">
-                                            <label>
-会社の説明</label>
+                                            <label>会社の説明</label>
                                             <input class="form-control" type="text" name="cdescription" value="<?php $marutra = explode('"',translate(str_replace(" ","+",$companydata['description']))); echo $marutra[1]; ?>">
                                             <p class="help-block error"></p>
                                         </div>
 										</div>
 										<div class="col-lg-6">
 										 <div class="form-group">
-                                            <label>
-国</label>
+                                            <label>国</label>
                                             <select class="form-control" name="country" id="country" class="country" onchange="user('<?php echo $_REQUEST['user_id']; ?>',this.value);">
 											<?php
 													
@@ -307,14 +311,12 @@ if($_REQUEST['kon'] =='user')
                                             <p class="help-block error"><?php $marutra = explode('"',translate(str_replace(" ","+", $erroraddress))); echo $marutra[1]; ?></p>
                                         </div>
 										 <div class="form-group">
-                                            <label>
-あなたについて</label>
+                                            <label>あなたについて</label>
                                             <input class="form-control" type="text" name="about" value="<?php $marutra = explode('"',translate(str_replace(" ","+",$userdata['yourself']))); echo $marutra[1] ; ?>">
                                             <p class="help-block error"><?php $marutra = explode('"',translate(str_replace(" ","+",$errorabout))); echo $marutra[1] ; ?></p>
                                         </div>
 										<div class="form-group">
-                                            <label>
-既知の言語</label>
+                                            <label>既知の言語</label>
 											<?php 
 											$queryl=mysql_query("select * from user_language where uid='".$data[id]."' ");
 											while($langname=mysql_fetch_array($queryl))
@@ -409,8 +411,7 @@ if($_REQUEST['kon'] =='seminardetails')
                                             <p class="help-block error"><?php echo $errortitle; ?></p>
                                         </div>
 										<div class="form-group">
-                                            <label>
-説明</label>
+                                            <label>説明</label>
                                             <input class="form-control" type="text" name="description" value="<?php $marutra = explode('"',translate(str_replace(" ","+",$data['description']))); echo $marutra[1] ; ?>">
                                             <p class="help-block error"><?php $marutra = explode('"',translate(str_replace(" ","+",$errordescription))); echo $marutra[1] ; ?></p>
                                         </div>
@@ -420,32 +421,27 @@ if($_REQUEST['kon'] =='seminardetails')
                                             <p class="help-block"><?php $marutra = explode('"',translate(str_replace(" ","+",$errorname))); echo $marutra[1] ; ?></p>
                                         </div>
 										<div class="form-group">
-                                            <label>
-ホストメール</label>
+                                            <label>ホストメール</label>
                                             <input class="form-control" type="text" name="hostemail" value="<?php echo $data['contact_email']; ?>">
                                             <p class="help-block"><?php $marutra = explode('"',translate(str_replace(" ","+",$erroremail))); echo $marutra[1] ; ?></p>
                                         </div>
-										<div class="form-group">
-                                            <label>
-資格</label>
+										<!--<div class="form-group">
+                                            <label>資格</label>
                                             <input class="form-control" type="text" name="qualification" value="<?php $marutra = explode('"',translate(str_replace(" ","+",$data['qualification']))); echo $marutra[1] ; ?>">
                                             <p class="help-block"></p>
-                                        </div>
+                                        </div>-->
                                         <div class="form-group">
-                                            <label>
-総座席</label>
+                                            <label>総座席</label>
                                             <input class="form-control" type="text" name="total_seat" value="<?php echo $data['total_seat']; ?>" readonly>
                                             <p class="help-block"></p>
                                         </div>
 										<div class="form-group">
-                                            <label>
-予約された座席</label>
+                                            <label>予約された座席</label>
                                             <input class="form-control" type="text" name="booked_seat" value="<?php echo $data['total_booked_seat']; ?>" readonly>
                                             <p class="help-block error"><?php $marutra = explode('"',translate(str_replace(" ","+",$errorcontact))); echo $marutra[1] ; ?></p>
                                         </div>
 										 <div class="form-group">
-                                            <label>
-写真</label><br>
+                                            <label>写真</label><br>
                                             <?
 												$queryimage=mysql_query("select * from `seminar_photos` where `seminar_id` = '".$data[id]."' ");
 												$image=mysql_fetch_array($queryimage);
@@ -619,7 +615,7 @@ if($_REQUEST['kon'] =='seminardetails')
                                             <input class="form-control" type="text" name="type" value="<?php $marutra = explode('"',translate(str_replace(" ","+",$type['name']))); echo $marutra[1] ; ?>" readonly>
                                             <p class="help-block error"><?php $marutra = explode('"',translate(str_replace(" ","+",$errortype))); echo $marutra[1] ; ?></p>
                                         </div>
-										<div class="form-group">
+										<!--<div class="form-group">
                                             <label>
 目的</label>
 											<?php 
@@ -628,7 +624,7 @@ if($_REQUEST['kon'] =='seminardetails')
 											?>
                                             <input class="form-control" type="text" name="purpose" value="<?php $marutra = explode('"',translate(str_replace(" ","+",$purpose['name']))); echo $marutra[1] ; ?>" readonly>
                                             <p class="help-block error"><?php $marutra = explode('"',translate(str_replace(" ","+",$errorpurpose))); echo $marutra[1] ; ?></p>
-                                        </div>
+                                        </div>-->
 										<div class="form-group">
                                             <label>
 連絡先番号。</label>
@@ -665,18 +661,15 @@ if($_REQUEST['kon'] =='seminardetails')
                     <!-- Advanced Tables -->
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                             
-セミナー施設
+                             セミナー施設
                         </div>
                         <div class="panel-body">
                             <div class="table-responsive">
                                 <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                     <thead>
                                         <tr>
-                                            <th> 
-名</th>
-                                            <th>
-状態</th>
+                                            <th> 名</th>
+                                            <th>状態</th>
                                             
                                         </tr>
                                     </thead>
@@ -698,6 +691,116 @@ if($_REQUEST['kon'] =='seminardetails')
 											}else{
 											?>
 												<i class="fa fa-thumbs-o-down" onclick="facilitystatus('1','<?php echo $data['id']; ?>','<?php echo $data['seminar_id']; ?>');" title="Inactive" style="color:red;cursor:pointer;"></i>
+											<? } ?>
+											</center></td>
+                                        </tr>
+									<?
+										}
+									?>
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <!--End Advanced Tables -->
+                </div>
+            </div>
+<?php
+	}
+	if($_REQUEST['kon'] =='attendees')
+	{  
+?>
+	<div class="row">
+                <div class="col-md-12">
+                    <!-- Advanced Tables -->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                             セミナー参加者
+                        </div>
+                        <div class="panel-body">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                    <thead>
+                                        <tr>
+                                            <th>名</th>
+                                            <th>状態</th>
+                                            
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+									<?
+										$query=mysql_query("select * from `seminar_purpose` where seminar_id='$_REQUEST[sid]' ");
+										while($data=mysql_fetch_array($query)){
+											
+											$detailquery = mysql_query("select * from `purpose` where id='".$data['attendees_id']."' ");
+											$detaildata=mysql_fetch_array($detailquery);
+									?>
+                                        <tr class="odd gradeX">
+											
+                                            <td><? $marutra = explode('"',translate(str_replace(" ","+",$detaildata['name']))); echo $marutra[1] ; ?></td>
+                                            <td><center><? if($data['status']=='1'){
+											?>
+												<i class="fa fa-thumbs-o-up" title="Active" style="color:green;cursor:pointer;" onclick="attendeesstatus('0','<?php echo $data['id']; ?>','<?php echo $data['seminar_id']; ?>');"></i>
+											<?
+											}else{
+											?>
+												<i class="fa fa-thumbs-o-down" onclick="attendeesstatus('1','<?php echo $data['id']; ?>','<?php echo $data['seminar_id']; ?>');" title="Inactive" style="color:red;cursor:pointer;"></i>
+											<? } ?>
+											</center></td>
+                                        </tr>
+									<?
+										}
+									?>
+                                    </tbody>
+                                </table>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <!--End Advanced Tables -->
+                </div>
+            </div>
+<?php
+	}
+if($_REQUEST['kon'] =='industrytype')
+	{  
+?>
+	<div class="row">
+                <div class="col-md-12">
+                    <!-- Advanced Tables -->
+                    <div class="panel panel-default">
+                        <div class="panel-heading">
+                             業種
+                        </div>
+                        <div class="panel-body">
+                            <div class="table-responsive">
+                                <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                    <thead>
+                                        <tr>
+                                            <th>名</th>
+                                            <th>状態</th>
+                                            
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+									<?
+										$query=mysql_query("select * from `seminar_industry` where seminar_id='$_REQUEST[sid]'");
+										while($data=mysql_fetch_array($query)){
+											
+											$detailquery = mysql_query("select * from `industry` where id='".$data['industry_id']."' ");
+											$detaildata=mysql_fetch_array($detailquery);
+									?>
+                                        <tr class="odd gradeX">
+											
+                                            <td><? $marutra = explode('"',translate(str_replace(" ","+",$detaildata['name']))); echo $marutra[1] ; ?></td>
+                                            <td><center><? if($data['status']=='1'){
+											?>
+												<i class="fa fa-thumbs-o-up" title="Active" style="color:green;cursor:pointer;" onclick="industrystatus('0','<?php echo $data['id']; ?>','<?php echo $data['seminar_id']; ?>');"></i>
+											<?
+											}else{
+											?>
+												<i class="fa fa-thumbs-o-down" onclick="industrystatus('1','<?php echo $data['id']; ?>','<?php echo $data['seminar_id']; ?>');" title="Inactive" style="color:red;cursor:pointer;"></i>
 											<? } ?>
 											</center></td>
                                         </tr>

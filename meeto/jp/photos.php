@@ -58,9 +58,15 @@ $rowusercompany=mysql_fetch_array(mysql_query("select * from user_company where 
 					<a href="Editprofile.php">
 プロファイル編集</a>
 				</li>						
-				<li class="activet">						
+			<?php 
+           if($_SESSION['jpmeetou']['type']==1)
+            {?>   
+				<li>						
 					<a href="photos.php" class="">写真</a>	
-				</li>			
+				</li>
+			<?
+			}
+		  ?>			
 				<li>	
 					<a href="Verification.php" class="">
 信頼と検証</a>				
@@ -99,7 +105,7 @@ $rowusercompany=mysql_fetch_array(mysql_query("select * from user_company where 
 							<div class="top-margin-10"></div>
 							
 							<button type="submit" name="subbtn" class="blue-button border-n">
-設定を保存する</button>
+写真を更新する</button>
 							
 							<div class="top-margin-10">&nbsp;</div>
 							</center>

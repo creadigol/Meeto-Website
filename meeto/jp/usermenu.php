@@ -11,8 +11,18 @@
             <li><a class="wishlist" href="my-wish-list.php">
 マイウィッシュリスト</a></li>
             <li><a class="Editprofile_menu" href="Editprofile.php">プロフィール</a></li>
-            <li><a class="account_menu" href="account.php">
-パスワードを変更する</a></li>
+			<?php
+				$fbid = mysql_fetch_array(mysql_query("select * from user where id='".$_SESSION['jpmeetou']['id']."'"));
+				if($fbid['type']==2)
+				{
+					
+				}else{
+			?>
+            <li><a class="account_menu" href="account.php">パスワードを変更する</a></li>
+			<?php
+			}
+			?>
+
         </ul>
     </div>
 </div> 

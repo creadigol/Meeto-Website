@@ -115,6 +115,27 @@ class User extends CI_Controller {
 							$res1['type']=$row->type;
 							$value=$res1;
 						}
+						
+						$key= md5($email);
+						$url = "http://www.meeto.jp/Verification.php?uid=".$row->id."&key=".$key;
+						$subject = "Email Verification";
+						$to = $email;
+						$headers = 'MIME-Version: 1.0' . "\r\n";
+						$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+						$headers .= 'From:meeto.japan@gmail.com';
+						$message  = '<html>';	
+						$message .= '<body>';
+						$message .= '<h2>To activate your account please click on Activate buttton</h2>';
+						$message .= '<table>';
+						$message .= '<tr>';
+						$message .= '<td align="center" width="300" height="40" bgcolor="#000091" style="border-radius:5px;color:#ffffff;display:block"><a href='.trim($url).' style="color:#ffffff;font-size:16px;font-weight:bold;font-family:Helvetica,Arial,sans-serif;text-decoration:none;line-height:40px;width:100%;display:inline-block">Activate Your Account</a></td>';
+						$message .= '</tr>';
+						$message .= '</table>';
+						$message .= '</div>';
+						$message .= '</body>';
+						$message .= '</html>';
+						$sentmail = mail($to,$subject,$message,$headers);
+						
 						$res['status_code']=1;
 						if($lang=='ja')
 							$res_message = '登録に成功';
@@ -197,7 +218,7 @@ class User extends CI_Controller {
 								$data1['phoneno'] = $result[0]->{'phoneno'};
 								$data1['address'] = $result[0]->{'address'};
 								$data1['yourself'] = $result[0]->{'yourself'};
-								$data1['photo'] = "http://creadigol.biz/meeto/img/".$result[0]->{'photo'};
+								$data1['photo'] = "http://www.meeto.jp/img/".$result[0]->{'photo'};
 							}
 							else
 							{
@@ -261,6 +282,7 @@ class User extends CI_Controller {
 								$data1['language'] = "";
 							}
 						}
+						
 						$res['status_code']=1;
 						if($lang=='ja')
 							$res_message = 'ローカルで正常にログイン';
@@ -295,6 +317,7 @@ class User extends CI_Controller {
 							$data1['email'] = $value->email;
 							$data1['email_verify'] = $value->email_verify;
 							
+							$query = $this->db->query("update user_detail set photo='".$this->input->post('photo')."' where uid='".$uid."' ");
 							$query = $this->db->query("select * from user_detail where uid='".$uid."' ");
 							if($result = $query->result())
 							{
@@ -303,7 +326,7 @@ class User extends CI_Controller {
 								$data1['phoneno'] = $result[0]->{'phoneno'};
 								$data1['address'] = $result[0]->{'address'};
 								$data1['yourself'] = $result[0]->{'yourself'};
-								$data1['photo'] = "http://creadigol.biz/meeto/img/".$result[0]->{'photo'};
+								$data1['photo'] = $result[0]->{'photo'};
 							}
 							else
 							{
@@ -377,12 +400,86 @@ class User extends CI_Controller {
 					}
 					else
 					{
-						$res['status_code']=2;
-						if($lang=='ja')
-							$res_message = 'FacebookのID欠落しています';
-						else
-							$res_message = 'facebook id missing';
-						$res['message']=$res_message;
+						$fname=$this->input->post('fname');
+						$lname=$this->input->post('lname');
+						$email=$this->input->post('email');
+						$photo=$this->input->post('photo');
+						
+						$query = $this->db->query("select * from user where email='".$email."' ");
+						if($result = $query->result() && !empty($email))
+						{
+							$res['status_code']=2;
+							if($lang=='ja')
+								$res_message = '別のアカウントで添付されたこのメールをもう一度お試しください。';
+							else
+								$res_message = 'This Email id attached with other account.';
+							$res['message']=$res_message;
+						}
+						else						
+						{
+							$id="";
+							$password="";
+							$fb_id=$this->input->post('fb_id');
+							
+							if($this->User_model->create_users($id,$fname,$lname,$email,$password,$type))
+							{
+								$query=$this->db->query("select * from user where fb_id like '".$fb_id."' ");
+								foreach($query->result() as $row)
+								{ 
+									$data = array(
+									'uid' => $row->id,
+									'photo' => $photo,
+									);
+									$this->db->insert('user_detail', $data);	
+									
+									$res1['uid']=$row->id;
+									$res1['fb_id']=$row->fb_id;
+									$res1['fname']=$row->fname;
+									$res1['lname']=$row->lname;
+									$res1['email']=$row->email;
+									$res1['photo']=$photo;
+									$res1['type']=$row->type;
+									$value=$res1;
+								}
+								
+								$key= md5($email);
+								$url = "http://www.meeto.jp/Verification.php?uid=".$row->id."&key=".$key;
+								$subject = "Email Verification";
+								$to = $email;
+								$headers = 'MIME-Version: 1.0' . "\r\n";
+								$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+								$headers .= 'From:meeto.japan@gmail.com';
+								$message  = '<html>';	
+								$message .= '<body>';
+								$message .= '<h2>To activate your account please click on Activate buttton</h2>';
+								$message .= '<table>';
+								$message .= '<tr>';
+								$message .= '<td align="center" width="300" height="40" bgcolor="#000091" style="border-radius:5px;color:#ffffff;display:block"><a href='.trim($url).' style="color:#ffffff;font-size:16px;font-weight:bold;font-family:Helvetica,Arial,sans-serif;text-decoration:none;line-height:40px;width:100%;display:inline-block">Activate Your Account</a></td>';
+								$message .= '</tr>';
+								$message .= '</table>';
+								$message .= '</div>';
+								$message .= '</body>';
+								$message .= '</html>';
+								$sentmail = mail($to,$subject,$message,$headers);
+								
+								$res['status_code']=1;
+								if($lang=='ja')
+									$res_message = '登録に成功';
+								else
+									$res_message = 'Registration successful';
+								$res['message']=$res_message;
+								$res['user']=$value;
+							}
+							else
+							{
+								$res['status_code']=0;
+								if($lang=='ja')
+									$res_message = '成功していない登録';
+								else
+									$res_message = 'Registration not successfully';
+								$res['message']=$res_message;
+							}
+						}
 					}
 			}
 			else
@@ -426,13 +523,14 @@ class User extends CI_Controller {
 		{
 			$query=$this->db->query("select count(*) as c from user where id='".$id."' and password='".md5($password)."' ");
 			$result=$query->result();
+			
 			if($result[0]->{'c'}==0)
 			{
 				$res['status_code']=0;
 				if($lang=='ja')
 					$res_message = 'IDまたはパスワードが一致しません';
 				else
-					$res_message = 'Id or Password Does not match';
+					$res_message = 'Old Password Does not match';
 				$res['message']=$res_message;
 			}
 			else
@@ -475,19 +573,37 @@ class User extends CI_Controller {
 		}
 		else
 		{
-			$query=$this->db->query("select count(*) as c from user where email='".$email."' ");
+			$query=$this->db->query("select count(*) as c from user where email='".$email."' and type='1' ");
 			$result=$query->result();
 			if($result[0]->{'c'}==0)
 			{
-				$res['status_code']=0;
-				if($lang=='ja')
-					$res_message = '電子メールは存在しません。';
+				$query=$this->db->query("select count(*) as c from user where email='".$email."' and type='2' ");
+				$result=$query->result();
+				if($result[0]->{'c'}==0)
+				{
+					$res['status_code']=0;
+					if($lang=='ja')
+						$res_message = '電子メールは存在しません。';
+					else
+						$res_message = 'email does not exist';
+					$res['message']=$res_message;	
+				}
 				else
-					$res_message = 'email does not exist';
-				$res['message']=$res_message;
+				{
+					$res['status_code']=0;
+					if($lang=='ja')
+						$res_message = '電子メールは存在しません。';
+					else
+						$res_message = 'This Email ID Attach with facebook account.';
+					$res['message']=$res_message;
+				}
 			}
 			else
 			{
+				$query1 = $this->db->query("select * from user where email='".$email."' and type ='1'");
+				$result1=$query1->result();
+				$uid=$result1[0]->{'id'};
+				
 				function generatePassword($length = 8) {
 					$chars = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
 					$count = mb_strlen($chars);
@@ -500,14 +616,17 @@ class User extends CI_Controller {
 				
 				$newpassword = generatePassword();
 				
-				if($this->User_model->sendmail($email,$newpassword))
+				if($this->User_model->sendmail($email,$newpassword,$uid))
 				{
+					
 					$res['status_code']=1;
 					if($lang=='ja')
-						$res_message = 'メールすでに存在しています';
+						$res_message = 'あなたの登録したメールで送信されたメールあなたのメールをチェックしてください';
 					else
-						$res_message = 'あなたのメールをチェックしてくださいメールを送信';
+						$res_message = 'Mail Sent on Your Registered Email Please Check Your Email';
 					$res['message']=$res_message;
+					
+					
 				}
 				else
 				{
@@ -541,6 +660,7 @@ class User extends CI_Controller {
 						$data1['fname'] = $value->fname;
 						$data1['lname'] = $value->lname;
 						$data1['email'] = $value->email;
+						$data1['email_verify'] = $value->email_verify;
 						
 						$query = $this->db->query("select * from user_detail where uid='".$uid."' ");
 						if($result = $query->result())
@@ -553,7 +673,14 @@ class User extends CI_Controller {
 							$data1['countryid'] = $result[0]->{'countryid'};
 							$data1['stateid'] = $result[0]->{'stateid'};
 							$data1['cityid'] = $result[0]->{'cityid'};
-							$data1['photo'] = "http://creadigol.biz/meeto/img/".$result[0]->{'photo'};
+							if($value->type=='2')
+							{
+								$data1['photo'] = $result[0]->{'photo'};
+							}
+							else
+							{
+								$data1['photo'] = "http://www.meeto.jp/img/".$result[0]->{'photo'};
+							}
 						}
 						else
 						{
@@ -606,14 +733,16 @@ class User extends CI_Controller {
 								
 								if($result1 = $query1->result())
 								{
-									$data1['language']['language_name_'.$i] = $result1[0]->{'name'};
+									$datal[$i]['language'] = $result1[0]->{'name'};
 								}
 								else
 								{
-									$data1['language'] = "";
+									$datal['language'] = "";
 								}
 								$i++;
 							}
+							$data1['language'] = $datal;
+							
 						}
 						else
 						{
@@ -654,23 +783,38 @@ class User extends CI_Controller {
 		{
 			if(!empty($uid))
 			{
-				if($data = $this->User_model->userprofile($uid,$type))
+				$email = $this->input->post('email');
+				$query = $this->db->query("select * from user where email='".$email."' and id!='".$uid."' ");
+				if($result = $query->result())
 				{
-					$res['status_code']=1;
+					$res['status_code']=0;
 					if($lang=='ja')
-						$res_message = 'ユーザーの詳細が正常に更新されました。';
+						$res_message = '別のアカウントで添付されたこのメールをもう一度お試しください。';
 					else
-						$res_message = 'User Detail Updated Successfully.';
+						$res_message = 'This Email Attched With Another Accound Please Try Another.';
 					$res['message']=$res_message;
 				}
 				else
 				{
-					$res['status_code']=0;
-					if($lang=='ja')
-						$res_message = 'レコードが見つかりません。';
+					if($data = $this->User_model->userprofile($uid,$type))
+					{
+						$res['status_code']=1;
+						if($lang=='ja')
+							$res_message = 'ユーザーの詳細が正常に更新されました。';
+						else
+							$res_message = 'User Detail Updated Successfully.';
+						$res['message']=$res_message;
+					}
 					else
-						$res_message = 'Record Not Found.';
-					$res['message']=$res_message;
+					{
+						$res['status_code']=0;
+						if($lang=='ja')
+							$res_message = 'レコードが見つかりません。';
+						else
+							$res_message = 'Record Not Found.';
+						$res['message']=$res_message;
+					}
+
 				}
 			}
 			else
@@ -716,7 +860,7 @@ class User extends CI_Controller {
 					$query = $this->db->query("select * from seminar_photos where seminar_id='".$value->id."' ");
 					if($result = $query->result())
 					{
-						$data1[$i]['photo'] = "http://creadigol.biz/meeto/img/".$result[0]->{'image'};
+						$data1[$i]['photo'] = "http://www.meeto.jp/img/".$result[0]->{'image'};
 					}
 					else
 					{
@@ -770,24 +914,27 @@ class User extends CI_Controller {
 					$data1[$i]['booking_id'] = $value->id;
 					$data1[$i]['uid'] = $value->uid;
 					$data1[$i]['from_date'] = $value->from_date;
+					$data1[$i]['to_date'] = $value->to_date;
 					$data1[$i]['status'] = $value->approval_status;
 					$data1[$i]['booking_no'] = $value->booking_no;
 					$data1[$i]['book_seat'] = $value->book_seat;
+					$data1[$i]['created_date'] = $value->created_date;
+					$data1[$i]['message'] = $value->message;
 					
-					$query = $this->db->query("select * from user where id='".$value->uid."' ");
+					$query = $this->db->query("select * from seminar where id='".$value->seminar_id."' ");
 					if($result = $query->result())
 					{
-						$data1[$i]['host_name'] = $result[0]->{'fname'}." ".$result[0]->{'lname'};
+						$data1[$i]['host_name'] = $result[0]->{'hostperson_name'};
 					}
 					else
 					{
-						$data1[$i]['photo'] = "";
+						$data1[$i]['host_name'] = "";
 					}
 					
 					$query = $this->db->query("select * from seminar_photos where seminar_id='".$value->seminar_id."' ");
 					if($result = $query->result())
 					{
-						$data1[$i]['photo'] = "http://creadigol.biz/meeto/img/".$result[0]->{'image'};
+						$data1[$i]['photo'] = "http://www.meeto.jp/img/".$result[0]->{'image'};
 					}
 					else
 					{
@@ -856,16 +1003,20 @@ class User extends CI_Controller {
 					if($result = $query->result())
 					{
 						$data1[$i]['title'] = $result[0]->{'title'};
+						$data1[$i]['total_seat'] = $result[0]->{'total_seat'};
+						$data1[$i]['total_booked_seat'] = $result[0]->{'total_booked_seat'};
 					}
 					else
 					{
 						$data1[$i]['title'] = "";
+						$data1[$i]['total_seat'] = "";
+						$data1[$i]['total_booked_seat'] = "";
 					}
 					
-					$query = $this->db->query("select * from seminar_photos where seminar_id='".$value->seminar_id."' ");
+					$query = $this->db->query("select * from seminar_photos where seminar_id='".$value->seminar_id."' order by id ");
 					if($result = $query->result())
 					{
-						$data1[$i]['photo'] = "http://creadigol.biz/meeto/img/".$result[0]->{'image'};
+						$data1[$i]['photo'] = "http://www.meeto.jp/img/".$result[0]->{'image'};
 					}
 					else
 					{
@@ -972,6 +1123,7 @@ class User extends CI_Controller {
 		$lang=$this->input->post('lang');
 		$uid = $this->input->post('user_id');
 		$seminar_id = $this->input->post('seminar_id');
+		$booking_id = $this->input->post('booking_id');
 				
 		$uidquery=$this->db->query("select * from user where id = '".$uid."' ");
 		$uidresult=$uidquery->result();
@@ -988,8 +1140,27 @@ class User extends CI_Controller {
 			{
 				if(!empty($result))
 				{
-					$data = $this->User_model->deletebooking($uid,$seminar_id);
+					$seat = $seminarresult[0]->{'total_booked_seat'}+$result[0]->{'book_seat'};
+					$query=$this->db->query("update seminar set total_booked_seat='".$seat."' where id='".$seminar_id."'");
 					
+					$data = $this->User_model->deletebooking($uid,$seminar_id,$booking_id);
+					
+					$gcmData['sid'] = $seminarresult[0]->{'id'};
+					$gcmData['bid'] = $result[0]->{'id'};
+					$gcmData['sn'] = $seminarresult[0]->{'title'};
+					$gcmData['un'] = $uidresult[0]->{'fname'};
+					$gcmData['ty'] = SEMINAR_CANCEL;
+					
+					$gcmData1 = array(
+						'title'		=> 'Meeto',
+						//'isBackground' 	=> 'false',
+						//'flag'		=> '1',
+						'data'	=> $gcmData
+					);
+						
+					$ids = array( $user_data[0]->{'gcm_id'} );
+					$this->User_model->sendPushNotification($gcmData1, $ids);
+			
 					$res['status_code']=1;
 					if($lang=='ja')
 						$res_message = 'セミナーの予約削除されたに成功しました';
@@ -1132,11 +1303,12 @@ class User extends CI_Controller {
 		if($result=$query->result())
 		{
 			$key= md5($email);
-			$url = "http://www.creadigol.biz/meeto/Verification.php?uid=".$uid."&key=".$key;
+			$url = "http://www.meeto.jp/Verification_app.php?uid=".$uid."&key=".$key;
 			$subject = "Email Verification";
 			$to = $email;
 			$headers = 'MIME-Version: 1.0' . "\r\n";
 			$headers .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
+			$headers .= 'From:meeto.japan@gmail.com';
 			$message  = '<html>';	
 			$message .= '<body>';
 			$message .= '<h2>To activate your account please click on Activate buttton</h2>';
@@ -1234,7 +1406,7 @@ class User extends CI_Controller {
 					$data1['phoneno'] = $result[0]->{'phoneno'};
 					$data1['address'] = $result[0]->{'address'};
 					$data1['yourself'] = $result[0]->{'yourself'};
-					$data1['photo'] = "http://creadigol.biz/meeto/img/".$result[0]->{'photo'};
+					$data1['photo'] = "http://www.meeto.jp/img/".$result[0]->{'photo'};
 				}
 				else
 				{
@@ -1321,41 +1493,52 @@ class User extends CI_Controller {
 		$seminar_id = $this->input->post('seminar_id');
 		$review = $this->input->post('review');
 		
-		if(!empty($uid) && !empty($seminar_id) && !empty($review) )
+		$query = $this->db->query("select * from review where uid='".$uid."' and seminar_id='".$seminar_id."' ");
+		if($query->result())
 		{
-			if($data=$this->User_model->user_review($uid,$seminar_id,$review))
+			$res['status_code']=0;
+			if($lang=='ja')
+				$res_message = 'あなたはすでにこのセミナーのためのあなたのレビューを与えました';
+			else
+				$res_message = 'You already Gave Your Review For This Seminar';
+			$res['message']=$res_message;
+		}
+		else
+		{
+			if(!empty($uid) && !empty($seminar_id) && !empty($review) )
 			{
-				$res['status_code']=1;
-				if($lang=='ja')
-					$res_message = 'レビューは正常に追加します';
+				if($data=$this->User_model->user_review($uid,$seminar_id,$review))
+				{
+					$res['status_code']=1;
+					if($lang=='ja')
+						$res_message = 'レビューは正常に追加します';
+					else
+						$res_message = 'Review Added Successfully';
+					$res['message']=$res_message;
+				}
 				else
-					$res_message = 'Review Added Successfully';
-				$res['message']=$res_message;
+				{
+					$res['status_code']=0;
+					if($lang=='ja')
+						$res_message = '確認追加されていません';
+					else
+						$res_message = 'Review Not Added';
+					$res['message']=$res_message;
+				}
 			}
 			else
 			{
 				$res['status_code']=0;
 				if($lang=='ja')
-					$res_message = '確認追加されていません';
+					$res_message = 'パラメータ不足しています';
 				else
-					$res_message = 'Review Not Added';
+					$res_message = 'Parameter missing';
 				$res['message']=$res_message;
 			}
 		}
-		else
-		{
-			$res['status_code']=0;
-			if($lang=='ja')
-				$res_message = 'パラメータ不足しています';
-			else
-				$res_message = 'Parameter missing';
-			$res['message']=$res_message;
-		}
-		
 		echo json_encode($res);
 	}
-	
-	
+
 	public function user_review_detail()
 	{
 		$lang=$this->input->post('lang');
@@ -1400,7 +1583,7 @@ class User extends CI_Controller {
 					$query1 = $this->db->query("select * from seminar_photos where seminar_id='".$value->seminar_id."' ");
 					if($result1 = $query1->result())
 					{
-						$data1[$i]['seminar_pic'] = "http://creadigol.biz/meeto/img/".$result1[0]->{'image'};
+						$data1[$i]['seminar_pic'] = "http://www.meeto.jp/img/".$result1[0]->{'image'};
 					}
 					else
 					{
@@ -1450,7 +1633,7 @@ class User extends CI_Controller {
 		if($lang=="en")
 		{
 			$query="";$result="";$data="";
-			$query = $this->db->query("select * from language ");
+			$query = $this->db->query("select * from language where status = 1 ");
 			$result = $query->result();
 			if(!empty($result))
 			{
@@ -1465,7 +1648,7 @@ class User extends CI_Controller {
 			}
 			
 			$query="";$result="";$data="";
-			$query = $this->db->query("select * from seminar_type ");
+			$query = $this->db->query("select * from seminar_type where status = 1 ");
 			$result = $query->result();
 			if(!empty($result))
 			{
@@ -1480,7 +1663,7 @@ class User extends CI_Controller {
 			}
 			
 			$query="";$result="";$data="";
-			$query = $this->db->query("select * from facility ");
+			$query = $this->db->query("select * from facility where status = 1 ");
 			$result = $query->result();
 			if(!empty($result))
 			{
@@ -1495,7 +1678,7 @@ class User extends CI_Controller {
 			}
 			
 			$query="";$result="";$data="";
-			$query = $this->db->query("select * from industry ");
+			$query = $this->db->query("select * from industry where status = 1 ");
 			$result = $query->result();
 			if(!empty($result))
 			{
@@ -1510,7 +1693,7 @@ class User extends CI_Controller {
 			}
 			
 			$query="";$result="";$data="";
-			$query = $this->db->query("select * from purpose ");
+			$query = $this->db->query("select * from purpose where status = 1 ");
 			$result = $query->result();
 			if(!empty($result))
 			{
@@ -1527,7 +1710,7 @@ class User extends CI_Controller {
 		else if($lang=="ja")
 		{
 			$query="";$result="";$data="";
-			$query = $this->db->query("select * from language ");
+			$query = $this->db->query("select * from language where status = 1 ");
 			$result = $query->result();
 			if(!empty($result))
 			{
@@ -1542,7 +1725,7 @@ class User extends CI_Controller {
 			}
 			
 			$query="";$result="";$data="";
-			$query = $this->db->query("select * from seminar_type ");
+			$query = $this->db->query("select * from seminar_type where status = 1 ");
 			$result = $query->result();
 			if(!empty($result))
 			{
@@ -1557,7 +1740,7 @@ class User extends CI_Controller {
 			}
 			
 			$query="";$result="";$data="";
-			$query = $this->db->query("select * from facility ");
+			$query = $this->db->query("select * from facility where status = 1 ");
 			$result = $query->result();
 			if(!empty($result))
 			{
@@ -1572,7 +1755,7 @@ class User extends CI_Controller {
 			}
 			
 			$query="";$result="";$data="";
-			$query = $this->db->query("select * from industry ");
+			$query = $this->db->query("select * from industry where status = 1 ");
 			$result = $query->result();
 			if(!empty($result))
 			{
@@ -1587,7 +1770,7 @@ class User extends CI_Controller {
 			}
 			
 			$query="";$result="";$data="";
-			$query = $this->db->query("select * from purpose ");
+			$query = $this->db->query("select * from purpose where status = 1 ");
 			$result = $query->result();
 			if(!empty($result))
 			{

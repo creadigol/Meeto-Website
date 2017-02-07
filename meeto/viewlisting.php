@@ -25,8 +25,7 @@ $row = mysql_fetch_array(mysql_query("select * from `seminar_booking` where semi
 	      
 	        <div class="col-md-3">				
 	           <div class="top-margin-20">
-         	   </div>					
-								
+         	   </div>							
 				<div class="top-margin-30"></div>
 			</div>				
 				<div class="col-md-8">	
@@ -34,17 +33,14 @@ $row = mysql_fetch_array(mysql_query("select * from `seminar_booking` where semi
 				
 				  <div class="row hedding-row tabcontent" id="Listings" style="display:block;">				
 						<div class="col-md-12 Required-head listing-menu-button">
-							
+						 <h4>Your Seminar Booking History</h4>	
 						</div>
 						<div class="clearfix"></div>	
 						<div class="row" id="viewlisting">
 							
 						</div>
 						<div class="clearfix"></div>
-				   </div>
-				   
-				
-						
+				   </div>	
 				</div>
 			
 						

@@ -1,9 +1,9 @@
 <?php 
 require_once('db.php');    
 require_once('condition.php'); 
-$row = mysql_fetch_array(mysql_query("select * from user where id = '".$_SESSION['id']."'")); 
-$rowuserdetail= mysql_fetch_array(mysql_query("select * from user_detail where uid = '".$_SESSION['id']."'")); 
-$rowusercompany=mysql_fetch_array(mysql_query("select * from user_company where uid = '".$_SESSION['id']."'")); 
+$row = mysql_fetch_array(mysql_query("select * from user where id = '".$_SESSION['jpmeetou']['id']."'")); 
+$rowuserdetail= mysql_fetch_array(mysql_query("select * from user_detail where uid = '".$_SESSION['jpmeetou']['id']."'")); 
+$rowusercompany=mysql_fetch_array(mysql_query("select * from user_company where uid = '".$_SESSION['jpmeetou']['id']."'")); 
 ?>
 <!DOCTYPE html>
 <html lang="en">  

@@ -7,6 +7,7 @@
 				<div class="col-md-5 col-sm-5 col-xs-12 opan-r">
 						
 				 <a href="jp/index.php" style="color:white;font-size:15px;">☻ Japanese</a>
+				<!--- <a href="jp<?php echo $_SERVER['REQUEST_URI'];?>" style="color:white;font-size:15px;">☻ Japanese</a>-->
 				
 				</div>
 				</div>
