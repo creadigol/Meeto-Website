@@ -116,6 +116,17 @@ $(function()
 	var fromdate = document.getElementById('semitodate').value;
 	document.getElementById('semifromdate').max=fromdate;
 }
+function timelimit()
+{
+	alert('hii');
+	var fromtime = document.getElementById('fromtime').value;
+	document.getElementById('totime').min=fromtime;
+	var totime = document.getElementById('totime').value;
+	document.getElementById('fromtime').max=totime;
+
+}
+
+
  
   </script>
   <script>
@@ -204,9 +215,28 @@ function facilityshow(id,aa)
    function validateEmail(email) {
     var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
     if (!emailReg.test(email)) {
-        alert('Please Enter Valid Email ID');
+		$("#emailvali").show();
+        //alert('Please Enter Valid Email ID');
       } 
-}
+	  else
+	  {
+		  $("#emailvali").hide();
+	  }
+   }
+   function validateContact(phone)
+   {
+	var phoneReg = /^[0-9]+$/;
+    if (!phoneReg.test(phone)) {
+		$("#phonevali").show();
+        //alert('Please Enter Valid Email ID');
+      } 
+	  else
+	  {
+		  $("#phonevali").hide();
+	  }
+	   
+   }
+   
 	</script>
 	 <style>
         .upperdivche,.img-remove
@@ -439,9 +469,7 @@ function facilityshow(id,aa)
 					<ul class="tab nav left_side left_back">
 						<span>Basic</span>
 					  <li class="tablinks active" onclick="openCity(event, 'Pricing')"><span>Contact</span>
-					  	<span id="valtrue" class="glyphicon glyphicon-ok" style="color:green; font-size:20px; display:none; position: absolute; left: 100px;top:0px; padding:0px !important;"></span>
-						
-						 <span id="valfalse" class="glyphicon glyphicon-remove" style="color:red; font-size:20px; display:none; position: absolute; left: 100px;top:0px; padding:0px !important;"></span>
+					  	
 					  
 					  </li>
 					  <li class="tablinks" onclick="openCity(event, 'Calendar')"><span>Day</span>
@@ -461,9 +489,7 @@ function facilityshow(id,aa)
 						 <span id="Overviewfalse" class="glyphicon glyphicon-remove" style="color:red; font-size:20px; display:none; position: absolute; left: 100px;top:0px; padding:0px !important;"></span>							  
 					  </li>
 					  <li class="tablinks" onclick="openCity(event, 'Photos')"><span>Photos</span>
-					  	<span id="Photostrue" class="glyphicon glyphicon-ok" style="color:green; font-size:20px; display:none; position: absolute; left: 100px;top:0px; padding:0px !important;"></span>
-						
-						 <span id="Photosfalse" class="glyphicon glyphicon-remove" style="color:red; font-size:20px; display:none; position: absolute; left: 100px;top:0px; padding:0px !important;"></span>							  
+					  								  
 					  </li>
 					</ul>
 
@@ -479,7 +505,8 @@ function facilityshow(id,aa)
 						
 						 <span id="Locationfalse" class="glyphicon glyphicon-remove" style="color:red; font-size:20px; display:none; position: absolute; left: 100px;top:0px; padding:0px !important;"></span>							  
 					  </li>
-					  <li><a href="#" class="tablinks list-submit" onclick="openCity(event, 'Policy')">Submit</a></li>
+					 <!--<li><a class="tablinks list-submit" onclick="openCity(event, 'Policy')">Submit</a></li>-->
+					  <li style="padding-left: 14px;"><input type="submit"  class="tablinks list-submit" onclick="semivalidation()" name="subbtn" value="Submit" /></li>
 					</ul>
 				</div>
 			</div>
@@ -499,17 +526,19 @@ function facilityshow(id,aa)
 								<div class="col-md-9">
 									<div class="overview_title">									
 										<label class="overview-label">Host Person Name</label>
-										<input name="hostname" type="text" id="hostname" placeholder="Host Person Name" class="overview-input">
+										<input name="hostname" value="<?php echo $_SESSION['jpmeetou']['fname']." ".$_SESSION['jpmeetou']['lname']; ?>" type="text" id="hostname" placeholder="Host Person Name" class="overview-input">
 									</div>
 									<div class="bottom-margin-20"> </div>
 									<div class="overview_title">									
 										<label class="overview-label">Contact Email</label>
-										<input name="contactemail" type="email" id="contactemail" placeholder="Contact Email" onmouseout="validateEmail(this.value);" class="overview-input">
+										<label id="emailvali" style="color:red; font-size:15px; display:none;">Please Enter Valid Email ID</label>
+										<input name="contactemail" value="<?php echo $_SESSION['jpmeetou']['email']; ?>" type="email" id="contactemail" placeholder="Contact Email" onkeyup="validateEmail(this.value);" class="overview-input">
 									</div>
 									<div class="bottom-margin-20"> </div>
 									<div class="overview_title">									
 										<label class="overview-label">Contact No</label>
-										<input name="contactno" type="text" id="contactno" placeholder="Contact No" class="overview-input">
+										<label id="phonevali" style="color:red; font-size:15px; display:none;">Please Enter Valid Contact No</label>
+										<input name="contactno"  type="text" id="contactno" onkeyup="validateContact(this.value);" placeholder="Contact No" class="overview-input">
 									</div>
 								</div>
 									<div class="clearfix"></div>
@@ -536,10 +565,10 @@ function facilityshow(id,aa)
 
 									<div class="overview_title">									
 
-										<label class="overview-label">From Date</label>
+										<label class="overview-label">From Date <span style="color:red;">*</span></label>
 
 										<input type="date" required min="<?php echo $dt; ?>" id="semifromdate" name="fromdate" onchange="datelimit();" placeholder="From Date" class="overview-input">
-										<label class="overview-label">To Date</label>
+										<label class="overview-label">To Date <span style="color:red;">*</span></label>
 
 										<input type="date" required min="<?php echo $dt; ?>" id="semitodate" name="todate" onchange="datelimit();"  placeholder="To Date" class="overview-input">
 
@@ -553,12 +582,12 @@ function facilityshow(id,aa)
 									<!-- Custom styles for this template -->
  
 										<link href="css/timepicki.css" rel="stylesheet">
-										<label class="overview-label">From Time</label>
+										<label class="overview-label">Everyday Start Seminar Time<span style="color:red;">*</span></label>
 
 										
-										<input id="timepicker1" style="cursor:pointer;" class="timepicker1" type="text" name="fromtime" placeholder="Select Time"/>
-										<label class="overview-label">To Time </label>
-										<input id="timepicker1" style="cursor:pointer;" class="timepicker1" type="text" name="totime" placeholder="Select Time"/>
+										<input id="timepicker1"  style="cursor:pointer;" class="timepicker1" type="text" name="fromtime" placeholder="Select Time"/>
+										<label class="overview-label">Everyday End Seminar Time<span style="color:red;">*</span></label>
+										<input id="timepicker1"  style="cursor:pointer;" class="timepicker1" type="text" name="totime" placeholder="Select Time"/>
 
 										
                                        <!-- <label class="overview-label">" Ex : 11:00 am or 11:00 pm "</label>-->
@@ -603,7 +632,7 @@ function facilityshow(id,aa)
 								<div class="col-md-9">
 
 									<div class="overview_title">									
-										<label class="overview-label">Title</label>
+										<label class="overview-label">Title<span style="color:red;">*</span></label>
 										<input type="text" required name="title" value="" id="title" placeholder="Title" class="overview-input">
 
 									</div>
@@ -611,9 +640,9 @@ function facilityshow(id,aa)
 									<div class="bottom-margin-20"> </div>
 									<div class="overview_title">									
 
-										<label class="overview-label">Tagline</label>
+										<label class="overview-label">Tagline<span style="color:red;">*</span></label>
 
-										<input type="text"  name="tagline" id="tagline" placeholder="Tagline" class="overview-input">
+										<input type="text" required name="tagline" id="tagline" placeholder="Tagline" class="overview-input">
 
 									</div>
 
@@ -1072,7 +1101,7 @@ function facilityshow(id,aa)
 
 
 
-					<div id="Policy" class="tabcontent">
+				<!--<div id="Policy" class="tabcontent">
 
 						  <div class="col-md-12 right_side left-side-height">
 
@@ -1109,7 +1138,7 @@ function facilityshow(id,aa)
 
 								</div> 
 
-							</div>
+							</div>-->
 
 					</div>
 

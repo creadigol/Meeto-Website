@@ -2,7 +2,7 @@
 require_once('db.php');   
  require_once('condition.php');
  
-  $seminardetail=mysql_query("select * from seminar where uid = '".$_SESSION['jpmeetou']['id']."' order by id");
+  $seminardetail=mysql_query("select * from seminar where uid = '".$_SESSION['jpmeetou']['id']."' order by id desc");
   
 ?>
 <!DOCTYPE html>

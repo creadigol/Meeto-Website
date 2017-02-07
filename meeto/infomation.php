@@ -176,7 +176,18 @@ function seldate()
                                     <span class="opan-r"><?php echo $seminar_detail['total_seat']; ?> seats</span>
                                 </li>
                                 <li class="icon-margin">
-								   <img src="img/<?php if($usercompany['organization']=='Profit Organization' || $rowusercompany['organization']=='組織を選択します') { echo "profit.png"; } else { echo "nonprofit.png"; } ?>" class="list-img img-responsive">
+								  <?php 
+								  if($usercompany['organization']=='Profit Organization' || $rowusercompany['organization']=='組織を選択します')
+								  {?>
+									  <img src="img/profit.png" class="list-img img-responsive">
+								  <?}
+								  elseif($usercompany['organization']=='Non-Profit Organization' || $rowusercompany['organization']=='非営利団体')
+								  {?>
+									  <img src="img/nonprofit.png" class="list-img img-responsive">
+								 <?}
+								 else{}
+								 
+								 ?>
                                     <span class="opan-r"><?php echo $usercompany['organization']; ?></span>
                                 </li>
                             </ul>
@@ -268,7 +279,7 @@ function seldate()
 				<div class="body-cont" style="display:block;">	
                     <ul class="nav right-space">
                             <?php
-                                $selfacility=mysql_query("select * from seminar_facility where seminar_id=$_REQUEST[id]");
+                                $selfacility=mysql_query("select * from seminar_facility where seminar_id=$_REQUEST[id] and status=1");
                                 while($fetseminarfaci=mysql_fetch_array($selfacility))
                                 {
                                     $selfaciname=mysql_fetch_array(mysql_query("select * from facility where id=$fetseminarfaci[facility_id]"));
@@ -355,7 +366,7 @@ function seldate()
                    </div>
 					
 				  </div>
-                    <textarea class="review-submit" rows="2" id="givenreview"></textarea>
+                    <textarea class="review-submit" rows="2" placeholder="Give Your Reviews" id="givenreview"></textarea>
 					
 					<div class="top-margin-20"></div>
 					

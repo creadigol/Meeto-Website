@@ -106,7 +106,8 @@ $fgh=0;
 		}
 		else
 		{
-			echo "<script>alert('Invalid Login Detail..!');</script>";
+			$fgh=7;
+			//echo "<script>alert('Invalid Login Detail..!');</script>";
 		}
 	}
 	if(isset($_SESSION['jpmeetou']['facebook_access_token']))
@@ -391,6 +392,33 @@ $fgh=0;
                     
 					<div class="col-md-12" id="deleteusermsg" style="padding:20px;"> 
 						<h4 style="color:red;font-weight:bolder;">This Email id attached with other account!</h4>
+						<div class="col-md-2 col-md-offset-10 btn btn-primary" style="color:black;font-weight:bolder;" onclick="$('#hidenewfac123').hide();">
+						Ok</div>
+					</div>
+             
+				</div>
+				
+			</div>
+		</div>
+</div>
+		<?php
+	}
+?>
+<?php
+	if($fgh==7)
+	{
+		unset($_SESSION['jpmeetou']);
+		$fgh=0;
+		?>
+		<div class="" id='hidenewfac123' style='width:100%;height:149%;background: rgba(0,0,0,0.5);padding: 2%;position: fixed;z-index: 999;'>
+		<div class="row" >
+			<div class="col-md-12">
+			<br><br><br><br><br><br><br><br><br><br><br><br>
+				<div class="col-md-5 col-md-offset-4" style="border:1px solid #333; background:#fff">
+					
+                    
+					<div class="col-md-12" id="deleteusermsg" style="padding:20px;"> 
+						<h4 style="color:red;font-weight:bolder;">Invalid Login Detail..!</h4>
 						<div class="col-md-2 col-md-offset-10 btn btn-primary" style="color:black;font-weight:bolder;" onclick="$('#hidenewfac123').hide();">
 						Ok</div>
 					</div>

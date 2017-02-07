@@ -102,6 +102,8 @@ if($_REQUEST['for']=='login')
 									<!--<a href="#" class="btn btn-tw"><i class="fa fa-twitter"></i>&nbsp; Twitter</a>
 									<a href="#" class="btn btn-go"><i class="fa fa-google-plus"></i>&nbsp; Google</a>
 									<a class="text-center center-block margin-main"><span class="text-center"><b>OR</b></span></a>-->
+									<a class="text-center center-block margin-main"><span class="text-center"><b>OR</b></span></a>
+									
 									
 									<div class="top-margin-10"></div>
 									 <form action="index.php" method="post" enctype="multipart/form-data" >

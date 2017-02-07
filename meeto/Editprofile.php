@@ -102,6 +102,46 @@ $rowuserdetail= mysql_fetch_array(mysql_query("select * from user_detail where u
 $rowusercompany=mysql_fetch_array(mysql_query("select * from user_company where uid = '".$usid."'")); 
  
 ?>
+<script>
+function validateEmail(email) {
+	
+   if(email.length > 0)
+	{	
+       $("#emptyemail").hide();
+	}
+	else
+	{
+	 $("#emptyemail").show();
+	}	  
+    var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+    if (!emailReg.test(email)) {
+		$("#emailvali").show();
+        //alert('Please Enter Valid Email ID');
+      }
+	else
+	{
+	  $("#emailvali").hide();
+	}
+   }
+   function validateContact(phone)
+   {
+	var phoneReg = /^[0-9]+$/;
+    if (!phoneReg.test(phone)) {
+		$("#phonevali").show();
+        //alert('Please Enter Valid Email ID');
+      } 
+	  else
+	  {
+		  $("#phonevali").hide();
+	  }
+	   
+   }
+  </script>
+
+
+
+
+
 <!DOCTYPE html>
 <html lang="en">  
 <?php	
@@ -240,15 +280,18 @@ a.Editprofile_menu, a.Editprofile_menu:hover{
 									
 						 </li>					
 						 <div class="clearfix"></div>
-	
+	                        <center><label id="emailvali" style="color:red; font-size:15px; display:none;">Please Enter Valid Email ID</label></center>
+							<center><label id="emptyemail" style="color:red; font-size:15px; display:none;">Please Enter Email ID</label></center>
 						 <li class="li-input">		
-							 <label class="users" for="">Email Address:</label>										
-							 <input type="email" class="input-name" name="email" id="" required value="<?php echo isset($_POST['email']) ? $_POST['email'] : $row['email']?>">										</br>											 							
+							 <label class="users" for="">Email Address:</label>	
+                             	
+							 <input type="email" class="input-name" name="email"  onkeyup="validateEmail(this.value);" onmouseout="validateEmail(this.value);" id="email" required value="<?php echo isset($_POST['email']) ? $_POST['email'] : $row['email']?>">										</br>											 							
 						 </li>								
 						 <div class="clearfix"></div>
-						 <li class="li-input">				
+						 <center><label id="phonevali" style="color:red; font-size:15px; display:none;">Please Enter Valid Contact No</label></center>
+						 <li class="li-input">
 							<label class="users" for="">Phone Number:</label>	
-							<input name="phone_no" title="You can enter only numeric" pattern="[0-9+]{1,}" class="input-name" type="text" value="<?php echo isset($_POST['phone_no']) ? $_POST['phone_no'] : $rowuserdetail['phoneno']?>">
+							<input name="phone_no" id="phone_no" title="You can enter only numeric" onkeyup="validateContact(this.value);" pattern="[0-9+]{1,}" class="input-name" type="text" value="<?php echo isset($_POST['phone_no']) ? $_POST['phone_no'] : $rowuserdetail['phoneno']?>">
 						
 							
 						 </li>
