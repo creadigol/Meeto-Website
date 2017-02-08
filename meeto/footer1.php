@@ -1,4 +1,3 @@
-
 <div class="container-flude flude-footer" id="footer">
 	<div class="container">
 		<div class="top-margin-20">&nbsp;</div>	
@@ -22,14 +21,14 @@
 					<ul class="nav footer-list col-md-6 col-xs-12">
 						<li><a href="privancy.php">Privacy Policy</a></li>
 						<li><a href="termofservice.php">Terms of Service</a></li>
-						<li><a href="cancellation.php">Cancellation Policy</a></li>
+						<!-- <li><a href="cancellation.php">Cancellation Policy</a></li> -->
 						<li><a href="how-work.php">How It Works</a></li>
 						
                     </ul>
                     <ul class="nav footer-list col-md-6 col-xs-12">
 						<li><a href="contactus.php">Contact Us</a></li>
-						<li><a href="blog.php">Blog</a></li>
-						<li><a href="about.php">About</a></li>
+						<!-- <li><a href="blog.php">Blog</a></li> -->
+						<!-- <li><a href="about.php">About</a></li> -->
 						<li><a href="userpolicy.php">User Policy</a></li>
 					</ul>
 				</div>

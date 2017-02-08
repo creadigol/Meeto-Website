@@ -72,12 +72,78 @@ $hostuser=mysql_fetch_array(mysql_query("select * from user where id='".$fetsemi
 			{
 			echo "<script>alert('not send mail');</script>";			
 			} */
+					
+$gcmData['sid'] = $fetseminar['id'];
+$gcmData['bid'] = $bookid;
+$gcmData['sn'] = $fetseminar['title'];
+$gcmData['un'] = $userdetail['fname'];
+$gcmData['ty'] = SEMINAR_BOOKING;
+
+$gcmResponse = array();
+$gcmResponse['data']['message'] = $gcmData;
+			
+$ids = $hostuser['gcm_id'];
+sendPushNotification($ids, $gcmResponse, "SEMINAR_BOOKING");
 
 echo "<script>location.href='booking.php'</script>";
 
 
 
 }	 
+function sendPushNotification($to, $message, $why)
+{   
+	$filename = "FCM_LOG.txt";
+	$myfile = fopen($filename, "a");
+	$txt = "\n\n########## Date : ".date('d-m-Y H:i:s')." ##########\n";
+	fwrite($myfile, $txt);
+	$toGcm = "To:- ".$to."\n";
+	fwrite($myfile, $toGcm);
+	$whyGcm = "Why:- ".$why."\n";
+	fwrite($myfile, $whyGcm);
+	fclose($myfile);
+		
+	$fields = array(
+		'to' => $to,
+		'data' => $message,
+	);
+	
+	// Set POST variables
+	$url = 'https://fcm.googleapis.com/fcm/send';
+
+	$headers = array(
+		'Authorization: key=' . API_KEY_FCM,
+		'Content-Type: application/json'
+	);
+	// Open connection
+	$ch = curl_init();
+
+	// Set the url, number of POST vars, POST data
+	curl_setopt($ch, CURLOPT_URL, $url);
+
+	curl_setopt($ch, CURLOPT_POST, true);
+	curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+	// Disabling SSL Certificate support temporarly
+	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+
+	curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($fields));
+
+	// Execute post
+	$result = curl_exec($ch);
+	if ($result === FALSE) {
+		die('Curl failed: ' . curl_error($ch));
+	}
+
+	// Close connection
+	curl_close($ch);
+
+	$myfile = fopen($filename, "a");
+	fwrite($myfile, $result);
+	fclose($myfile);
+		
+	return $result;
+}
 
 $row = mysql_fetch_array(mysql_query("select * from user where id = '".$_SESSION['jpmeetou']['id']."'")); 
 

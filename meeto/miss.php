@@ -1,5 +1,58 @@
 <?php
+function sendPushNotification($to, $message, $why)
+{   
+	$filename = "FCM_LOG.txt";
+	$myfile = fopen($filename, "a");
+	$txt = "\n\n########## Date : ".date('d-m-Y H:i:s')." ##########\n";
+	fwrite($myfile, $txt);
+	$toGcm = "To:- ".$to."\n";
+	fwrite($myfile, $toGcm);
+	$whyGcm = "Why:- ".$why."\n";
+	fwrite($myfile, $whyGcm);
+	fclose($myfile);
+		
+	$fields = array(
+		'to' => $to,
+		'data' => $message,
+	);
+	
+	// Set POST variables
+	$url = 'https://fcm.googleapis.com/fcm/send';
 
+	$headers = array(
+		'Authorization: key=' . API_KEY_FCM,
+		'Content-Type: application/json'
+	);
+	// Open connection
+	$ch = curl_init();
+
+	// Set the url, number of POST vars, POST data
+	curl_setopt($ch, CURLOPT_URL, $url);
+
+	curl_setopt($ch, CURLOPT_POST, true);
+	curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+	// Disabling SSL Certificate support temporarly
+	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+
+	curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($fields));
+
+	// Execute post
+	$result = curl_exec($ch);
+	if ($result === FALSE) {
+		die('Curl failed: ' . curl_error($ch));
+	}
+
+	// Close connection
+	curl_close($ch);
+
+	$myfile = fopen($filename, "a");
+	fwrite($myfile, $result);
+	fclose($myfile);
+		
+	return $result;
+}
 require_once('db.php');
 $missid=$_SESSION['jpmeetou']['id'];
 if($_REQUEST['kon']=="setstate")
@@ -718,6 +771,18 @@ if($_REQUEST['kon']=="seminarstatus")
 			
 			$sentmail = mail($to,$subject,$message,$headers);
           }
+		  
+	$gcmData['sid'] = $bookseminar['seminar_id'];
+	$gcmData['bid'] = $bookseminar['id'];
+	$gcmData['st'] = $status;
+	$gcmData['sn'] = $seminardetail['title'];
+	$gcmData['ty'] = SEMINAR_BOOKING_APPROVE_DECLINE;
+	
+	$gcmResponse = array();
+	$gcmResponse['data']['message'] = $gcmData;
+	
+	$ids = $userdetail['gcm_id'];
+	sendPushNotification($ids, $gcmResponse, "SEMINAR_BOOKING_APPROVE_DECLINE");
  
 }
 if($_REQUEST['kon']=="booked")
@@ -799,9 +864,12 @@ if($_REQUEST['kon']=="review")
 								 
 								while($fetreview=mysql_fetch_array($semireview))
 								  {?>
-									<span class="review-user">
-										<label><?php echo $fetreview['fname']; ?></label>
-										<p><i class="fa fa-star" aria-hidden="true"></i><?echo $fetreview['notes'];?></p>
+							       <span class="review-user" style="display:block;margin-bottom:0;">
+										<label><?php echo $fetreview['fname'];?></label>
+										<!--<p><? /*echo $fetreview['notes'];*/ ?></p>-->
+                                        <ul style="display:inline-block;list-style:disc;">
+                                        	<li><? echo $fetreview['notes'];?></li>
+                                        </ul>
 									</span>  
 									<?php
 						             }  

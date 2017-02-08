@@ -4,7 +4,7 @@ require_once('db.php');
 require_once('condition.php'); 
 if(isset($_REQUEST['subbtn']))
 {	   
-			$email=$_SESSION['jpmeetou']['uemail'];
+			$email=$_SESSION['jpmeetou']['email'];
 			$uid=$_SESSION['jpmeetou']['id'];
             $key= md5($email);
 	        $url = "http://www.meeto.jp/Verification.php?uid=".$uid."&key=".$key;
@@ -32,7 +32,7 @@ if(isset($_REQUEST['subbtn']))
 }
 
 $row = mysql_fetch_array(mysql_query("select * from user where id = '".$_SESSION['jpmeetou']['id']."'")); 
-$_SESSION['jpmeetou']['uemail']=$row['email'];
+$_SESSION['jpmeetou']['email']=$row['email'];
 $rowuserdetail= mysql_fetch_array(mysql_query("select * from user_detail where uid = '".$_SESSION['jpmeetou']['id']."'")); 
 $rowusercompany=mysql_fetch_array(mysql_query("select * from user_company where uid = '".$_SESSION['jpmeetou']['id']."'")); 
 

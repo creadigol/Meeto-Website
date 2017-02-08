@@ -1,0 +1,56 @@
+
+
+########## Date : 08-02-2017 23:02:11 ##########
+To:- esFBrIM7mY4:APA91bGG2v30KnEywuMhBqAmcl_0ag5LUuJm2G6MIfFkxKENxnxX-W2B_hcLnehpvDKYAVrLwr-uGVuFB41Tx_VTkzrq8mm_SvV8pTzqGJ7hDthRJ3skuNuvq_-7jJ-uFaP_9ZLMje_e
+Why:- SEMINAR_BOOKING
+{"multicast_id":5716614636567735940,"success":0,"failure":1,"canonical_ids":0,"results":[{"error":"NotRegistered"}]}
+
+########## Date : 08-02-2017 23:04:17 ##########
+To:- eb3bXmno9nw:APA91bGLFhUqEzL9R10spLUPHzXWqZDZZtNsCA_x2s5vQ6PRHgWrD_zAevtVLa0OPGnYV0glPzQQ14pQHahknuTNaXXgwW3ml9G8sFcbNtdmUlWUgLAAJrVvN2ExwDqZh-ntkOwqhFCh
+Why:- SEMINAR_BOOKING
+{"multicast_id":7189571093110897569,"success":0,"failure":1,"canonical_ids":0,"results":[{"error":"NotRegistered"}]}
+
+########## Date : 08-02-2017 23:10:36 ##########
+To:- eb3bXmno9nw:APA91bGLFhUqEzL9R10spLUPHzXWqZDZZtNsCA_x2s5vQ6PRHgWrD_zAevtVLa0OPGnYV0glPzQQ14pQHahknuTNaXXgwW3ml9G8sFcbNtdmUlWUgLAAJrVvN2ExwDqZh-ntkOwqhFCh
+Why:- SEMINAR_BOOKING
+{"multicast_id":8716989447015707219,"success":0,"failure":1,"canonical_ids":0,"results":[{"error":"NotRegistered"}]}
+
+########## Date : 08-02-2017 23:10:46 ##########
+To:- f7lfCXnguF0:APA91bHnIR6iZM685n6ArOaZkuy7peGMNxkUGaVM1V8mlxsAc4KX7tngk3_xb3eN79eDH_MeXLhFHnC-SHxqpYyr6a7ikLGTEX5ySfrYjAHh_HlPsTanlngmTvpXKawsOfwDTbOhMtal
+Why:- SEMINAR_BOOKING
+{"multicast_id":7912467010216625747,"success":0,"failure":1,"canonical_ids":0,"results":[{"error":"NotRegistered"}]}
+
+########## Date : 08-02-2017 23:36:46 ##########
+To:- fc5XS0CtzqQ:APA91bFmsktvQALpqNNwT5lmRsCDkyIbAvgGh__A0LgrfkgfDpGYqcMoImIMDCNiT50BFwlGPrwXC2qgsy5ljdubliqqpxtcVHezeafJgWVZh5vOk7FIkIFJvsGBWW0P9ppwD0ZTXC9N
+Why:- SEMINAR_BOOKING
+{"multicast_id":4903370960924477223,"success":1,"failure":0,"canonical_ids":0,"results":[{"message_id":"0:1486564606683942%590c6861f9fd7ecd"}]}
+
+########## Date : 08-02-2017 23:39:08 ##########
+To:- cO0Callo9CQ:APA91bHzMcoOe04HOud5O-hou48-kA3IMuSeJwIfIrU5EhXukZ3QJ-pu3v-ynxqDlHWavlwmQOY7dR4bSQx0D8PNkMtx2o5v92L_ZPJrnzDPOk6fB5XbGTMpvQdfCz_IXH9o40T51STT
+Why:- SEMINAR_BOOKING_APPROVE_DECLINE
+{"multicast_id":8538647402984786898,"success":0,"failure":1,"canonical_ids":0,"results":[{"error":"NotRegistered"}]}
+
+########## Date : 08-02-2017 23:39:57 ##########
+To:- cO0Callo9CQ:APA91bHzMcoOe04HOud5O-hou48-kA3IMuSeJwIfIrU5EhXukZ3QJ-pu3v-ynxqDlHWavlwmQOY7dR4bSQx0D8PNkMtx2o5v92L_ZPJrnzDPOk6fB5XbGTMpvQdfCz_IXH9o40T51STT
+Why:- SEMINAR_BOOKING_APPROVE_DECLINE
+{"multicast_id":7041597538265903405,"success":0,"failure":1,"canonical_ids":0,"results":[{"error":"NotRegistered"}]}
+
+########## Date : 08-02-2017 23:55:05 ##########
+To:- fc5XS0CtzqQ:APA91bFmsktvQALpqNNwT5lmRsCDkyIbAvgGh__A0LgrfkgfDpGYqcMoImIMDCNiT50BFwlGPrwXC2qgsy5ljdubliqqpxtcVHezeafJgWVZh5vOk7FIkIFJvsGBWW0P9ppwD0ZTXC9N
+Why:- SEMINAR_BOOKING_APPROVE_DECLINE
+{"multicast_id":8078442783072108409,"success":1,"failure":0,"canonical_ids":0,"results":[{"message_id":"0:1486565705089409%590c6861f9fd7ecd"}]}
+
+########## Date : 08-02-2017 23:55:36 ##########
+To:- fc5XS0CtzqQ:APA91bFmsktvQALpqNNwT5lmRsCDkyIbAvgGh__A0LgrfkgfDpGYqcMoImIMDCNiT50BFwlGPrwXC2qgsy5ljdubliqqpxtcVHezeafJgWVZh5vOk7FIkIFJvsGBWW0P9ppwD0ZTXC9N
+Why:- SEMINAR_BOOKING_APPROVE_DECLINE
+{"multicast_id":6429139942189903331,"success":1,"failure":0,"canonical_ids":0,"results":[{"message_id":"0:1486565736633705%590c6861f9fd7ecd"}]}
+
+########## Date : 08-02-2017 23:56:52 ##########
+To:- fc5XS0CtzqQ:APA91bFmsktvQALpqNNwT5lmRsCDkyIbAvgGh__A0LgrfkgfDpGYqcMoImIMDCNiT50BFwlGPrwXC2qgsy5ljdubliqqpxtcVHezeafJgWVZh5vOk7FIkIFJvsGBWW0P9ppwD0ZTXC9N
+Why:- SEMINAR_BOOKING
+{"multicast_id":7481185049418852071,"success":1,"failure":0,"canonical_ids":0,"results":[{"message_id":"0:1486565812985602%590c6861f9fd7ecd"}]}
+
+########## Date : 09-02-2017 00:00:37 ##########
+To:- fc5XS0CtzqQ:APA91bFmsktvQALpqNNwT5lmRsCDkyIbAvgGh__A0LgrfkgfDpGYqcMoImIMDCNiT50BFwlGPrwXC2qgsy5ljdubliqqpxtcVHezeafJgWVZh5vOk7FIkIFJvsGBWW0P9ppwD0ZTXC9N
+Why:- SEMINAR_BOOKING
+{"multicast_id":5850806425554010292,"success":1,"failure":0,"canonical_ids":0,"results":[{"message_id":"0:1486566037857829%590c6861f9fd7ecd"}]}

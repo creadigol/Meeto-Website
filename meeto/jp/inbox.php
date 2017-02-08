@@ -2,7 +2,7 @@
 require_once('db.php');   
  require_once('condition.php');
  
-  $seminardetail=mysql_query("select * from seminar where uid = '".$_SESSION['jpmeetou']['id']."' order by created_date DESC");
+  $seminardetail=mysql_query("select * from seminar where uid = '".$_SESSION['jpmeetou']['id']."' order by id DESC");
   
 ?>
 <!DOCTYPE html>
@@ -43,7 +43,7 @@ a.inbox_menu, a.inbox_menu:hover{
 								    <thead>
 									  <h3 class="Required-head">セミナー予約リスト</h3>
  										<tr class="border-n inbox table-head inbox-table">
-											<td width="5%"><strong>セムなし</strong></td>
+											<td width="5%"><strong>スノー</strong></td>
 											<td width="13%"><strong>日付</strong></td>
 											<td width="17%"><strong>セミナー</strong></td>
 											<td width="17%"><strong>ユーザー</strong></td>
@@ -77,7 +77,7 @@ a.inbox_menu, a.inbox_menu:hover{
 											if($bookseminar['approval_status']=='pending')
 											{
 											?>
-											<button type="button" value="accepted" class="green-button" onclick="seminarstatus('<?php echo $bookseminar['id'];?>',this.value);">受け入れます</button>
+											<button type="button" value="accepted" class="green-button" onclick="seminarstatus('<?php echo $bookseminar['id'];?>',this.value);">受け入れる</button>
 											<button type="button" value="declined" class="red-button" onclick="seminarstatus('<?php echo $bookseminar['id'];?>',this.value);">低下</button>
 											<?php
 											}

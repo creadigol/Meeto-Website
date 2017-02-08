@@ -1,89 +1,96 @@
 <?php     
-	require_once('db.php'); 
-	require_once('condition.php');  
+   require_once('condition.php');
 	$micro=round(microtime(true)*1000);
-	$dt=date("Y-m-d");
-	//echo "<br><br><br><br><br><br><br><br><br><br>hi";
 	if(isset($_REQUEST['subbtn']))
 	{	
-		//echo "hi";
-		$title = mysql_real_escape_string($_REQUEST['title']);	
+   
+       $deletefaci=mysql_query("delete from seminar_facility where seminar_id='".$_REQUEST['id']."'");
+	   $deletepurpose=mysql_query("delete from seminar_purpose where seminar_id='".$_REQUEST['id']."'");
+	   $deleteindustry=mysql_query("delete from seminar_industry where seminar_id='".$_REQUEST['id']."'");
+	   
+		$title = $_REQUEST['title'];	
 		$tagline = mysql_real_escape_string($_REQUEST['tagline']);	
 		$description = mysql_real_escape_string($_REQUEST['description']);	
 		$address = mysql_real_escape_string($_REQUEST['streetaddress']);	
-		$hostname = mysql_real_escape_string($_REQUEST['hostname']);	
-		$idddd=$_SESSION['jpmeetou']['id'];
-		
+		$hostname = mysql_real_escape_string($_REQUEST['hostname']);
 		$fromday = $_REQUEST['fromdate']." ".$_REQUEST['fromtime'];
 	    $from_day =strtotime($fromday) * 1000;
         $today = $_REQUEST['todate']." ".$_REQUEST['totime'];
 	    $to_day =strtotime($today) * 1000;
-		//print_r($idddd);
-		//echo $idddd;
-		//echo $_REQUEST['type'];
-		$inseminar=mysql_query("insert into seminar (uid,title,tagline,description,total_seat,total_booked_seat,qualification,address,typeid,countryid,stateid,cityid,zipcode,phoneno,hostperson_name,contact_email,status,approval_status,created_date,modified_date,lat,lng) values ($idddd,'$title','$tagline','$description',$_REQUEST[seats],0,'','$address',$_REQUEST[type],$_REQUEST[country],$_REQUEST[state],$_REQUEST[city],'$_REQUEST[zipcode]','$_REQUEST[contactno]','$hostname','$_REQUEST[contactemail]',1,'pending','$micro','$micro','$_REQUEST[lat]','$_REQUEST[lng]')");
-		/*echo "insert into seminar (uid,title,tagline,description,total_seat,total_booked_seat,qualification,address,typeid,countryid,stateid,cityid,zipcode,phoneno,hostperson_name,contact_email,status,approval_status,created_date,modified_date,lat,lng) values ($idddd,'$title','$tagline','$description',$_REQUEST[seats],0,'$_REQUEST[qualification]','$address',$_REQUEST[type],$_REQUEST[country],$_REQUEST[state],$_REQUEST[city],'$_REQUEST[zipcode]','$_REQUEST[contactno]','$hostname','$_REQUEST[contactemail]',1,'pending','$micro','$micro','$_REQUEST[lat]','$_REQUEST[lng]')";*/
+
+        $editseminar=mysql_query("update seminar set title='".$title."',tagline='".$tagline."',description='".$description."',total_seat='".$_REQUEST['seats']."',total_booked_seat='0',address='".$address."',typeid='".$_REQUEST['type']."',zipcode='".$_REQUEST['zipcode']."',phoneno='".$_REQUEST['contactno']."',countryid='".$_REQUEST['country']."',stateid='".$_REQUEST['state']."',cityid='".$_REQUEST['city']."',hostperson_name='".$hostname."',contact_email='".$_REQUEST['contactemail']."',modified_date='".$micro."' where id='".$_REQUEST['id']."' ") or mysql_error();
+		
+		
 		
 		$sid=mysql_insert_id();
-		$inseminarday=mysql_query("insert into seminar_day (seminar_id,from_date,to_date,from_time,to_time) values($sid,'".$from_day."','".$to_day."','','') ");
+		$inseminarday=mysql_query("update seminar_day set from_date='".$from_day."',to_date='".$to_day."' where seminar_id=$_REQUEST[id]");
 		$countfaci=count($_REQUEST['facility']);
 		for($i=0;$i<$countfaci;$i++)
 		{
 			$fid=$_REQUEST['facility'][$i];
-			$insemifaci=mysql_query("insert into seminar_facility (seminar_id,facility_id,status) values ($sid,$fid,1)");
+			$insemifaci=mysql_query("insert into seminar_facility (seminar_id,facility_id,status) values ('".$_REQUEST['id']."',$fid,1)");
 		}
 		$countattendees=count($_REQUEST['purpose']);
 		for($i=0;$i<$countattendees;$i++)
 		{
 			$aid=$_REQUEST['purpose'][$i];
-			$insemiattendees=mysql_query("insert into seminar_purpose (seminar_id,attendees_id,status) values ($sid,$aid,1)");
+			$insemiattendees=mysql_query("insert into seminar_purpose (seminar_id,attendees_id,status) values ('".$_REQUEST['id']."',$aid,1)");
 		}
 		$countindustry=count($_REQUEST['industry']);
 		for($i=0;$i<$countindustry;$i++)
 		{
 			$fid=$_REQUEST['industry'][$i];
-			$inindustry=mysql_query("insert into seminar_industry (seminar_id,industry_id,status) values ($sid,$fid,1)");
+			$inindustry=mysql_query("insert into seminar_industry (seminar_id,industry_id,status) values ('".$_REQUEST['id']."',$fid,1)");
 		}
+		
+		$ar=array();
+		$arr=array();
 		$countsemi=count($_FILES['semiimage']['name']);
 		for($i=0;$i<$countsemi;$i++)
-		{
-			$tt=$_FILES['semiimage'][type][$i];	
+		{	
+			$tt=$_FILES['semiimage']['type'][$i];	
 			//echo "type >> ".$tt."<br>";
 			$s=substr($tt,6);	
+			$ar[]=$_FILES['semiimage']['name'][$i];
+			//echo "<br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>".$_FILES['semiimage']['name'][0].$s;
 			if($s=="jpeg" || $s=="jpg" || $s=="png")	
 			{		
+				
 				$dt=date("Y-m-d");		
 				$dt2=(int)round(microtime($dt)*1000);
-				$oldname=$_FILES[semiimage][name][$i];
-				$ran=rand(0,999999);	
-				$curname="semiimage".$ran.".".$s;	
-				$newname="../img/".$curname;
+				$oldname=$_FILES['semiimage']['name'][$i];
+				$fd=mysql_query("select * from seminar_photos order by id desc");
+				$ran=mysql_fetch_array($fd);
+				$curname="semiimage".$ran[0].".".$s;	
+				$newname=(__DIR__)."/img/".$curname;
 				$rtr=$_REQUEST['txtrotatevalue'][$i];
-				$insemiimg=mysql_query("insert into seminar_photos (seminar_id,image,rotateval) values ($sid,'$curname','$rtr')");
-				//echo "insert into seminar_photos (seminar_id,image) values ($sid,'$curname')";
+				$arr[]=$insemiimg=mysql_query("insert into seminar_photos (seminar_id,image,rotateval) values ('".$_REQUEST['id']."','$curname',$rtr)");
 				move_uploaded_file($_FILES['semiimage']['tmp_name'][$i], $newname);  
 			}
-			
-		}	
-   //	mysql_query("delete from seminar_photos where rotateval=0");		
-		if($inseminar)	
-		{       
-		    if($inseminarday)
-			 {		
-		       if($insemiimg)	
-		     	{			
-		          echo "<script>alert('あなたのセミナーが成功裏に追加されました。');</script>";
-		        }						
-			}	      					 	
+		}
+		
+		
+		mysql_query("delete from seminar_photos where rotateval=0");
+		if($editseminar)
+		{
+			echo "<script>alert('Edit Seminar Successfully');</script>";
 		}
 		echo "<script>location.href='your-listing.php'</script>";
 	}
+	/* echo "<br><br><br><br><br><br><br><br><br>insert into seminar_photos (seminar_id,image,rotateval) values ($sid,'$curname','$rtr') $f<br>";
+	print_r($ar);
+	print_r($_FILES['semiimage']['name']);
+	print_r($_REQUEST['txtrotatevalue']); */
+$seminar = mysql_fetch_array(mysql_query("select * from seminar where id = '".$_REQUEST['id']."' "));	
+$seminardate =  mysql_fetch_array(mysql_query("select * from seminar_day where seminar_id = '".$seminar['id']."'"));
+
+	
 ?>
 <!DOCTYPE html>
 <html lang="en">
   <?php	require_once('head1.php');   ?>
   <!-- NAVBAR================================================== -->
- <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.min.js" type="text/javascript"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.min.js" type="text/javascript"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"
 type="text/javascript"></script>
 <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css"
@@ -108,9 +115,23 @@ $(function () {
     });
 });
 </script>
-  
-  <script>
-  /*
+<script>
+function deletepic(photoid)
+ {
+	 if(confirm("Are You Sure You Want To Delete  ?"))
+	 {
+		 $.ajax({
+		url: "miss.php?kon=deletephoto&id="+photoid, 
+		type: "POST",
+		success: function(data)
+		{ 
+		
+		}
+		}); 
+	 }
+		 
+ }
+ 
 $(function() 
  { 
       $( "#semifromdate,#semitodate" ).datepicker({
@@ -121,27 +142,7 @@ $(function()
       dateFormat:"dd-mm-yy"
      });
  });
- */
   </script>
-  <script type="text/javascript"> 
-
-function stopRKey(evt) { 
-  var evt = (evt) ? evt : ((event) ? event : null); 
-  var node = (evt.target) ? evt.target : ((evt.srcElement) ? evt.srcElement : null); 
-  if ((evt.keyCode == 13) && (node.type=="text"))  {return false;} 
-} 
-
-document.onkeypress = stopRKey; 
-
-function datelimit()
-{
-	var fromdate = document.getElementById('semifromdate').value;
-	document.getElementById('semitodate').min=fromdate;
-	
-	var fromdate = document.getElementById('semitodate').value;
-	document.getElementById('semifromdate').max=fromdate;
-}
-</script>
   <script>
 var myCenter;
 var lat=0;
@@ -180,6 +181,7 @@ document.getElementById('lat').value=lat;
 document.getElementById('lng').value=lng
 	$("#pinimg").hide();
 }
+
 var glbid=0;
 function facilityshow(id,aa)
 	{
@@ -193,7 +195,7 @@ function facilityshow(id,aa)
                 }
                 reader.readAsDataURL(a.files[0]);
             }
-			//$("#rotateniid"+id).val(id);
+			$("#rotateniid"+id).val(id);
 		glbid=id;
 			tgg();
 	}
@@ -223,35 +225,9 @@ function facilityshow(id,aa)
     }
     });
 	 }
-	 
-	function validateEmail(email) {
-    var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,15})?$/;
-    if (!emailReg.test(email)) {
-		$("#emailvali").show();
-        //alert('Please Enter Valid Email ID');
-      } 
-	  else
-	  {
-		  $("#emailvali").hide();
-	  }
-   }
-   
-    function validateContact(phone)
-   {
-	var phoneReg = /^[0-9]+$/;
-    if (!phoneReg.test(phone)) {
-		$("#phonevali").show();
-        //alert('Please Enter Valid Email ID');
-      } 
-	  else
-	  {
-		  $("#phonevali").hide();
-	  }
-	   
-   }
-	</script>
-	 <style>
-        .upperdivche,.img-remove
+</script>
+<style>
+        .upperdivche,#show_pic0
         {
            display:none;
         }
@@ -263,36 +239,32 @@ function facilityshow(id,aa)
 				<div class="col-md-5 col-md-offset-4" style="border:1px solid #333; background:#fff;">
 					
                     <div class="col-md-12 page-header">
-						<div  class="col-md-6" align="left" style="color:black;">
-                        <h3>
-                            セミナー画像
-                        </h3>
+						<div  class="col-md-6" align="left" style="color:blcak;">
+                        <h3>Seminar Image</h3>
 						</div>
 						<div  class="col-md-6 " align="right" >
-						<div class="col-md-2 col-md-offset-10 btn btn-danger" onclick="tgg();">
-							X
-						</div>
+						<div class="col-md-2 col-md-offset-10 btn btn-danger" onclick="tgg();">X</div>
 						</div>
                     </div>
 					<div class="col-md-12"> 
 						
-						<div class="col-md-8 col-md-offset-2">
-						
-							<label style="border:1px solid black;" align="center"><img align="center" src="" class="img-responsive" class="" id="semimgfulldis" /></label>
-						</div>
-						
-						
-						<div class="col-md-6 col-md-offset-2">
-						<input type="hidden" class="btnRotate" value="90" id="deg90" />
-						<input type="hidden" class="btnRotate" value="-90" id="deg990" />
-						<input type="hidden" class="btnRotate" value="180" id="deg180" />
-						<input type="hidden" class="btnRotate" value="360" id="deg360" />
-							<div class="col-md-3" onClick="rotateImage($('#deg90').val());"><i style="color:red;" class="fa fa-rotate-right"></i></div>
-							<div class="col-md-3" onClick="rotateImage($('#deg990').val());"><i style="color:red;"class="fa fa-rotate-left" ></i></div>
-							<div class="col-md-3" onClick="rotateImage($('#deg180').val());"><i class="fa fa-refresh" style="transform:rotate(90deg);color:red;"></i></div>
-							<div class="col-md-3" onClick="rotateImage($('#deg360').val());"><i style="color:red;"class="fa fa-refresh"></i></div>
-						<br><br>
-						</div>
+											<div class="col-md-8 col-md-offset-2">
+											
+												<label   style="border:1px solid black;" align="center"><img align="center" src="" width="500" height="500"  class="" id="semimgfulldis" /></label>
+											</div>
+											
+											
+											<div class="col-md-6 col-md-offset-2">
+											<input type="hidden" class="btnRotate" value="90" id="deg90" />
+											<input type="hidden" class="btnRotate" value="-90" id="deg990" />
+											<input type="hidden" class="btnRotate" value="180" id="deg180" />
+											<input type="hidden" class="btnRotate" value="360" id="deg360" />
+												<div class="col-md-3" onClick="rotateImage($('#deg90').val());"><i style="color:red;" class="fa fa-rotate-right"></i></div>
+												<div class="col-md-3" onClick="rotateImage($('#deg990').val());"><i style="color:red;"class="fa fa-rotate-left" ></i></div>
+												<div class="col-md-3" onClick="rotateImage($('#deg180').val());"><i class="fa fa-refresh" style="transform:rotate(90deg);color:red;"></i></div>
+												<div class="col-md-3" onClick="rotateImage($('#deg360').val());"><i style="color:red;"class="fa fa-refresh"></i></div>
+											<br><br>
+											</div>
 					
 					  <br><br><br>
 					</div>
@@ -315,8 +287,7 @@ function facilityshow(id,aa)
 	<div class="text-center">
 	<div id="firstscreenhead" class="clearfix"><div>
 		<div class="top-margin-10 margin-main">&nbsp;</div>
-			<h3 class="space">
-あなたのセミナーを一覧表示</h3>
+			<h3 class="space">List Your Seminar</h3>
 		<div class="top-margin-20"></div>		
 	</div>
 	</div>
@@ -329,7 +300,7 @@ function facilityshow(id,aa)
 			<div class="col-md-12 seminar-type seminar-type-right">
 				<div class="col-md-2 list-name">
 					<div class="list-label">
-						<label>セミナー会場：</label>
+						<label>Seminar Place :</label>
 					</div>	
 				</div>
 
@@ -342,10 +313,10 @@ function facilityshow(id,aa)
 					?>
 					<li class="field_btn list-seminar-box">
 							<a href="#">
-								<img src="../img/<?php echo $fettype['image']; ?>" class="list-img img-responsive">
+								<img src="img/<?php echo $fettype['image']; ?>" class="list-img img-responsive">
 								<span class="img-name">
-									<?php $marutra = explode('"',translate(str_replace(" ","+",$fettype['name']))); echo $marutra[1] ; ?>	
-								<input required type="radio" class="semitype list-redio" name="type" id="home_type10" value="<?php echo $fettype['id']; ?>">				
+									<?php echo $fettype['name']; ?>	
+								<input required type="radio" class="semitype list-redio" name="type" id="home_type10" value="<?php echo $fettype['id']; ?>"<? if($seminar['typeid']==$fettype['id']) echo CHECKED;?>>				
 								</span>
 							</a>
 						<div class="bottom-margin-30"></div>	
@@ -354,10 +325,8 @@ function facilityshow(id,aa)
 						}
 					?>
 					</ul>
-					<a href="#" class="validation" id="typevalidation">
-セミナー場所を選択してください</a>
+					<a href="#" class="validation" id="typevalidation">Please Select Seminar Place</a>
 				</div>
-				<div class="clearfix"></div>
 			</div>	
 		
 			<div class="top-margin-20">&nbsp;</div>
@@ -365,23 +334,29 @@ function facilityshow(id,aa)
 			<div class="col-md-12 seminar-type"> 
 				<div class="col-md-2 list-name">
 					<div class="list-label">
-						<label>セミナー参加者：</label>
+						<label>Seminar Attendees:</label>
 					</div>	
 				</div>
 
-				<div class="col-md-10 list-type"> 
+				<div class="col-md-10 list-type">
 					<ul class="type_field_btn slider-width">
 						<?php
+						$arrypurpose=array();
+						$seminarpurpose =mysql_query("select * from seminar_purpose where seminar_id = '".$seminar['id']."' and status=1");
+					   while($purpose=mysql_fetch_array($seminarpurpose))
+					   {
+					   array_push($arrypurpose,$purpose['attendees_id']);
+					   }
 						$selpurpose=mysql_query("select * from purpose where status=1");
 						while($fetpurpose=mysql_fetch_array($selpurpose))
 						{
 						?>
 						<li class="field_btn list-seminar-box">
 							<a href="#">
-								<img src="../img/<?php echo $fetpurpose['image']; ?>" class="list-img img-responsive">	
+								<img src="img/<?php echo $fetpurpose['image']; ?>" class="list-img img-responsive">	
 								<span class="img-name">
-								<?php $marutra = explode('"',translate(str_replace(" ","+",$fetpurpose['name']))); echo $marutra[1] ; ?>
-								<input type="checkbox" class="semipurpose checkbox-button" name="purpose[]" id="attendees" value="<?php echo $fetpurpose['id']; ?>">			
+								<?php echo $fetpurpose['name']; ?>
+								<input type="checkbox" class="semipurpose checkbox-button" name="purpose[]" id="attendees" value="<?php echo $fetpurpose['id']; ?>" <?php if(in_array($fetpurpose['id'],$arrypurpose)) echo checked;?> >			
 								</span>
 							</a>
 							<div class="bottom-margin-30"></div>	
@@ -390,9 +365,8 @@ function facilityshow(id,aa)
 						}
 						?>
 					</ul>
-					<br><br><a href="#" class="validation" id="purposevalidation">セミナーの参加者を選択してください</a>
+					<br><br><a href="#" class="validation" id="purposevalidation">Please Select Seminar Attendees</a>
 				</div>
-				<div class="clearfix"></div>
 			</div>
 			
 			<div class="top-margin-20">&nbsp;</div>
@@ -400,23 +374,30 @@ function facilityshow(id,aa)
 			<div class="col-md-12 seminar-type seminar-type-right">
 				<div class="col-md-2 list-name">
 					<div class="list-label">
-						<label>産業タイプ：</label>
+						<label>Industry Type :</label>
 					</div>	
 				</div>
 
 				<div class="col-md-10 list-type">
 					<ul class="type_field_btn slider-width">
 					<?php
+					  $arryindustry=array();
+						$seminarindustry =mysql_query("select * from seminar_industry where seminar_id = '".$seminar['id']."' and status=1");
+					   while($industry=mysql_fetch_array($seminarindustry))
+					   {
+					   array_push($arryindustry,$industry['industry_id']);
+					   }
+					
 						$selindustry=mysql_query("select * from  industry where status=1");
 						while($fetindustry=mysql_fetch_array($selindustry))
 						{
 					?>
 					<li class="field_btn list-seminar-box">
 							<a href="#">
-								<img src="../img/<?php echo $fetindustry['image']; ?>" class="list-img img-responsive">	
+								<img src="img/<?php echo $fetindustry['image']; ?>" class="list-img img-responsive">	
 								<span class="img-name">
-								<?php $marutra = explode('"',translate(str_replace(" ","+",$fetindustry['name']))); echo $marutra[1] ; ?>
-								<input type="checkbox" class="semipurpose1 checkbox-button" name="industry[]" id="industry" value="<?php $marutra = explode('"',translate(str_replace(" ","+", $fetindustry['id']))); echo $marutra[1]; ?>">			
+								<?php echo $fetindustry['name']; ?>
+								<input type="checkbox" class="semipurpose1 checkbox-button" name="industry[]" id="industry" value="<?php echo $fetindustry['id']; ?>" <?php if(in_array($fetindustry['id'],$arryindustry)) echo checked;?>>			
 								</span>
 							</a>
 						<div class="bottom-margin-30"></div>	
@@ -425,52 +406,36 @@ function facilityshow(id,aa)
 						}
 					?>
 					</ul>
-					<a href="#" class="validation" id="Industry">でも業界を選択してください</a>
+					<a href="#" class="validation" id="Industry">Please Select Any Industry</a>
 				</div>
-				<div class="clearfix"></div>
 			</div>		
 			
 			
 			<div class="col-md-6 col-md-offset-3 top-margin-30"> 
 				<div class="col-md-4 list-name">
 					<div class="list-label">
-						<label>総席数：</label>
+						<label>Total Seats :</label>
 					</div>	
 				</div>
 
 				<div class="col-md-8 list-type">
 					<ul class="type_field_btn">
 						<li class="field_btn">
-							<a>
-								<img src="../img/list-page/group12.png" class="list-img img-responsive">
-								<input id="seats" name="seats" required  type="number"  min="1" placeholder="総席" class="input-medium input-Accommodates price-border" />
-							</a>
+						<a>
+							<img src="img/list-page/group12.png" class="list-img img-responsive">
+							<input name="seats" onkeyup="showcontinue(this.value);" required type="number" min="1" placeholder="Total Seats" class="input-medium input-Accommodates" value="<?php  echo $seminar['total_seat'];?>">
+						</a>
 						</li>
 					</ul>
-			<!--		<br><br><a href="#" class="validation" id="seatvalidation">Please Enter Total Seats </a>  -->
+				<!--	<br><a href="#" class="validation" id="seatvalidation">Please Enter Total Seats </a>-->
 				</div>
 			</div>
-			<!--<div class="list-name">
-				<div class="list-label">
-					<label>city</label>
-				</div>	
-			</div>
-
-			<div class="list-type">
-				<ul class="type_field_btn">
-					<li class="field_btn">
-						<a>
-							<img src="img/list-page/map-marker.png" class="list-img img-responsive">
-								<input type="text" class="city-location" placeholder="Your Location">
-						</a>
-					</li>
-				</ul>
-			</div>-->
+			
 			
 			
 			<div class="col-md-12 text-center">
 				<div class="top-margin-20">&nbsp;</div>	
-						<a class="blue-button list-continue" id="continue" style="pointer-events: all;" onclick="checkvalid();">持続する</a>
+						<a class="blue-button list-continue" id="continue" style="pointer-events: all;" onclick="checkvalid();">Continue</a>
 
 			</div>	
 		
@@ -486,14 +451,17 @@ function facilityshow(id,aa)
 	<div class="container small-container">
 		<div class="row">
 
-			<div class="col-lg-3 col-md-3 col-sm-3 col-xs-12"> 
+			<div class="col-md-3"> 
 				<div class="row">
 					<ul class="tab nav left_side left_back">
-						<span>基本</span>
-					  <li class="tablinks active" onclick="openCity(event, 'Pricing')"><span>接触</span>
-					  	
+						<span>Basic</span>
+					  <li class="tablinks active" onclick="openCity(event, 'Pricing')"><span>Contact</span>
+					  	<span id="valtrue" class="glyphicon glyphicon-ok" style="color:green; font-size:20px; display:none; position: absolute; left: 100px;top:0px; padding:0px !important;"></span>
+						
+						 <span id="valfalse" class="glyphicon glyphicon-remove" style="color:red; font-size:20px; display:none; position: absolute; left: 100px;top:0px; padding:0px !important;"></span>
+					  
 					  </li>
-					  <li class="tablinks" onclick="openCity(event, 'Calendar')"><span>日</span>
+					  <li class="tablinks" onclick="openCity(event, 'Calendar')"><span>Day</span>
 					  	<span id="daytrue" class="glyphicon glyphicon-ok" style="color:green; font-size:20px; display:none; position: absolute; left: 100px;top:0px; padding:0px !important;"></span>
 						
 						 <span id="dayfalse" class="glyphicon glyphicon-remove" style="color:red; font-size:20px; display:none; position: absolute; left: 100px;top:0px; padding:0px !important;"></span>				  
@@ -503,64 +471,65 @@ function facilityshow(id,aa)
 					
 
 					<ul class="tab nav left_side left-menu left_back">
-						<span>説明</span>
-					  <li class="tablinks" onclick="openCity(event, 'Overview')"><span>概要</span>
+						<span>Description</span>
+					  <li class="tablinks" onclick="openCity(event, 'Overview')"><span>Overview</span>
 					  	<span id="Overviewtrue" class="glyphicon glyphicon-ok" style="color:green; font-size:20px; display:none; position: absolute; left: 100px;top:0px; padding:0px !important;"></span>
 						
 						 <span id="Overviewfalse" class="glyphicon glyphicon-remove" style="color:red; font-size:20px; display:none; position: absolute; left: 100px;top:0px; padding:0px !important;"></span>							  
 					  </li>
-					  <li class="tablinks" onclick="openCity(event, 'Photos')"><span>写真</span>
-					  							  
+					  <li class="tablinks" onclick="openCity(event, 'Photos')"><span>Photos</span>
+					  	<span id="Photostrue" class="glyphicon glyphicon-ok" style="color:green; font-size:20px; display:none; position: absolute; left: 100px;top:0px; padding:0px !important;"></span>
+						
+						 <span id="Photosfalse" class="glyphicon glyphicon-remove" style="color:red; font-size:20px; display:none; position: absolute; left: 100px;top:0px; padding:0px !important;"></span>							  
 					  </li>
 					</ul>
 
 
 
 					<ul class="tab nav left_side left-menu left_back">
-						<span>設定</span>
-					  <li class="tablinks" onclick="openCity(event, 'Amenities')"><span>ファシリティ</span>
-					  				  
+						<span>Settings</span>
+					  <li class="tablinks" onclick="openCity(event,'Amenities')"><span>Facilities</span>
+					  	<!--<span id="Amenitiestrue" class="glyphicon glyphicon-ok" style="color:green; font-size:20px; display:none; position: absolute; left: 100px;top:0px; padding:0px !important;"></span>
+						
+						 <span id="Amenitiesfalse" class="glyphicon glyphicon-remove" style="color:red; font-size:20px; display:none; position: absolute; left: 100px;top:0px; padding:0px !important;"></span>		-->					  
 					  </li>
-					  <li class="tablinks" onclick="openCity(event, 'Location')"><span>ロケーション</span>
+					  <li class="tablinks" onclick="openCity(event, 'Location')"><span>Location</span>
 					  	<span id="Locationtrue" class="glyphicon glyphicon-ok" style="color:green; font-size:20px; display:none; position: absolute; left: 100px;top:0px; padding:0px !important;"></span>
 						
 						 <span id="Locationfalse" class="glyphicon glyphicon-remove" style="color:red; font-size:20px; display:none; position: absolute; left: 100px;top:0px; padding:0px !important;"></span>							  
 					  </li>
-					  <!--<li><a href="#" class="tablinks list-submit" onclick="openCity(event, 'Policy')">提出します</a></li>-->
-					  <!--<li><a class="tablinks list-submit" onclick="openCity(event, 'Policy')">提出します</a></li>-->
-					  <li style="padding-left: 14px;"><input type="submit"  class="tablinks list-submit" onclick="semivalidation()" name="subbtn" value="提出します"  style="width:100%;padding-left:0;text-align:left;background:none;border:none;"/></li>
+					  <!--<li><a class="tablinks list-submit" onclick="openCity(event, 'Policy')">Submit</a></li>-->
+					  <li style="padding-left: 14px;"><input type="submit"  class="tablinks list-submit" onclick="semivalidation()" name="subbtn" value="Submit"  style="width:100%;padding-left:0;text-align:left;background:none;border:none;"/></li>
 					</ul>
 				</div>
 			</div>
 
 			
 
-			<div class="col-lg-9 col-md-9 col-sm-9 col-xs-12">
+			<div class="col-md-9">
 				<div class="row">
 					<div id="Pricing" class="tabcontent">
 						<div class="col-md-12 right_side">
 						<div class="clearfix"></div>
 							<div class="row price-border price-margin Location-row">
 								<div class="col-md-8 center">
-									 <h3>基本</h3>
-									 <p>セミナーリストの連絡先の詳細を設定する</p>
+									 <h3>Basic</h3>
+									 <p>Set the default daily price renters will see for your listing. </p>
 								</div>
 								<div class="col-md-9">
 									<div class="overview_title">									
-										<label class="overview-label">人のホスト名</label>
-										<input name="hostname" value="<?php echo $_SESSION['jpmeetou']['fname']." ".$_SESSION['jpmeetou']['lname']; ?>" type="text" id="hostname" placeholder="人のホスト名" class="overview-input">
+										<label class="overview-label">Host Person Name</label>
+										<input name="hostname" type="text" id="hostname" placeholder="Host Person Name" class="overview-input" required value="<?php echo $seminar['hostperson_name'];?>" >
 									</div>
 									<div class="bottom-margin-20"> </div>
 									<div class="overview_title">									
-										<label class="overview-label">連絡先メールアドレス</label>
-										<label id="emailvali" style="color:red; font-size:15px; display:none;">有効なメールIDを入力してください</label>
-										<input name="contactemail" value="<?php echo $_SESSION['jpmeetou']['email']; ?>" type="email" onkeyup="validateEmail(this.value);" id="contactemail" placeholder="連絡先メールアドレス" class="overview-input">
+										<label class="overview-label">Contact Email</label>
+										<input name="contactemail" type="email" id="contactemail" placeholder="Contact Email" class="overview-input" required value="<?php echo $seminar['contact_email'];?>">
 									</div>
 									<div class="bottom-margin-20"> </div>
 									<div class="overview_title">									
-										<label class="overview-label">連絡先番号</label>
-										<label id="phonevali" style="color:red; font-size:15px; display:none;">有効な連絡先番号を入力してください</label>
-										<input name="contactno" type="text" id="contactno" placeholder="連絡先番号" onkeyup="validateContact(this.value);" class="overview-input">
+										<label class="overview-label">Contact No</label>
+										<input name="contactno" type="text" id="contactno" placeholder="Contact No" class="overview-input" required value="<?php echo $seminar['phoneno'];?>" >
 									</div>
 								</div>
 									<div class="clearfix"></div>
@@ -577,9 +546,9 @@ function facilityshow(id,aa)
 
 								<div class="col-md-8 center">
 
-									 <h3>日</h3>
+									 <h3>Day</h3>
 
-									 <p>セミナーリストのセミナーの詳細を設定します。 </p>
+									 <p>Set the default daily price renters will see for your listing. </p>
 
 								</div>
 
@@ -587,29 +556,31 @@ function facilityshow(id,aa)
 
 									<div class="overview_title">									
 
-										<label class="overview-label">日から</label>
-										<input type="text" name="fromdate" id="txtFrom" placeholder="From Date" class="overview-input" />
-										<!--<input type="date" required min="<?php echo $dt; ?>" onchange="datelimit();" id="semifromdate" name="fromdate" placeholder="From Date" class="overview-input">-->
-										<label class="overview-label">現在まで</label>
-										<input type="text" name="todate" id="txtTo" placeholder="To Date" class="overview-input" />
-										<!--<input type="date" required min="<?php echo $dt; ?>" onchange="datelimit();" id="semitodate" name="todate" placeholder="To Date" class="overview-input">-->
+										<label class="overview-label">From Date</label>
+										 <input type="text" name="fromdate" value="<?php echo date("Y-m-d",$seminardate['from_date']/1000);?>" id="txtFrom" placeholder="From Date" class="overview-input" />
+										<!--<input type="date" required min="<?php echo $dt; ?>" id="semifromdate" name="fromdate" placeholder="From Date" class="overview-input" value="<?php echo date("Y-m-d",$seminardate['from_date']/1000);?>">-->
+										<label class="overview-label">To Date</label>
+										<input type="text" name="todate" value="<?php echo date("Y-m-d",$seminardate['to_date']/1000);?>" id="txtTo" placeholder="To Date" class="overview-input" />
+										<!--<input type="date" required min="<?php echo $dt; ?>" id="semitodate" name="todate" placeholder="To Date" class="overview-input" value="<?php 
+                                         echo date("Y-m-d",$seminardate['to_date']/1000);?>">-->
 
 									</div>
 									
 									<div class="bottom-margin-20"> </div>
 
 									<div class="overview_title">									
-									<link href="css/bootstrap_time.css" rel="stylesheet">
+								<link href="css/bootstrap_time.css" rel="stylesheet">
 
 									<!-- Custom styles for this template -->
  
 										<link href="css/timepicki.css" rel="stylesheet">
-										<label class="overview-label">毎日始まるセミナー時間</label>
-										<input id="timepicker1" style="cursor:pointer;" class="timepicker1" type="text" name="fromtime" placeholder="Select Time"/>
+										<label class="overview-label">From Time</label>
+										<input id="timepicker1" style="cursor:pointer;" class="timepicker1" type="text" name="fromtime" placeholder="Select Time" value="<?php echo date("g:i a",$seminardate['from_date']/1000);?>" />
 										
-										<label class="overview-label">毎日終了セミナー時間</label>
-
-										<input id="timepicker1" style="cursor:pointer;" class="timepicker1" type="text" name="totime" placeholder="Select Time"/>
+										<label class="overview-label">To Time</label>
+											<input id="timepicker1" style="cursor:pointer;" class="timepicker1" type="text" name="totime" placeholder="Select Time" value="<?php 
+                                         echo date("g:i a",$seminardate['to_date']/1000);?>"/>
+									
                                         
 									</div>
 
@@ -643,43 +614,40 @@ function facilityshow(id,aa)
 
 								<div class="col-md-8 center">
 
-									 <h3>概要</h3>
+									 <h3>Overview</h3>
 
-									 <p>セミナーリストのセミナーの詳細を設定します。</p>
+									 <p>Set the default daily price renters will see for your listing. </p>
 
 								</div>
 
 								<div class="col-md-9">
 
 									<div class="overview_title">									
-										<label class="overview-label">タイトル</label>
-										<input type="text" required name="title" value="" id="title" placeholder="タイトル" class="overview-input">
+										<label class="overview-label">Title</label>
+										<input type="text" required name="title" value="<?php echo $seminar['title'];?>" id="title" placeholder="Title" class="overview-input">
 
 									</div>
 
 									<div class="bottom-margin-20"> </div>
 									<div class="overview_title">									
 
-										<label class="overview-label">キャッチフレーズ</label>
+										<label class="overview-label">Tagline</label>
 
-										<input type="text"  name="tagline" id="tagline" placeholder="キャッチフレーズ" class="overview-input">
+										<input type="text"  name="tagline" value="<?php echo $seminar['tagline'];?>" id="tagline" placeholder="Tagline" class="overview-input">
 
 									</div>
 
 									<div class="bottom-margin-20"> </div>
 									<!--<div class="overview_title">									
 
-										<label class="overview-label">
-資格</label>
-										<select name="qualification" id="qualification" required class="overview-input">
-											<option value="">
-- 選択 -</option>
-											<option>
-第10回パス</option>
-											<option>
-第12回パス</option>
-											<option>卒業</option>
-											<option>大学院</option>
+										<label class="overview-label">Qualification</label>
+										<select name="qualification" class="overview-input" value="<?php /*echo $seminar['qualification'];?>">
+											
+											<option <?php if($seminar['qualification']=="10th Pass") echo selected; ?>>10th Pass</option>
+											<option <?php if($seminar['qualification']=="12th Pass") echo selected; ?>>12th Pass</option>
+											<option <?php if($seminar['qualification']=="Graduate") echo
+											selected; ?> >Graduate</option>
+											<option <?php if($seminar['qualification']=="Post Graduate") echo selected;*/ ?> >Post Graduate</option>
 										</select>
 										
 
@@ -688,10 +656,8 @@ function facilityshow(id,aa)
 									<div class="bottom-margin-20"> </div>
 									<div class="overview_title">									
 
-										<label class="overview-label">説明 &nbsp;&nbsp;</label>
-
-										<textarea  class="overview-input" name="description" placeholder="
-説明" id="description" rows="8" style="color:#000 !important;"></textarea>
+										<label class="overview-label">Description &nbsp;&nbsp;</label>
+										<textarea class="overview-input" name="description" placeholder="Description" rows="8" style="color:#000 !important;"><?php echo $seminar['description'];?></textarea>	
 									</div>
 								</div>
 									<div class="clearfix"></div>									
@@ -714,28 +680,44 @@ function facilityshow(id,aa)
 
 								<div class="col-md-12 text-center photo-head">
 
-										<img src="../img/cam.png" class="img-responsive center-block">
+										<img src="img/cam.png" class="img-responsive center-block">
 
-										 <h3>
-写真または2を追加！ </h3>
+										 <h3>Add a photo or two! </h3>
 
-										 <span>セミナーの写真を設定するセミナーのリスト</span>
-<span id="choosefileset"></span>
-												<input class="add-photo choose-img" id="jsimgid0" type="file" name="semiimage[]" onchange="setimg(0, this);addimgmaru()"/>
+										 <span>Or three, or more! Renters prefer to go to places with photos that highlight the features of your space.</span>
+                                                 
+												<span id="choosefileset"></span>
+												<input class="add-photo choose-img" id="jsimgid0" type="file" name="semiimage[]" onchange="setimg(0,this);addimgmaru()"/>
 												<input type="hidden" id="rotateniid0" value="360" name="txtrotatevalue[]">
 												<br>
 
 									<div class="bottom-margin-10">&nbsp;</div>	
 
 								</div>
-
+                                 
 								<center>
-
-									<!--<span class="forgot">
-										
-								注：画像サイズ1349px X 500pxなど
-									</span>-->
-								</center>
+           
+								
+								<div class="col-md-12">
+								  <?php
+								     $seminarpic=mysql_query("select * from seminar_photos where seminar_id='".$_REQUEST['id']."'");
+					                 while($fetphoto=mysql_fetch_array($seminarpic))
+					                 {
+								  ?>
+								  <div class="col-xs-12 col-sm-6 col-md-3 img_div">
+								  <img src="img/<?php echo $fetphoto['image']; ?>" style="transform:rotate(<?php echo $fetphoto['rotateval']; ?>deg)"  class="img-height img-responsive center-block" >
+								  <div class="btn_div"><button class="imges-editremove" onclick="deletepic(<?php echo $fetphoto['id'];?>);">X</button></div>
+								  <div class="top-margin-10"></div>
+								  </div> 
+								  
+									<?php
+									}
+								   ?>
+								   <div id="show_picmain" ><div id="show_pic"></div>
+								   </div>
+							   </div>
+							   <div class="col-md-12"><br><br></div>
+							</center>
 							<script>
 		loadd();
 		function loadd()
@@ -746,9 +728,6 @@ function facilityshow(id,aa)
 		var imgnuarr = new Array();
         function setimg(id, a)
         {
-			
-				$(".img-remove").show();
-			
 			imgnuarr[c]=a;
             if (a.files && a.files[0]) {
                 var reader = new FileReader();
@@ -758,55 +737,52 @@ function facilityshow(id,aa)
                 }
                 reader.readAsDataURL(a.files[0]);
             }
+			$(".disclose").show();
             
         }
         
         function addimgmaru()
         {
 			$("#jsimgid"+c).hide();
+			//alert(c);
             c++;
-          
-            var sdf='<div id="file_in'+c+'"><input type="file" class="add-photo choose-img" name="semiimage[]" id="jsimgid'+c+'"  onchange="setimg('+c+',this);addimgmaru()"></div>';
-            var setdiv = '<div class="col-md-3" id="show_pic'+c+'" style="display:none;min-height:140px;"><img class="img-height" width="150" class="" id="dppic'+c+'" onclick=facilityshow('+c+',this);><input type="hidden" id="rotateniid'+c+'" value="360" name="txtrotatevalue[]">';
+          var sdf='<div id="file_in'+c+'"><input type="file" class="add-photo choose-img" name="semiimage[]" id="jsimgid'+c+'"  onchange="setimg('+c+',this);addimgmaru()"/></div>';
+            var setdiv = '<div id="show_pic'+c+'" class="col-md-3" style="display:none; min-height:140px;"><img class="img-height" src="" width="150" id="dppic'+c+'" onclick=facilityshow('+c+',this);><input type="hidden" id="rotateniid'+c+'" value="360" name="txtrotatevalue[]">';
             setdiv += '<br><button type="button" class="img-remove" onclick=remove('+c+',"rmv_div");> x </button></div>';
-           
-            
-            var cc=c-1;
-			
+           var cc=c-1;
             $("#show_pic"+cc).after(setdiv);
-			$("#file_in"+c).hide();
+			//$("#file_in"+c).hide();
 			$("#choosefileset").append(sdf);
         }
         function remove(rmv,a)
         {
-           if(a=="rmv_div"){
-			   if(rmv==0)
-			   {
-				   $("#jsimgid0").hide();
-					$("#show_pic0").hide(); 
-					$("#rotateniid0").val('0');
-			   }else{
-				  $("#file_in"+rmv).remove();
-               $("#show_pic"+rmv).remove(); 
-			   }
-			    
-			   
-                if(c==rmv)
-                {
-                    c=c-1;
-                }
-           }
+			// alert(rmv);
+            if(a=="rmv_div"){
+					if(rmv==0)
+					{
+						$("#jsimgid0").hide();
+						$("#show_pic0").hide(); 
+						$("#rotateniid0").val('0');
+					}else{
+						$("#file_in"+rmv).remove();
+						$("#show_pic"+rmv).remove();
+						if(c==rmv)
+						{
+							c=c-1;
+						}
+					}
+			}
             
         }
         
     </script>
-								<div id="main0" class="col-md-12">
-								     <div id="show_pic0" class="col-md-3" style="min-height:140px;">
-									 <img  src="" onclick="facilityshow(0,this);" id="dppic0">
-									<br><button type="button" class="img-remove" onclick='remove(0,"rmv_div")';> x </button>
-									</div>
-									</div>
-							</div>
+							    <div id="main0" class="col-md-12">
+								  <div id="show_pic0" class="col-md-3" style="min-height:140px;">
+									 <img class="img-height" src="" width="150" onclick="facilityshow(0,this);" id="dppic0">
+									 <button type="button" class="upperdivche disclose images-edit" onclick='remove(0,"rmv_div");'>X</button>	
+								  </div>
+								</div>
+									
 							<div class="clearfix"></div>	
 						</div>
 
@@ -819,7 +795,7 @@ function facilityshow(id,aa)
 					</div>
 
 
-
+					</div>
 					<div id="Amenities" class="tabcontent">
 
 					  <div class="col-md-12 right_side">
@@ -830,25 +806,30 @@ function facilityshow(id,aa)
 
 								<div class="col-md-6 center">
 
-									 <h3>ファシリティ</h3>
+									 <h3>Facilities</h3>
 
-									 <p>ほとんどのホストリストには共通の設備があります。</p>
+									 <p>Common facilities at most Hosts listings. </p>
 								</div>
 								<div class="col-md-12">
 									<ul class="nav facility">
 										<?php
+										$array=array();
+										$seminarfaci =mysql_query("select * from seminar_facility where seminar_id = '".$seminar['id']."'");
+										while($fecility=mysql_fetch_array($seminarfaci))
+									    {
+										  array_push($array,$fecility['facility_id']);
+									    }
 										$selfaci=mysql_query("select * from facility where status=1");
 										while($fetfaci=mysql_fetch_array($selfaci))
 										{
-											?>
+										 ?>
 											<li>
-											<input type="checkbox" class="checkbox-check" name="facility[]" id="facility" value="<?php echo $fetfaci['id']; ?>">
-											<span><?php $marutra = explode('"',translate(str_replace(" ","+",$fetfaci['name']))); echo $marutra[1] ; ?>
-											</span>
-										    </li>
-											<?php
+											<input type="checkbox" class="checkbox-check" name="facility[]" value="<?php echo $fetfaci['id']; ?>" <?php if(in_array($fetfaci['id'],$array)) echo checked;?>>
+											<span><?php echo $fetfaci['name']; ?></span>
+											</li>
+										<?php
 										}
-										?>
+										?>	
 									</ul>
 								</div>
 							</div>
@@ -860,7 +841,7 @@ function facilityshow(id,aa)
 							<div class="bottom-margin-20">&nbsp;</div>	
 						</div>
 					</div>
-					</div>
+				
 					<div id="Location" class="tabcontent">
 
 					  <div class="col-md-12 right_side">
@@ -870,7 +851,8 @@ function facilityshow(id,aa)
 							<div class="row price-border price-margin Location-row left-side-height">
 
 								<div class="col-md-5 center">
-                                   <div class="modal-body">
+
+								<div class="modal-body">
 
 								
 
@@ -880,30 +862,18 @@ function facilityshow(id,aa)
 																					
 											<li>											
 												<div class="overview_title">									
-													<label class="overview-label" for="">国<span style="color:red;">*</span></label>
-												<select id="country" class="overview-input"  name="country" onchange="setstate(this.value);">
-														 <option value="">-  国を選択  -</option>
-													<?php
-															$selcountry=mysql_query("select * from countries where id!=101");
+													<label class="overview-label" for="">Country<span style="color:red;">*</span></label>
+													<select id="country" class="overview-input"  name="country" onchange="setstate(this.value);">
+														<?php
+															$selcountry=mysql_query("select * from countries");
 															while($fetcountry=mysql_fetch_array($selcountry))
 															{
 														?>
-																<option value="<?php echo $fetcountry['id']; ?>"><?php $marutra = explode('"',translate(str_replace(" ","+", $fetcountry['name'])));echo $marutra[1] ; ?></option>
+																<option <?php if($seminar['countryid']==$fetcountry['id'])echo "selected"; ?> value="<?php echo $fetcountry['id']; ?>"> <?php echo $fetcountry['name']; ?>
+																</option>
 														<?php
 															}
 														?>
-													</select>
-												
-												</div>
-
-											</li>
-
-											<li>
-
-												<div class="overview_title">	
-													<label class="overview-label">状態<span style="color:red;">*</span></label>
-													<select id="allstate" class="overview-input" name="state"  onchange="setcity(this.value);">
-														<option value="">- 州の選択 -</option>
 													</select>
 													
 												</div>
@@ -912,26 +882,38 @@ function facilityshow(id,aa)
 
 											<li>
 
-												<div class="overview_title">									
-
-													<label class="overview-label">シティ<span style="color:red;">*</span></label>
-													<select id="allcity" class="overview-input" name="city" onchange="">
-														 <option value="">- 都市を選択 -</option>
-														
+												<div class="overview_title">	
+													<label class="overview-label">State<span style="color:red;">*</span></label>
+													<select id="allstate" class="overview-input" name="state"  onchange="setcity(this.value);" >
+													<?php
+															$selstate=mysql_query("select * from states where country_id=$seminar[countryid]");
+															while($fetstate=mysql_fetch_array($selstate))
+															{
+														?>
+															<option <?php if($seminar['stateid']==$fetstate['id'])echo "selected"; ?> value="<?php echo $fetstate['id']; ?>"><?php echo $fetstate['name']; ?></option>
+														<?php
+															}
+														?>
 													</select>
 												</div>
+
 											</li>
 
 											<li>
 
 												<div class="overview_title">									
-
-													<label class="overview-label">
-住所</label>
-
-													<input type="text" id="streetaddress" name="streetaddress" class="overview-input">
-													<input type="text" hidden name="lat" id="lat" class="overview-input">
-													<input type="text" hidden name="lng" id="lng" class="overview-input">
+													<label class="overview-label">city<span style="color:red;">*</span></label>
+													<select id="allcity" class="overview-input" name="city" onchange="">
+														<?php
+															$selcountry=mysql_query("select * from cities where state_id=$seminar[stateid]");
+															while($fetcountry=mysql_fetch_array($selcountry))
+															{
+														?>
+																<option <?php if($seminar['cityid']==$fetcountry['id'])echo "selected"; ?> value="<?php echo $fetcountry['id']; ?>"><?php echo $fetcountry['name']; ?></option>
+														<?php
+															}
+														?>
+													</select>
 												</div>
 
 											</li>
@@ -939,9 +921,19 @@ function facilityshow(id,aa)
 											<li>
 
 												<div class="overview_title">									
-													<label class="overview-label">
-郵便番号<span style="color:red;">*</span></label>
-													<input type="text" id="zipcode" name="zipcode" class="overview-input">
+													<label class="overview-label">Street Address<span style="color:red;">*</span></label>
+													<input type="text" name="streetaddress" class="overview-input"
+													value="<?php echo $seminar['address'];?>" >
+													
+												</div>
+
+											</li>
+
+											<li>
+
+												<div class="overview_title">									
+													<label class="overview-label">ZIP Code<span style="color:red;">*</span></label>
+													<input type="text" id="zipcode" name="zipcode" class="overview-input" value="<?php echo $seminar['zipcode'];?>">
 
 												</div>
 
@@ -956,21 +948,19 @@ function facilityshow(id,aa)
 								
 
 								</div>
-								
-									<!-- <h3>
-住所</h3>
+									<!-- <h3>Address</h3>
 
-									 <p>
-あなたの正確なアドレスはプライベートのみ予約後のお客様と共有している賃借人が自分の仕事の日を計画することができるようにするために、宿泊施設の正確な通りの名前を提供するために責任があるホストconfirmed.Howeverです。</p>-->
+									 <p>Your exact address is private and only shared with guests after a reservation is confirmed.However the host are responsible to provide the exact street name of the accommodations in order for renter to be able to plan for their work day.</p>-->
+
 								</div>
+
 								<div class="col-md-7 text-center">
 									
 
 												<div class="overview_title">									
-													<label class="overview-label">ロケーション<span style="color:red;">*</span></label>
+													<label class="overview-label">Location<span style="color:red;">*</span></label>
 
-													<input type="text" id="pac-input" required placeholder="
-場所を入力してください。"  class="overview-input">
+													<input type="text" id="pac-input" required  placeholder="Please Enter the Location" class="overview-input" value="<?php echo $seminar['address'];?>">
 													
 												<script>
 										  // This example adds a search box to a map, using the Google Place Autocomplete
@@ -1063,18 +1053,19 @@ function facilityshow(id,aa)
 										</script>
 											<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAnWG6DJ5dpqNjBC1CZI8xdS3L769lQHuc&libraries=places&callback=initAutocomplete"
 											async defer></script>
+										
 												</div>
 
 											
 									<div class="price-border">
 										<div id="map" style="height:200px;width:100%;"></div>
 							
-										<img src="../img/map-pin.png" id="pinimg" class="img-responsive map-pin">
+										<img src="img/map-pin.png" id="pinimg" class="img-responsive map-pin">
 																			
 										<div class="clearfix"></div>										
 										<!--<div class="top-margin-10">&nbsp;</div>
 
-											<a href="#" class="text-uppercase blue-button add-button" data-toggle="modal" data-target="#myModal">アドレスを追加</a>
+											<a href="#" class="text-uppercase blue-button add-button" data-toggle="modal" data-target="#myModal">ADD Address</a>
 
 										<div class="bottom-margin-10">&nbsp;</div>-->	
 
@@ -1095,7 +1086,7 @@ function facilityshow(id,aa)
 
 							<div class="modal-dialog">
 
-							  
+							
 
 							  <div class="modal-content modal-c">
 
@@ -1105,7 +1096,7 @@ function facilityshow(id,aa)
 
 								  <button type="button" class="close" data-dismiss="modal">&times;</button>
 
-								  <h4 class="modal-title semibold-o">住所を入力してください</h4>
+								  <h4 class="modal-title semibold-o">Enter Address</h4>
 
 								</div>
 
@@ -1115,9 +1106,9 @@ function facilityshow(id,aa)
 
 								<div class="modal-footer model-head">
 
-								  <button type="button" class="blue-button f-left border-n" data-dismiss="modal">キャンセル</button>
+								  <button type="button" class="blue-button f-left border-n" data-dismiss="modal">Cancel</button>
 
-								  <button type="button" class="blue-button f-right border-n" data-dismiss="modal">提出します</button>
+								  <button type="button" class="blue-button f-right border-n" data-dismiss="modal">Submit</button>
 								</div>								
 							  </div>
 							  
@@ -1134,7 +1125,7 @@ function facilityshow(id,aa)
 
 
 
-					<div id="Policy" class="tabcontent">
+					<!--<div id="Policy" class="tabcontent">
 
 						  <div class="col-md-12 right_side left-side-height">
 
@@ -1144,7 +1135,9 @@ function facilityshow(id,aa)
 
 									<div class="col-md-12 center policy">
 
-										 <span>あなたのリストを見ることができるように、送信ボタンをクリックしてください。</a>
+										 <span>
+
+											Please click on submit button so you can see your listing.</a>
 
 										 </span>
 
@@ -1161,16 +1154,15 @@ function facilityshow(id,aa)
 									<div class="col-md-12">
 										<div class="top-margin-20"></div>
 										
-									<button class="blue-button" onclick="semivalidation();" name="subbtn" type="submit">
-提出します</button>									
+									<button class="blue-button" onclick="semivalidation();" name="subbtn" type="submit">Submit</button>									
 									</div>
 											<div class="clearfix"></div>
 										<div class="bottom-margin-20">&nbsp;</div>
-									</div>
+								</div>
 
 								</div> 
 
-							</div>
+				    </div>-->
 
 					</div>
 
@@ -1224,17 +1216,20 @@ function facilityshow(id,aa)
 
 	<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
 
- <script src="js/timepicki.js"></script>
+  <script src="js/timepicki.js"></script>
     <script>
 	$('.timepicker1').timepicki();
     </script>
-
-</html>
 <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
 <script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
 <link rel="stylesheet" href="http://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">
 <!-- jQuery Code executes on Date Format option ----->
 <script src="js/script.js"></script>
+
+</html>
+
+
+
 <script>
 
 function openCity(evt, cityName) {
@@ -1266,14 +1261,4 @@ function openCity(evt, cityName) {
 </script>
 
 
-
-
-<!--
-<style>
-.field_btn { border: none !important; float: none !important;}
-.field_btn a { float: left !important;}
-.selected {background-color: #dededf;}
-
-
-</style> -->
 

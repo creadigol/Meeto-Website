@@ -22,16 +22,16 @@
 個人情報保護方針</a></li>
 						<li><a href="termofservice.php">
 利用規約</a></li>
-						<li><a  href="cancellation.php">
-取り消し規約</a></li>
+						<!-- <li><a  href="cancellation.php">
+取り消し規約</a></li> -->
 						<li><a href="how-work.php">
 使い方</a></li>
                     </ul>
                     <ul class="nav footer-list col-md-6 col-xs-12">
 						<li><a  href="contactus.php">お問い合わせ</a></li>
-						<li><a href="blog.php">ブログ</a></li>
-						<li><a href="about.php">
-約</a></li>
+						<!-- <li><a href="blog.php">ブログ</a></li> -->
+						<!-- <li><a href="about.php">
+約</a></li> -->
 <li><a href="userpolicy.php">ユーザーポリシー</a></li>
 					</ul>
 				</div>

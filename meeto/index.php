@@ -507,7 +507,7 @@ $(document).ready(function(e) {
             <div class="submit-box">
                 <div class="submit">
                 
-                    <input type="text" value="" id="city" class="submit-input" onkeyup="seachcity();" placeholder="Pick Your Workspace.">
+                    <input type="text" value="" id="city" class="submit-input" onkeyup="seachcity();" placeholder="Search Seminar City">
                     
                     <div class="blue-button submit-button" style="line-height:44px !important;" onclick="cityname();">Submit</div>
                     <div class="submit-cityname" id="citysuggetion"></div>

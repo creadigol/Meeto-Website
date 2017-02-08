@@ -113,7 +113,7 @@ function validateEmail(email) {
 	{
 	 $("#emptyemail").show();
 	}	  
-    var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+    var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,15})?$/;
     if (!emailReg.test(email)) {
 		$("#emailvali").show();
         //alert('Please Enter Valid Email ID');

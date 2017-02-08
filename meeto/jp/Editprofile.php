@@ -101,6 +101,43 @@ $rowuserdetail= mysql_fetch_array(mysql_query("select * from user_detail where u
 $rowusercompany=mysql_fetch_array(mysql_query("select * from user_company where uid = '".$_SESSION['jpmeetou']['id']."'")); 
  
 ?>
+<script>
+function validateEmail(email) {
+	
+   if(email.length > 0)
+	{	
+       $("#emptyemail").hide();
+	}
+	else
+	{
+	 $("#emptyemail").show();
+	}	  
+    var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+    if (!emailReg.test(email)) {
+		$("#emailvali").show();
+        //alert('Please Enter Valid Email ID');
+      }
+	else
+	{
+	  $("#emailvali").hide();
+	}
+   }
+   function validateContact(phone)
+   {
+	var phoneReg = /^[0-9]+$/;
+    if (!phoneReg.test(phone)) {
+		$("#phonevali").show();
+        //alert('Please Enter Valid Email ID');
+      } 
+	  else
+	  {
+		  $("#phonevali").hide();
+	  }
+	   
+   }
+  </script>
+
+
 <!DOCTYPE html>
 <html lang="en">  
 <?php	
@@ -170,13 +207,11 @@ a.Editprofile_menu, a.Editprofile_menu:hover{
 				   <li class="li-input">	
 				     <div class="top-margin-10">&nbsp;</div>	
 				     <label class="users">ファーストネーム ：</label>				
-				     <input type="text" class="input-name" name="user_fname" id="" pattern=".{3,}" required title="
-名前は最小3文字でなければなりません" value="<?php $marutra = explode('"',translate(str_replace(" ","+",$row['fname']))); echo $marutra[1];?> ">		
+				     <input type="text" class="input-name" name="user_fname" id="" pattern=".{3,}" required title="名前は最小3文字でなければなりません" value="<?php $marutra = explode('"',translate(str_replace(" ","+",$row['fname']))); echo $marutra[1];?> ">		
 					</li>				
 					<div class="clearfix"></div>
 					<li class="li-input">			
-					<label class="users">
-苗字 ：</label>		
+					<label class="users">苗字 ：</label>		
 					<input type="text" class="input-name" name="user_lname" id="" required value="<?php $marutra = explode('"',translate(str_replace(" ","+",$row['lname']))); echo $marutra[1]; ?> "></br>									<span class="tips-text">
 					
 あなたが他のユーザーとの確認予約をした後にのみ共有されます。						
@@ -259,18 +294,20 @@ a.Editprofile_menu, a.Editprofile_menu:hover{
 						 			
 						 </li>					
 						 <div class="clearfix"></div>
-	
+						 <center><label id="emailvali" style="color:red; font-size:15px; display:none;">有効なメールIDを入力してください</label></center>
+						<center><label id="emptyemail" style="color:red; font-size:15px; display:none;">メールIDを入力してください</label></center>
 						 <li class="li-input">		
 							 <label class="users" for="">
 電子メールアドレス：<i class="lock"></i></label>										
-							 <input type="email" readonly class="input-name" name="email" id="" required value="<?php $marutra = explode('"',translate(str_replace(" ","+",$row['email']))); echo $marutra[1];?> ">										</br>										
+							 <input type="email"  readonly class="input-name" name="email" id="email" required value="<?php $marutra = explode('"',translate(str_replace(" ","+",$row['email']))); echo $marutra[1];?> ">										</br>										
 							 							
 						 </li>								
 						 <div class="clearfix"></div>
+						 <center><label id="phonevali" style="color:red; font-size:15px; display:none;">有効な連絡先番号を入力してください</label></center>
 						 <li class="li-input">				
 							<label class="users" for="">
 電話番号：</label>	
-							<input name="phone_no" title="You can enter only numeric" pattern="[0-9+]{1,}" class="input-name" type="text" value="<?php echo $rowuserdetail['phoneno']; ?>">
+							<input name="phone_no" id="phone_no" title="You can enter only numeric" pattern="[0-9+]{1,}" class="input-name" type="text" value="<?php echo $rowuserdetail['phoneno']; ?>">
 						
 							
 						 </li>

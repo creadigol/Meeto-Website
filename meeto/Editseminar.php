@@ -90,6 +90,31 @@ $seminardate =  mysql_fetch_array(mysql_query("select * from seminar_day where s
 <html lang="en">
   <?php	require_once('head1.php');   ?>
   <!-- NAVBAR================================================== -->
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.min.js" type="text/javascript"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"
+type="text/javascript"></script>
+<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css"
+rel="Stylesheet"type="text/css"/>
+<script type="text/javascript">
+$(function () {
+    $("#txtFrom").datepicker({
+        numberOfMonths: 1,
+        onSelect: function (selected) {
+            var dt = new Date(selected);
+            dt.setDate(dt.getDate() + 1);
+            $("#txtTo").datepicker("option", "minDate", dt);
+        }
+    });
+    $("#txtTo").datepicker({
+        numberOfMonths: 1,
+        onSelect: function (selected) {
+            var dt = new Date(selected);
+            dt.setDate(dt.getDate() - 1);
+            $("#txtFrom").datepicker("option", "maxDate", dt);
+        }
+    });
+});
+</script>
 <script>
 function deletepic(photoid)
  {
@@ -473,7 +498,8 @@ function facilityshow(id,aa)
 						
 						 <span id="Locationfalse" class="glyphicon glyphicon-remove" style="color:red; font-size:20px; display:none; position: absolute; left: 100px;top:0px; padding:0px !important;"></span>							  
 					  </li>
-					  <li><a href="#" class="tablinks list-submit" onclick="openCity(event, 'Policy')">Submit</a></li>
+					  <!--<li><a class="tablinks list-submit" onclick="openCity(event, 'Policy')">Submit</a></li>-->
+					  <li style="padding-left: 14px;"><input type="submit"  class="tablinks list-submit" onclick="semivalidation()" name="subbtn" value="Submit"  style="width:100%;padding-left:0;text-align:left;background:none;border:none;"/></li>
 					</ul>
 				</div>
 			</div>
@@ -531,12 +557,12 @@ function facilityshow(id,aa)
 									<div class="overview_title">									
 
 										<label class="overview-label">From Date</label>
-
-										<input type="date" required min="<?php echo $dt; ?>" id="semifromdate" name="fromdate" placeholder="From Date" class="overview-input" value="<?php echo date("Y-m-d",$seminardate['from_date']/1000);?>">
+										 <input type="text" name="fromdate" value="<?php echo date("Y-m-d",$seminardate['from_date']/1000);?>" id="txtFrom" placeholder="From Date" class="overview-input" />
+										<!--<input type="date" required min="<?php echo $dt; ?>" id="semifromdate" name="fromdate" placeholder="From Date" class="overview-input" value="<?php echo date("Y-m-d",$seminardate['from_date']/1000);?>">-->
 										<label class="overview-label">To Date</label>
-
-										<input type="date" required min="<?php echo $dt; ?>" id="semitodate" name="todate" placeholder="To Date" class="overview-input" value="<?php 
-                                         echo date("Y-m-d",$seminardate['to_date']/1000);?>">
+										<input type="text" name="todate" value="<?php echo date("Y-m-d",$seminardate['to_date']/1000);?>" id="txtTo" placeholder="To Date" class="overview-input" />
+										<!--<input type="date" required min="<?php echo $dt; ?>" id="semitodate" name="todate" placeholder="To Date" class="overview-input" value="<?php 
+                                         echo date("Y-m-d",$seminardate['to_date']/1000);?>">-->
 
 									</div>
 									
@@ -1099,7 +1125,7 @@ function facilityshow(id,aa)
 
 
 
-					<div id="Policy" class="tabcontent">
+					<!--<div id="Policy" class="tabcontent">
 
 						  <div class="col-md-12 right_side left-side-height">
 
@@ -1136,7 +1162,7 @@ function facilityshow(id,aa)
 
 								</div> 
 
-				    </div>
+				    </div>-->
 
 					</div>
 
@@ -1194,11 +1220,13 @@ function facilityshow(id,aa)
     <script>
 	$('.timepicker1').timepicki();
     </script>
+<script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+<script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">
+<!-- jQuery Code executes on Date Format option ----->
+<script src="js/script.js"></script>
 
 </html>
-
-
-
 <script>
 
 function openCity(evt, cityName) {
@@ -1228,6 +1256,3 @@ function openCity(evt, cityName) {
 }
 
 </script>
-
-
-

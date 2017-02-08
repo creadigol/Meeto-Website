@@ -14,8 +14,15 @@ $fgh=0;
 			$checkemail = mysql_query("select * from user where email = '".$email."'");	
 			if(mysql_num_rows($checkemail) > 0)	
 			{		
-				//echo "<script>alert('メールIDはすでに存在しています..！');</script>";	
-					$fgh=1;				
+					$checkemail1 = mysql_query("select * from user where email = '".$email."' and type ='1'");	
+					if(mysql_num_rows($checkemail1) > 0)	
+					{		
+						//echo "<script>alert('Email Id Already Exist..!');</script>";
+						$fgh=1;			
+					}else{
+						//echo "<script>alert('This Email id attached with other account!');</script>";
+						$fgh=3;	
+					}		
 			}		
 			else	
 			{	
@@ -89,7 +96,8 @@ $fgh=0;
 		}
 		else
 		{
-			echo "<script>alert('無効なログインの詳細..！');</script>";
+			$fgh=7;
+			//echo "<script>alert('無効なログインの詳細..！');</script>";
 		}
 	}
 	if(isset($_SESSION['jpmeetou']['facebook_access_token']))
@@ -359,6 +367,60 @@ $fgh=0;
 		<?php
 	}
 ?>
+<?php
+	if($fgh==3)
+	{
+		unset($_SESSION['jpmeetou']);
+		$fgh=0;
+		?>
+		<div class="" id='hidenewfac123' style='width:100%;height:149%;background: rgba(0,0,0,0.5);padding: 2%;position: fixed;z-index: 999;'>
+		<div class="row" >
+			<div class="col-md-12">
+			<br><br><br><br><br><br><br><br><br><br><br><br>
+				<div class="col-md-5 col-md-offset-4" style="border:1px solid #333; background:#fff">
+					
+                    
+					<div class="col-md-12" id="deleteusermsg" style="padding:20px;"> 
+						<h4 style="color:red;font-weight:bolder;">このメールIDは他のアカウントに添付されています！</h4>
+						<div class="col-md-2 col-md-offset-10 btn btn-primary" style="color:black;font-weight:bolder;" onclick="$('#hidenewfac123').hide();">
+						Ok</div>
+					</div>
+             
+				</div>
+				
+			</div>
+		</div>
+</div>
+		<?php
+	}
+?>
+<?php
+	if($fgh==7)
+	{
+		unset($_SESSION['jpmeetou']);
+		$fgh=0;
+		?>
+		<div class="" id='hidenewfac123' style='width:100%;height:149%;background: rgba(0,0,0,0.5);padding: 2%;position: fixed;z-index: 999;'>
+		<div class="row" >
+			<div class="col-md-12">
+			<br><br><br><br><br><br><br><br><br><br><br><br>
+				<div class="col-md-5 col-md-offset-4" style="border:1px solid #333; background:#fff">
+					
+                    
+					<div class="col-md-12" id="deleteusermsg" style="padding:20px;"> 
+						<h4 style="color:red;font-weight:bolder;">無効なログインの詳細..！</h4>
+						<div class="col-md-2 col-md-offset-10 btn btn-primary" style="color:black;font-weight:bolder;" onclick="$('#hidenewfac123').hide();">
+						Ok</div>
+					</div>
+             
+				</div>
+				
+			</div>
+		</div>
+</div>
+		<?php
+	}
+?>
 <script>
 function hideselect()
 {
@@ -435,7 +497,7 @@ $(document).ready(function(e) {
             <div class="submit-box">
                 <div class="submit">
                 
-                    <input type="text" value="" id="city" class="submit-input" onkeyup="seachcity();" placeholder="あなたのワークスペースを選択してください。">
+                    <input type="text" value="" id="city" class="submit-input" onkeyup="seachcity();" placeholder="検索セミナー市">
                     
                     <div class="blue-button submit-button" style="line-height:44px !important;" onclick="cityname();">提出する</div>
                     <div class="submit-cityname" id="citysuggetion"></div>

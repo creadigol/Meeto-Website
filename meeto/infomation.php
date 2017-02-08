@@ -81,6 +81,7 @@ function seldate()
 	$seluser=mysql_fetch_array(mysql_query("select * from user where id=$seminar_detail[uid]"));
 	$usercompany=mysql_fetch_array(mysql_query("select * from user_company where uid=$seminar_detail[uid]"));
 	
+	
 	/*$purpose = explode(',',$seminar_detail['puposeid']);
 	$industry= explode(',',$seminar_detail['industryid']);
 	echo "<script>alert($purpose[0]);</script>";
@@ -221,8 +222,11 @@ function seldate()
 								
                               echo "From Time : ".date("g:i a",$fetsemiday['from_date']/1000)."&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
                               echo "To Time : ".date("g:i a",$fetsemiday['to_date']/1000)."<br>";
+							  
+							  
                             ?>
-                        </p>
+                        </p><Br>
+						<p>Seminar Address : <?php echo $seminar_detail['address']." ".$seminar_city['name'];?></p>
                     </div>
 					<div class="clearfix"></div>
                 </div>
@@ -344,9 +348,12 @@ function seldate()
 								 
 								while($fetreview=mysql_fetch_array($semireview))
 								  {?>
-									<span class="review-user">
-										<label><?php echo $fetreview['fname']; ?></label>
-										<p><i class="fa fa-star" aria-hidden="true"></i><?echo $fetreview['notes'];?></p>
+									<span class="review-user" style="display:block;margin-bottom:0;">
+										<label><?php echo $fetreview['fname'];?></label>
+										<!--<p><? /*echo $fetreview['notes'];*/ ?></p>-->
+                                        <ul style="display:inline-block;list-style:disc;">
+                                        	<li><? echo $fetreview['notes'];?></li>
+                                        </ul>
 									</span>  
 									<?php
 						             }  
@@ -404,7 +411,11 @@ function seldate()
 					
 					
                     <div class="col-md-9 col-sm-6 col-xs-12 host">
-                    	<div class="comp_name purple"><?php echo $usercompany['name']; echo "<br>"; ?></div>
+					    <?php if($usercompany['name']!=""){
+						?>
+							<div class="comp_name purple"><?php echo $usercompany['name']; echo "<br>"; ?></div>
+						<?}?>
+                    	
                         <span class="green"><?php echo $usercompany['description']; echo "<br>"; ?></span>
 						<span class="green"><?php echo $usercompany['organization'];echo "<br>"; ?></span>
                         <span class="green"><?php echo $seminar_detail['address'];  echo "<br>"; ?></span>
@@ -429,7 +440,8 @@ function seldate()
                     </div>
                     <div class="botns-label">
                             <span class="title" style="font-size:15px;">Total Available Seats</span>
-                            <label class="price-descri"><?php echo $avaliable=$seminar_detail['total_seat'] - $seminar_detail['total_booked_seat']; ?></label>		
+                            <label class="price-descri"><?php  $avaliable=$seminar_detail['total_seat'] - $seminar_detail['total_booked_seat'];
+							 if($avaliable>0){ echo $avaliable; } else { echo $avaliable=0; }?></label>		
                     </div>
                         <?php
                             if($fetsemiday['from_date']==$fetsemiday['to_date'])
@@ -465,7 +477,7 @@ function seldate()
 							?>
 								<div class="error_div">You are admin so you are not book this seminar</div>
 							<?php
-						} else if($avaliable!=0)
+						} else if($avaliable>0)
                         {
                     ?>
                 <form action="book-now.php?id=<?php echo $_REQUEST['id']; ?>" method="POST">
@@ -493,7 +505,7 @@ function seldate()
 						else
 						{
 					?>
-                <div class="error_div">Sorry, Total Available Seats Is : 0</div>
+                <div class="error_div">Sorry, No Available Seats</div>
 					<?php
 						}
                     ?>

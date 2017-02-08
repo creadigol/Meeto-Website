@@ -96,6 +96,28 @@
 <html lang="en">
   <?php	require_once('head1.php');   ?>
   <!-- NAVBAR================================================== -->
+ 
+
+<script type="text/javascript">
+$(function () {
+    $("#txtFrom").datepicker({
+        numberOfMonths: 1,
+        onSelect: function (selected) {
+            var dt = new Date(selected);
+            dt.setDate(dt.getDate() + 1);
+            $("#txtTo").datepicker("option", "minDate", dt);
+        }
+    });
+    $("#txtTo").datepicker({
+        numberOfMonths: 1,
+        onSelect: function (selected) {
+            var dt = new Date(selected);
+            dt.setDate(dt.getDate() - 1);
+            $("#txtFrom").datepicker("option", "maxDate", dt);
+        }
+    });
+});
+</script>
   <script>
 $(function() 
  { 
@@ -107,14 +129,26 @@ $(function()
       dateFormat:"dd-mm-yy"
      });
  });
- 
+
  function datelimit()
 {
-	var fromdate = document.getElementById('semifromdate').value;
-	document.getElementById('semitodate').min=fromdate;
+	var fromdate = document.getElementById('datepicker').value;
+	$(document).ready(function() {
+		$(function() {
+		$("#datepicker1").datepicker(
+		  {
+			  dateFormat: 'dd-mm-yy',
+			  minDate: fromdate,
+		  }
+		);
+		});
+		
+
 	
-	var fromdate = document.getElementById('semitodate').value;
-	document.getElementById('semifromdate').max=fromdate;
+	document.getElementById('datepicker1').min=fromdate;
+	
+	var fromdate = document.getElementById('datepicker1').value;
+	document.getElementById('datepicker').max=fromdate;
 }
 function timelimit()
 {
@@ -125,9 +159,6 @@ function timelimit()
 	document.getElementById('fromtime').max=totime;
 
 }
-
-
- 
   </script>
   <script>
 var myCenter;
@@ -213,7 +244,7 @@ function facilityshow(id,aa)
 	 }
 	 
    function validateEmail(email) {
-    var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?$/;
+    var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,15})?$/;
     if (!emailReg.test(email)) {
 		$("#emailvali").show();
         //alert('Please Enter Valid Email ID');
@@ -506,7 +537,7 @@ function facilityshow(id,aa)
 						 <span id="Locationfalse" class="glyphicon glyphicon-remove" style="color:red; font-size:20px; display:none; position: absolute; left: 100px;top:0px; padding:0px !important;"></span>							  
 					  </li>
 					 <!--<li><a class="tablinks list-submit" onclick="openCity(event, 'Policy')">Submit</a></li>-->
-					  <li style="padding-left: 14px;"><input type="submit"  class="tablinks list-submit" onclick="semivalidation()" name="subbtn" value="Submit" /></li>
+					  <li style="padding-left: 14px;"><input type="submit"  class="tablinks list-submit" onclick="semivalidation()" name="subbtn" value="Submit"  style="width:100%;padding-left:0;text-align:left;background:none;border:none;"/></li>
 					</ul>
 				</div>
 			</div>
@@ -550,69 +581,46 @@ function facilityshow(id,aa)
 					  <div class="col-md-12 right_side">
 
 						<div class="clearfix"></div>
-
 							<div class="row price-border price-margin Location-row">
-
 								<div class="col-md-8 center">
-
 									 <h3>Day</h3>
-
 									 <p>Set Day & Time detail for seminar listing</p>
-
 								</div>
-
 								<div class="col-md-9">
 
-									<div class="overview_title">									
-
+									<div class="overview_title">
 										<label class="overview-label">From Date <span style="color:red;">*</span></label>
-
-										<input type="date" required min="<?php echo $dt; ?>" id="semifromdate" name="fromdate" onchange="datelimit();" placeholder="From Date" class="overview-input">
+										<!--<input type="text" required  name="selected_date" name="fromdate"  placeholder="From Date" id="datepicker" onchange="selectfdate(this.value);" />-->
+										 <input type="text" name="fromdate" id="txtFrom" placeholder="From Date" class="overview-input" />
+										
+										
+										<!--<input type="date" required min="<?php echo $dt; ?>" id="semifromdate" name="fromdate" onchange="datelimit();" placeholder="From Date" class="overview-input">-->
+										
 										<label class="overview-label">To Date <span style="color:red;">*</span></label>
-
-										<input type="date" required min="<?php echo $dt; ?>" id="semitodate" name="todate" onchange="datelimit();"  placeholder="To Date" class="overview-input">
-
+										
+										<!--<input type="text" required  name="selected_date" name="todate" onchange="alertdataj(this.value);" placeholder="To Date" id="datepicker1"/>-->
+										<input type="text" name="todate" id="txtTo" placeholder="To Date" class="overview-input" />
+										<!--<input type="date" required min="<?php echo $dt; ?>" id="semitodate" name="todate" onchange="datelimit();"  placeholder="To Date" class="overview-input">-->
 									</div>
-									
-									<div class="bottom-margin-20"> </div>
-
+									<div class="bottom-margin-20"></div>
 									<div class="overview_title">									
 										<link href="css/bootstrap_time.css" rel="stylesheet">
-
 									<!-- Custom styles for this template -->
- 
 										<link href="css/timepicki.css" rel="stylesheet">
 										<label class="overview-label">Everyday Start Seminar Time<span style="color:red;">*</span></label>
-
-										
 										<input id="timepicker1"  style="cursor:pointer;" class="timepicker1" type="text" name="fromtime" placeholder="Select Time"/>
 										<label class="overview-label">Everyday End Seminar Time<span style="color:red;">*</span></label>
-										<input id="timepicker1"  style="cursor:pointer;" class="timepicker1" type="text" name="totime" placeholder="Select Time"/>
-
-										
+										<input id="timepicker1"  style="cursor:pointer;" class="timepicker1" type="text" name="totime" placeholder="Select Time"/>										
                                        <!-- <label class="overview-label">" Ex : 11:00 am or 11:00 pm "</label>-->
 									</div>
-
 									<div class="bottom-margin-20"> </div>
 								</div>
-
-								
-						
-
 							</div>
 
 							<div class="clearfix"></div>
-
-							
-
-							
-
 						</div>
 
 					</div>
-
-
-
 					<div id="Overview" class="tabcontent">
 
 					  <div class="col-md-12 right_side">
@@ -676,9 +684,6 @@ function facilityshow(id,aa)
 						
 
 					</div>
-
-					
-
 					<div id="Photos" class="tabcontent">
 
 					  <div class="col-md-12 right_side">
@@ -1191,15 +1196,32 @@ function facilityshow(id,aa)
 
 	<script src="js/ie10-viewport-bug-workaround.js"></script> 
 
-	<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+ <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
  <script src="js/timepicki.js"></script>
+ 
     <script>
 	$('.timepicker1').timepicki();
     </script>
  
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.min.js" type="text/javascript"></script>
+<script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"
+type="text/javascript"></script>
+<link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css"
+rel="Stylesheet"type="text/css"/>
+ <script src="http://code.jquery.com/jquery-1.10.2.js"></script>
+<script src="http://code.jquery.com/ui/1.11.0/jquery-ui.js"></script>
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.0/themes/smoothness/jquery-ui.css">
+<script src="js/all.js"></script>
+<!-- jQuery Code executes on Date Format option ----->
+<script src="js/script.js"></script>
+
 
 </html>
+
 <script>
+
+
+
 
 function openCity(evt, cityName) {
 

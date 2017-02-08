@@ -63,7 +63,7 @@ header {transform: translate3d(0,0px,0); height:84px;}
             
             <div class="header-group header-main">
                 <div class="header-item header-logo">
-                	<a class="housing-logo" title="Real Estate | Buy/Sell Propety | Housing.com" href="index.php" style="margin-top:5px;"></a>
+                	<a class="housing-logo" title="Meeto.jp" href="index.php" style="margin-top:5px;"></a>
                 </div>
             </div>
             <div class="header-group header-right pull-right" style="margin-top:15px;">

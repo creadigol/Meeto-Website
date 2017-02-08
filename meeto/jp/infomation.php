@@ -210,11 +210,14 @@ $data = explode('"',translate(str_replace(" ","+",$seminar_detail['title']))); e
                                 $fetsemiday=mysql_fetch_array($selsemiday);
 								
 								 echo "時から : ".date("g:i a",$fetsemiday['from_date']/1000)."&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
-                               echo "時間に : ".date("g:i a",$fetsemiday['to_date']/1000)."<br>";
+                                  echo "時間に : ".date("g:i a",$fetsemiday['to_date']/1000)."<br>";
                               //  echo "時から : ".$fetsemiday['from_time']."&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
                                // echo "時間に : ".$fetsemiday['to_time']."<br>";
+							   
+							   $data = explode('"',translate(str_replace(" ","+",$seminar_city['name'])));
                             ?>
-                        </p>
+                        </p><Br>
+						<p>Seminar Address : <?php $data = explode('"',translate(str_replace(" ","+",$seminar_detail['address']))); echo $data[1]; ?>&nbsp;&nbsp;<?php $data = explode('"',translate(str_replace(" ","+",$seminar_city['name']))); echo $data[1]; ?></p>
                     </div>
 					<div class="clearfix"></div>
                 </div>
@@ -340,14 +343,18 @@ $data = explode('"',translate(str_replace(" ","+",$seminar_detail['title']))); e
 								while($fetreview=mysql_fetch_array($semireview))
 								  {?>
 									
-                                        <span class="review-user">
+                                        <span class="review-user" style="display:block;">
 											<label>											
 												<?php $marutra = explode('"',translate(str_replace(" ","+",$fetreview['fname']))); echo $marutra[1] ; ?>
 											</label>
-                                            <p>
+                                            <!--<p>
 												<i class="fa fa-star" aria-hidden="true"></i>
-												<?$marutra = explode('"',translate(str_replace(" ","+",$fetreview['notes']))); echo $marutra[1] ;?>
-											</p>
+												<? /*$marutra = explode('"',translate(str_replace(" ","+",$fetreview['notes']))); echo $marutra[1];*/ ?>
+                                            </p>-->
+                                            
+                                            <ul style="display:inline-block;list-style:disc;">
+                                                <li><? $marutra = explode('"',translate(str_replace(" ","+",$fetreview['notes']))); echo $marutra[1] ;?></li>
+                                            </ul>
                                         </tr>
 									<?php
 						             }  
@@ -367,7 +374,7 @@ $data = explode('"',translate(str_replace(" ","+",$seminar_detail['title']))); e
                                 </div>
 					
 				  </div>
-                    <textarea class="review-submit" rows="2" id="givenreview"></textarea>
+                    <textarea class="review-submit" rows="2" placeholder="あなたのレビューを与える" id="givenreview"></textarea>
 					
 					<div class="top-margin-20"></div>
 					
@@ -403,7 +410,11 @@ $data = explode('"',translate(str_replace(" ","+",$seminar_detail['title']))); e
                     </div>
 					
                     <div class="col-md-9 col-sm-6 col-xs-12 host">
-                    	<div class="comp_name purple"><?php $data = explode('"',translate(str_replace(" ","+",$usercompany['name']))); echo $data[1] ; echo "<br>"; ?></div>
+					    
+						 <?php if($usercompany['name']!=""){
+						?>
+						<div class="comp_name purple"><?php $data = explode('"',translate(str_replace(" ","+",$usercompany['name']))); echo $data[1] ; echo "<br>"; ?></div>
+					   <?}?>
                         <span class="green"><?php $data = explode('"',translate(str_replace(" ","+",$usercompany['description']))); echo $data[1] ; echo "<br>"; ?></span>
 						<span class="green"><?php $data = explode('"',translate(str_replace(" ","+",$usercompany['organization']))); echo $data[1] ;echo "<br>"; ?></span>
                         <span class="green"><?php $marudata = explode('"',translate(str_replace(" ","+",$seminar_detail['address']))); echo $marudata[1] ;  echo "<br>"; ?></span>
@@ -428,7 +439,8 @@ $data = explode('"',translate(str_replace(" ","+",$seminar_detail['title']))); e
                     </div>
                     <div class="botns-label">
                             <span class="title" style="font-size:15px;">利用可能な総席</span>
-                            <label class="price-descri"><?php $avaliable=$seminar_detail['total_seat'] - $seminar_detail['total_booked_seat']; $marutra = explode('"',translate(str_replace(" ","+",$avaliable))); echo $marutra[1];  ?></label>		
+                            <label class="price-descri"><?php  $avaliable=$seminar_detail['total_seat'] - $seminar_detail['total_booked_seat'];
+							 if($avaliable>0){ echo $avaliable; } else { echo $avaliable=0; }?></label>		
                     </div>
                         <?php
                             if($fetsemiday['from_date']==$fetsemiday['to_date'])
@@ -462,7 +474,7 @@ $data = explode('"',translate(str_replace(" ","+",$seminar_detail['title']))); e
 							?>
 								<div class="error_div">あなたは管理者ですので、このセミナーを予約しないでください</div>
 							<?php
-						} else if($avaliable!=0)
+						} else if($avaliable>0)
                         {
                     ?>
                 <form action="book-now.php?id=<?php echo $_REQUEST['id']; ?>" method="POST">
@@ -491,7 +503,7 @@ $data = explode('"',translate(str_replace(" ","+",$seminar_detail['title']))); e
                         else
                         {
                     ?>
-                <div class="error_div">申し訳ありませんが、利用可能な総席です：0</div>
+                <div class="error_div">申し訳ありません、利用可能な座席がありません</div>
 					<?php
                         }
                     ?>

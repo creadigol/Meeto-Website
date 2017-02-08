@@ -122,7 +122,7 @@ $_SESSION['jpmeetou']['fname']=$fetuser['fname'];
             </div>
             <div class="header-group header-main">
                 <div class="header-item header-logo">
-                	<a class="housing-logo" title="Real Estate | Buy/Sell Propety | Housing.com" href="index.php" style="margin-top:5px;"></a>
+                	<a class="housing-logo" title="Meeto.jp" href="index.php" style="margin-top:5px;"></a>
                 </div>
             </div>
             <div class="header-group header-right pull-right">
