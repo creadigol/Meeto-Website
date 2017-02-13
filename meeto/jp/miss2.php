@@ -35,8 +35,7 @@ require_once('db.php');
 	  else
 	  { ?>  
         <a>
-		  <li>
-都市が見つかりません</li>
+		  <li><?php echo CITIES_NOT_FOUND;?></li>
 	    </a>
 	  <?
 	  }
@@ -62,7 +61,7 @@ require_once('db.php');
 	      ?>  
 	     <ul class="city-submit">
           <a>
-		  <li>都市が見つかりません</li>
+		  <li><?php echo CITIES_NOT_FOUND;?></li>
 	      </a>
 	    </ul>
 	     <?
@@ -80,7 +79,7 @@ require_once('db.php');
 	      ?>  
 	     <ul class="city-submit">
            <a>
-		    <li>都市が見つかりません</li>
+		    <li><?php echo CITIES_NOT_FOUND;?></li>
 	       </a>
 	    </ul>
 	     <?

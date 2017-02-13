@@ -198,9 +198,9 @@ $(window).scroll(function () {
                 <div class="col-md-8 col-md-offset-2 Location-row">	
                     <div class="row hedding-row row-border">				
                         <div class="col-md-12 now-booking-head booking-option">
-                            <span class="semibold-o">1.ご予約の概要</span>
+                            <span class="semibold-o">1.<?php echo OVERVIEW_OF_YOUR_BOOKING;?></span>
 					
-                            <a href="infomation.php?id=<?php echo $_REQUEST['id']; ?>" class="r-left text-right blue-button back-button">戻る申し出へ</a>
+                            <a href="infomation.php?id=<?php echo $_REQUEST['id']; ?>" class="r-left text-right blue-button back-button"><?php echo BACK_TO_YOUR_BOOKING;?></a>
 						<div class="clearfix"></div>	
                         </div>
                             
@@ -208,31 +208,38 @@ $(window).scroll(function () {
                             <div class="col-md-12">
                                 <div class="col-md-6">
                                     <div class="row">
+									 <?php
+									if($fetsemiphoto['image']=="" || !file_exists("../img/".$fetsemiphoto['image']))	
+										{?>	
+										<img src="../img/no-photo.jpg" style="height:261px; width:300px;" class="img-responsive center-block booking-icon">
+							
+										<?}						
+										 else
+										{?>	
                                         <img src="../img/<?php echo $fetsemiphoto['image']; ?>" style="transform:rotate(<?php echo $fetsemiphoto['rotateval']; ?>deg)" class="img-responsive slider-width center-block booking-icon">
+										<?php 
+										} ?>
                                     </div>
                                 </div>	
                                 <div class="col-md-6 review">
                                     <h4 class="semibold-o headding-boredr"><?php $marutra = explode('"',translate(str_replace(" ","+",$fetseminar['title']))); echo $marutra[1];  ?></h4>
                                     <ul class="nav checkin-details-left cheks-status">
                                         <li>
-                                            <label>
-日：</label><input type="text" name="fromdate" hidden value="<?php echo $_REQUEST['fromdate']; ?>" />
+                                            <label><?php echo FROM_DATE;?></label><input type="text" name="fromdate" hidden value="<?php echo $_REQUEST['fromdate']; ?>" />
                                             <span><?php echo $_REQUEST['fromdate']; ?></span>
                                         </li>
                                         <li>
-                                            <label>
-現在まで ：</label><input type="text" name="todate" hidden value="<?php echo $_REQUEST['todate']; ?>" />											
+                                            <label><?php echo TO_DATE;?>：</label><input type="text" name="todate" hidden value="<?php echo $_REQUEST['todate']; ?>" />											
                                             <span><?php echo $_REQUEST['todate']; ?></span>
                                         </li>
                                         <li>
-                                            <label>総席数：</label><input type="text" name="totalseats" hidden value="<?php echo $_REQUEST['totalseats']; ?>" />
+                                            <label><?php echo TOTAL_SEAT;?></label><input type="text" name="totalseats" hidden value="<?php echo $_REQUEST['totalseats']; ?>" />
                                             <span><?php echo $_REQUEST['totalseats']; ?></span>
                                         </li>
                                     </ul>
                                     <ul class="nav checkin-details-left cheks-status">
                                         <li>
-                                            <label>
-場所：</label>
+                                            <label><?php echo PLACE;?></label>
                                             <span> <?php $marutra = explode('"',translate(str_replace(" ","+",$selsemitype['name']))); echo $marutra[1];  ?></span>
                                         </li>
                                        <!-- <li>
@@ -248,8 +255,7 @@ $(window).scroll(function () {
                 <div class="top-margin-30">&nbsp;</div>						
                     <div class="row hedding-row row-border">				
                         <div class="col-md-12 now-booking-head booking-option">
-                            <span class="semibold-o">
-2.個人情報</span>
+                            <span class="semibold-o">2.<?php echo PERSONAL_INFORMATION;?></span>
                         </div>
                         <div class="clearfix"></div>
                         <div class="row your-booking">
@@ -257,7 +263,7 @@ $(window).scroll(function () {
                                 <div class="col-md-12 review Personal-Info">
                                         <ul class="nav login-list-cont reservation">
                                             <li>
-                                                <span>予約なし</span>												
+                                                <span><?php echo BOOKING_NO;?></span>												
                                                 <?php 
                                                     $char1=chr(rand(65,90));
                                                     $char2=chr(rand(65,90));
@@ -267,8 +273,7 @@ $(window).scroll(function () {
                                                 <input type="text" readonly name="bookingno" value="<?php echo $uniq; ?>" />
                                             </li>
                                             <li>
-                                                <span>
-メッセージ</span>
+                                                <span><?php echo MESSAGE;?></span>
                                                 <textarea name="message" id="message" value="" style="width:300px;" placeholder="メッセージホスト.." rows="5"></textarea>
                                             </li>
                                         </ul>
@@ -283,8 +288,7 @@ $(window).scroll(function () {
                             <div class="col-md-4 col-md-offset-4">								
                             <?php 								?>
         
-                                <button type="submit" name="subbtn" class="blue-button center-block book-now-button">
-今予約する</button>
+                                <button type="submit" name="subbtn" class="blue-button center-block book-now-button"><?php echo BOOK_NOW;?></button>
                             </div>	
                         </div>
                 </div>			

@@ -65,31 +65,31 @@ a.account_menu, a.account_menu:hover{
 				<div class="row hedding-row">
 				<div class="col-md-12 Required-head">	
 				   <h5>
-パスワードを変更してください</h5>		
+<?php echo CHANGE_YOUR_PASSWORD; ?></h5>		
 				   </div>					
 				   <ul class="nav">			
 				   <li class="li-input">	
 				     <div class="top-margin-10">&nbsp;</div>	
 				     <label class="users">
-以前のパスワード ：</label>				
+<?php echo OLD_PASSWORD; ?> ：</label>				
 				     <input type="password" class="input-name" name="old_password" id="" required  value="">		
 					</li>				
 					<div class="clearfix"></div>
 					<li class="li-input">			
 					<label class="users">
-新しいパスワード ：</label>		
+<?php echo NEW_PASSWORD; ?> ：</label>		
 					<input type="password" class="input-name" name="new_password" id="" required pattern=".{6,}" title="Password should be minimum 6 character" value="">									</br>
 					</li>								
 					  <div class="clearfix"></div>	
 					<li class="li-input">			
 					<label class="users">
-パスワードを認証する ：</label>		
+<?php echo CONFIRM_PASSWORD; ?> ：</label>		
 					<input type="password" class="input-name" name="confirm_password" id="" required pattern=".{6,}" title="Password should be minimum 6 character" value="">									</br>
 					</li>
 					<li class="li-input">
 					  <div class="col-md-8 col-md-offset-4 col-sm-8 col-sm-offset-4 col-xs-8 col-xs-offset-4">
 					   <button type="submit" name="submit_butto" class="blue-button save border-n">
-パスワードを更新します</button>
+<?php echo UPDATE_PASSWORD; ?></button>
 					  </div>
 					</li>
 					<div class="top-margin-20">&nbsp;</div>

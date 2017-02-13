@@ -225,6 +225,30 @@ function facilityshow(id,aa)
     }
     });
 	 }
+	function validateEmail(email) {
+    var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,15})?$/;
+    if (!emailReg.test(email)) {
+		$("#emailvali").show();
+        //alert('Please Enter Valid Email ID');
+      } 
+	  else
+	  {
+		  $("#emailvali").hide();
+	  }
+   }
+   function validateContact(phone)
+   {
+	var phoneReg = /^[0-9]+$/;
+    if (!phoneReg.test(phone)) {
+		$("#phonevali").show();
+        //alert('Please Enter Valid Email ID');
+      } 
+	  else
+	  {
+		  $("#phonevali").hide();
+	  }
+	   
+   }
 </script>
 <style>
         .upperdivche,#show_pic0
@@ -287,7 +311,7 @@ function facilityshow(id,aa)
 	<div class="text-center">
 	<div id="firstscreenhead" class="clearfix"><div>
 		<div class="top-margin-10 margin-main">&nbsp;</div>
-			<h3 class="space">List Your Seminar</h3>
+			<h3 class="space">Edit Your Seminar</h3>
 		<div class="top-margin-20"></div>		
 	</div>
 	</div>
@@ -456,9 +480,7 @@ function facilityshow(id,aa)
 					<ul class="tab nav left_side left_back">
 						<span>Basic</span>
 					  <li class="tablinks active" onclick="openCity(event, 'Pricing')"><span>Contact</span>
-					  	<span id="valtrue" class="glyphicon glyphicon-ok" style="color:green; font-size:20px; display:none; position: absolute; left: 100px;top:0px; padding:0px !important;"></span>
-						
-						 <span id="valfalse" class="glyphicon glyphicon-remove" style="color:red; font-size:20px; display:none; position: absolute; left: 100px;top:0px; padding:0px !important;"></span>
+					  	
 					  
 					  </li>
 					  <li class="tablinks" onclick="openCity(event, 'Calendar')"><span>Day</span>
@@ -478,9 +500,7 @@ function facilityshow(id,aa)
 						 <span id="Overviewfalse" class="glyphicon glyphicon-remove" style="color:red; font-size:20px; display:none; position: absolute; left: 100px;top:0px; padding:0px !important;"></span>							  
 					  </li>
 					  <li class="tablinks" onclick="openCity(event, 'Photos')"><span>Photos</span>
-					  	<span id="Photostrue" class="glyphicon glyphicon-ok" style="color:green; font-size:20px; display:none; position: absolute; left: 100px;top:0px; padding:0px !important;"></span>
-						
-						 <span id="Photosfalse" class="glyphicon glyphicon-remove" style="color:red; font-size:20px; display:none; position: absolute; left: 100px;top:0px; padding:0px !important;"></span>							  
+					  								  
 					  </li>
 					</ul>
 
@@ -489,9 +509,7 @@ function facilityshow(id,aa)
 					<ul class="tab nav left_side left-menu left_back">
 						<span>Settings</span>
 					  <li class="tablinks" onclick="openCity(event,'Amenities')"><span>Facilities</span>
-					  	<!--<span id="Amenitiestrue" class="glyphicon glyphicon-ok" style="color:green; font-size:20px; display:none; position: absolute; left: 100px;top:0px; padding:0px !important;"></span>
-						
-						 <span id="Amenitiesfalse" class="glyphicon glyphicon-remove" style="color:red; font-size:20px; display:none; position: absolute; left: 100px;top:0px; padding:0px !important;"></span>		-->					  
+					  					  
 					  </li>
 					  <li class="tablinks" onclick="openCity(event, 'Location')"><span>Location</span>
 					  	<span id="Locationtrue" class="glyphicon glyphicon-ok" style="color:green; font-size:20px; display:none; position: absolute; left: 100px;top:0px; padding:0px !important;"></span>
@@ -499,7 +517,7 @@ function facilityshow(id,aa)
 						 <span id="Locationfalse" class="glyphicon glyphicon-remove" style="color:red; font-size:20px; display:none; position: absolute; left: 100px;top:0px; padding:0px !important;"></span>							  
 					  </li>
 					  <!--<li><a class="tablinks list-submit" onclick="openCity(event, 'Policy')">Submit</a></li>-->
-					  <li style="padding-left: 14px;"><input type="submit"  class="tablinks list-submit" onclick="semivalidation()" name="subbtn" value="Submit"  style="width:100%;padding-left:0;text-align:left;background:none;border:none;"/></li>
+					  <li style="padding-left: 14px;"><input type="submit"  class="tablinks list-submit" onclick="semivalidation();" name="subbtn" value="Submit"  style="width:100%;padding-left:0;text-align:left;background:none;border:none;"/></li>
 					</ul>
 				</div>
 			</div>
@@ -524,11 +542,13 @@ function facilityshow(id,aa)
 									<div class="bottom-margin-20"> </div>
 									<div class="overview_title">									
 										<label class="overview-label">Contact Email</label>
+										<label id="emailvali" style="color:red; font-size:15px; display:none;">Please Enter Valid Email ID</label>
 										<input name="contactemail" type="email" id="contactemail" placeholder="Contact Email" class="overview-input" required value="<?php echo $seminar['contact_email'];?>">
 									</div>
 									<div class="bottom-margin-20"> </div>
 									<div class="overview_title">									
 										<label class="overview-label">Contact No</label>
+										<label id="phonevali" style="color:red; font-size:15px; display:none;">Please Enter Valid Contact No</label>
 										<input name="contactno" type="text" id="contactno" placeholder="Contact No" class="overview-input" required value="<?php echo $seminar['phoneno'];?>" >
 									</div>
 								</div>
@@ -1117,53 +1137,7 @@ function facilityshow(id,aa)
 						<!--Address Pop-up END -->
 						</div>
 
-						
-
-						
-
 					</div>
-
-
-
-					<!--<div id="Policy" class="tabcontent">
-
-						  <div class="col-md-12 right_side left-side-height">
-
-							<div class="clearfix"></div>
-
-								<div class="row price-border price-margin Location-row">
-
-									<div class="col-md-12 center policy">
-
-										 <span>
-
-											Please click on submit button so you can see your listing.</a>
-
-										 </span>
-
-									</div>
-
-								</div>
-
-								<div class="clearfix"></div>
-
-								
-
-								<div class="row price-border price-margin Location-row">
-
-									<div class="col-md-12">
-										<div class="top-margin-20"></div>
-										
-									<button class="blue-button" onclick="semivalidation();" name="subbtn" type="submit">Submit</button>									
-									</div>
-											<div class="clearfix"></div>
-										<div class="bottom-margin-20">&nbsp;</div>
-								</div>
-
-								</div> 
-
-				    </div>-->
-
 					</div>
 
 				</div>

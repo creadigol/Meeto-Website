@@ -1,6 +1,6 @@
 <?php 
 require_once('db.php');
-require_once('condition.php');   
+require_once('condition.php');     
 $row = mysql_fetch_array(mysql_query("select * from user where id = $_REQUEST[id]"));
  $rowuserdetail= mysql_fetch_array(mysql_query("select * from user_detail where uid = $_REQUEST[id]")); 
  $rowusercompany=mysql_fetch_array(mysql_query("select * from user_company where uid = $_REQUEST[id]"));
@@ -64,8 +64,7 @@ a.dashboard_menu, a.dashboard_menu:hover{
                     	}				
                     ?>
                 <div class="verifierid">
-                    <h2 class="profile-heads">
-検証</h2>
+                    <h2 class="profile-heads"><?php echo VERIFICATIONS; ?></h2>
                     <div class="clearfix"></div>
                     <ul class="nav virify-method">
                         <li>
@@ -88,7 +87,7 @@ a.dashboard_menu, a.dashboard_menu:hover{
                                 ?>
                             
                             
-                                <span class="emaild-text"> 電子メールアドレス </span>
+                                <span class="emaild-text"> <?php echo EMAIL_ADDRESS; ?> </span>
                             </div>
                         </li> 
                         <!--  <li>
@@ -104,7 +103,7 @@ a.dashboard_menu, a.dashboard_menu:hover{
                     <div class="clearfix"></div>
                 </div>
                 <div class="verifierid">
-                    <h2 class="profile-heads">リストについて</h2>
+                    <h2 class="profile-heads"><?php echo ABOUT_LIST; ?></h2>
                     <div class="clearfix"></div>
                     <ul class="nav virify-method about-me">
                         <!--<li>
@@ -159,13 +158,13 @@ a.dashboard_menu, a.dashboard_menu:hover{
                         <li>
                             <div class="opt_div"><!--emaild-text-->
                             	<a href="your-listing.php"><span>
-掲載  :</span> <span><b>(<?php echo $countlist; ?>)</b></span></a>
+<?php echo LISTINGS; ?>  :</span> <span><b>(<?php echo $countlist; ?>)</b></span></a>
                             </div>                          
                              
                         </li>
                         <li>
                             <div class="opt_div"><!--emaild-text-->
-                            	<a href="my-wish-list.php"><span>ウィッシュリスト :</span> <span><b>(<?php echo $countwishlist; ?>)</b></span></a>
+                            	<a href="my-wish-list.php"><span><?php echo WISHLIST; ?> :</span> <span><b>(<?php echo $countwishlist; ?>)</b></span></a>
                             </div>                          
                             
                         </li>
@@ -196,15 +195,15 @@ a.dashboard_menu, a.dashboard_menu:hover{
                     
                     <div class="comp_detail_div">
                     	<div class="head_div">
-私について</div>
+<?php echo ABOUT_ME; ?></div>
                         <div class="cont_div">
                         	<span>
-会社名 :</span>
+<?php echo COMPANY_NAME; ?> :</span>
                             <span>
                             	<?php				
                                     if($rowusercompany['name']=="" || empty($rowusercompany))							
                                     {						
-                                    echo " 指定されていない";
+                                    echo NOT_SPECIFIED;
                                     }							
                                     else						
                                     {					
@@ -215,12 +214,12 @@ a.dashboard_menu, a.dashboard_menu:hover{
                         </div>
                         <div class="cont_div">
                         	<span>
-会社の説明 :</span>
+<?php echo COMPANY_DESCRIPTION; ?> :</span>
                             <span>
                             	<?php
                                     if($rowusercompany['description']=="" || empty($rowusercompany))	
                                     {				
-                                    echo "指定されていない";
+                                    echo NOT_SPECIFIED;
                                     }						
                                     else					
                                     {				
@@ -230,12 +229,12 @@ a.dashboard_menu, a.dashboard_menu:hover{
                             </span>
                         </div>
                         <div class="cont_div">
-                        	<span>言語 :</span>
+                        	<span><?php echo LANGUAGES; ?> :</span>
                             <span>
                             	<?php						
                                     if(mysql_num_rows($rowuserlang)==0)							
                                     {			
-                                    echo " 指定されていない";						
+                                     echo NOT_SPECIFIED;					
                                     }						
                                     else		
                                     {		
@@ -258,20 +257,20 @@ a.dashboard_menu, a.dashboard_menu:hover{
                     
                     <div class="comp_detail_div">
                     	<div class="head_div">
-レビューについて</div>
+<?php echo ABOUT_REVIEW; ?></div>
 
 						    <ul class="nav nav-tabs Review-tab" role="tablist">
 								<li role="presentation" class="Listings-profile active">
 									<a href="#home" aria-controls="home" role="tab" data-toggle="tab">
 										<label>
-レビュー<span></span></label>
+<?php echo YOUR_REVIEW; ?><span></span></label>
 									</a>
 								</li>
 								
 								<li role="presentation" class="Listings-profile">
 									<a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">
 										<label>
-ユーザーレビュー<span></span></label>
+<?php echo USER_REVIEW; ?><span></span></label>
 									</a>
 								</li>
 							</ul>
@@ -280,7 +279,7 @@ a.dashboard_menu, a.dashboard_menu:hover{
 						<div role="tabpanel" class="tab-pane active" id="home">
 						<div class="panel panel-default">
                         <div class="panel-heading">
-                             あなたのレビュー
+                             <?php echo YOUR_REVIEW; ?>
                         </div>
                         <div class="panel-body">
                             <div class="table-responsive">
@@ -288,9 +287,9 @@ a.dashboard_menu, a.dashboard_menu:hover{
                                     <thead>
                                         <tr>
                                             <th><center>
-セミナー</center></th>
+<?php echo SEMINAR; ?></center></th>
 											<th><center>
-レビュー</center></th>
+<?php echo REVIEWS; ?></center></th>
 									    </tr>
                                     </thead>
                                     <tbody>
@@ -320,7 +319,7 @@ a.dashboard_menu, a.dashboard_menu:hover{
 								 <div class="panel panel-default">
                         <div class="panel-heading">
                             
-ユーザーレビュー
+<?php echo USER_REVIEW; ?>
                         </div>
                         <div class="panel-body">
 						<div class="table-responsive">
@@ -350,11 +349,11 @@ a.dashboard_menu, a.dashboard_menu:hover{
                                         <tr>
                                             
                                             <th><center>
-レビュー</center></th>
+<?php echo REVIEWS; ?></center></th>
 											<th><center>
-セミナー</center></th>
+<?php echo SEMINAR; ?></center></th>
 											<th><center>
-ユーザー名</center></th>   
+<?php echo USERNAME; ?></center></th>   
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -375,7 +374,7 @@ a.dashboard_menu, a.dashboard_menu:hover{
 								  {
 									  ?>
 									  <tr class="odd gradeX">
-											<td style="color:red;">見つかった情報はありません...！</td>
+											<td style="color:red;"><?php echo NO_RECORD_FOUND; ?>...！</td>
                                             
                                         </tr>
 									  <?php

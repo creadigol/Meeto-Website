@@ -134,7 +134,7 @@ function seldate()
     <div class="main_detail">
         <div id="left_section" class="main_layout">
             <div class="section_div about_main_detail">	
-                <h2 class="header-cont">基本的な詳細</h2>
+                <h2 class="header-cont"><?php echo BASIC_DETAIL;?></h2>
                 <div class="body-cont">
                         <span class="host_prof text-center">
 						   <?php
@@ -174,7 +174,7 @@ $data = explode('"',translate(str_replace(" ","+",$seminar_detail['title']))); e
                                 </li>
                                 <li class="icon-margin">
                                     <i class="fa fa-users" aria-hidden="true"></i>
-                                    <span class="opan-r"><?php $data = explode('"',translate(str_replace(" ","+",$seminar_detail['total_seat']))); echo $data[1] ; ?> 席</span>
+                                    <span class="opan-r"><?php $data = explode('"',translate(str_replace(" ","+",$seminar_detail['total_seat']))); echo $data[1] ; ?><?php echo SEATS;?></span>
                                 </li>
                                 <li class="icon-margin">
 								   <img src="../img/<?php if($usercompany['organization']=='Profit Organization' || $rowusercompany['organization']=='組織を選択します') { echo "profit.png"; } else { echo "nonprofit.png"; } ?>" class="list-img img-responsive">
@@ -186,7 +186,7 @@ $data = explode('"',translate(str_replace(" ","+",$seminar_detail['title']))); e
                 </div>
             </div>
             <div class="section_div about-listing">
-                <h2 class="header-cont">このセミナーについて</h2>
+                <h2 class="header-cont"><?php echo SEATS;?></h2>
                 <div class="body-cont">
                     <div class="about-info">
                         <p><?php $data = explode('"',translate(str_replace(" ","+",$seminar_detail['description']))); echo $data[1] ; ?></p><Br>
@@ -217,14 +217,14 @@ $data = explode('"',translate(str_replace(" ","+",$seminar_detail['title']))); e
 							   $data = explode('"',translate(str_replace(" ","+",$seminar_city['name'])));
                             ?>
                         </p><Br>
-						<p>Seminar Address : <?php $data = explode('"',translate(str_replace(" ","+",$seminar_detail['address']))); echo $data[1]; ?>&nbsp;&nbsp;<?php $data = explode('"',translate(str_replace(" ","+",$seminar_city['name']))); echo $data[1]; ?></p>
+						<p><?php echo SEMINAR_ADDRESS; ?> : <?php $data = explode('"',translate(str_replace(" ","+",$seminar_detail['address']))); echo $data[1]; ?>&nbsp;&nbsp;<?php $data = explode('"',translate(str_replace(" ","+",$seminar_city['name']))); echo $data[1]; ?></p>
                     </div>
 					<div class="clearfix"></div>
                 </div>
             </div>
 			
 			<div class="section_div descri-section">
-                <h2 class="header-cont">セミナー参加者:</h2>
+                <h2 class="header-cont"><?php echo SEMINAR_ATTENDES; ?></h2>
                 <div class="body-cont Seminar-Attendees">
 				     <ul class="nav right-space">
                         <?php
@@ -246,7 +246,7 @@ $data = explode('"',translate(str_replace(" ","+",$seminar_detail['title']))); e
             </div>
 
 			<div class="section_div descri-section">
-                <h2 class="header-cont">産業タイプ :</h2>
+                <h2 class="header-cont"><?php echo INDUSTRY_TYPE; ?></h2>
                 <div class="body-cont Seminar-Attendees">
 				     <ul class="nav right-space">
                         <?php
@@ -270,7 +270,7 @@ $data = explode('"',translate(str_replace(" ","+",$seminar_detail['title']))); e
 			
 			
             <div class="section_div descri-section">
-					<h2 class="header-cont">ファシリティ :</h2>
+					<h2 class="header-cont"><?php echo FACILITIES; ?></h2>
 				<div class="body-cont" style="display:block;">	
                     <ul class="nav right-space">
                             <?php
@@ -289,7 +289,7 @@ $data = explode('"',translate(str_replace(" ","+",$seminar_detail['title']))); e
                     </ul>
                     
                     <div class="descri-section">
-					<h2 class="header-cont">セミナー画像 :</h2>
+					<h2 class="header-cont"><?php echo SEMINAR_IMAGE; ?> :</h2>
                         <div class="row">
                                 <?php
                                     $selsemiphoto=mysql_query("select * from seminar_photos where seminar_id=$_REQUEST[id]");
@@ -326,8 +326,7 @@ $data = explode('"',translate(str_replace(" ","+",$seminar_detail['title']))); e
                 </div>
             </div>
 			<div class="section_div review-section">
-                <h2 class="header-cont">
-レビュー</h2>
+                <h2 class="header-cont"><?php echo REVIEWS; ?></h2>
                 <div class="body-cont">
                   <div class="col-md-12 review">
 				   <div id="review">
@@ -363,8 +362,8 @@ $data = explode('"',translate(str_replace(" ","+",$seminar_detail['title']))); e
 				   {
 					   ?>
 						 <div id="noreview">
-							<h4>まだレビューはありません </h4>
-							<p>ここに滞在し、あなたは、このホストに彼らの最初のレビューを与えることができます！ </p> 
+							<h4><?php echo NO_REVIEWS_YET; ?></h4>
+							<p><?php echo STAY_HERE_AND_YOU_COULD_GIVE_THIS_HOST_THEIR_FIRST_REVIEW; ?></p> 
                          </div>
 						 
 					   <?php
@@ -378,12 +377,12 @@ $data = explode('"',translate(str_replace(" ","+",$seminar_detail['title']))); e
 					
 					<div class="top-margin-20"></div>
 					
-					<button class="blue-button" type="button" onclick="review('<?php echo $_REQUEST['id']; ?>');" >提出します</button>
+					<button class="blue-button" type="button" onclick="review('<?php echo $_REQUEST['id']; ?>');" ><?php echo SUBMIT; ?></button>
                  </div>
                 </div>
             </div>
             <div class="section_div about_host">
-                <h2 class="header-cont">ホストについて、 <?php $marutra = explode('"',translate(str_replace(" ","+",$seminar_detail['hostperson_name']))); echo $marutra[1]; ?></h2>
+                <h2 class="header-cont"><?php echo ABOUT_THE_HOST; ?><?php $marutra = explode('"',translate(str_replace(" ","+",$seminar_detail['hostperson_name']))); echo $marutra[1]; ?></h2>
                 <div class="body-cont">
                 	<div class="col-md-3 col-sm-6 col-xs-12 text-center">
 							<?php
@@ -434,11 +433,11 @@ $data = explode('"',translate(str_replace(" ","+",$seminar_detail['title']))); e
         	<div class="price_detail">
                 <div class="top-title">
                     <div class="botns-label">
-                            <span class="title" style="font-size:15px;">総席</span>
+                            <span class="title" style="font-size:15px;"><?php echo TOTAL_SEAT;?></span>
                             <label class="price-descri"><?php $marutra = explode('"',translate(str_replace(" ","+",$seminar_detail['total_seat']))); echo $marutra[1] ; ?></label>		
                     </div>
                     <div class="botns-label">
-                            <span class="title" style="font-size:15px;">利用可能な総席</span>
+                            <span class="title" style="font-size:15px;"><?php echo TOTAL_AVAILABLE_SEATS;?></span>
                             <label class="price-descri"><?php  $avaliable=$seminar_detail['total_seat'] - $seminar_detail['total_booked_seat'];
 							 if($avaliable>0){ echo $avaliable; } else { echo $avaliable=0; }?></label>		
                     </div>
@@ -447,7 +446,7 @@ $data = explode('"',translate(str_replace(" ","+",$seminar_detail['title']))); e
                             {
                         ?>
                     <div class="botns-label">
-                        <span class="title" style="font-size:15px;">日付</span>
+                        <span class="title" style="font-size:15px;"><?php echo DATE1;?></span>
                         <label class="price-descri"><?php echo "日付 : ".date("d-m-Y",$fetsemiday['from_date']); ?></label>		
                     </div>
                         <?php
@@ -456,11 +455,11 @@ $data = explode('"',translate(str_replace(" ","+",$seminar_detail['title']))); e
                             {
                         ?>
                     <div class="botns-label">
-                        <span class="title" style="font-size:15px;">日から</span>
+                        <span class="title" style="font-size:15px;"><?php echo FROM_DATE;?></span>
                         <label class="price-descri"><?php echo date("d-m-Y",$fetsemiday['from_date']/1000); ?></label>		
                     </div>
                     <div class="botns-label">
-                        <span class="title" style="font-size:15px;">現在まで</span>
+                        <span class="title" style="font-size:15px;"><?php echo TO_DATE;?></span>
                         <label class="price-descri"><?php echo date("d-m-Y",$fetsemiday['to_date']/1000); ?></label>		
                     </div>
                         <?php
@@ -472,7 +471,7 @@ $data = explode('"',translate(str_replace(" ","+",$seminar_detail['title']))); e
 						if($admin==1)
 						{
 							?>
-								<div class="error_div">あなたは管理者ですので、このセミナーを予約しないでください</div>
+								<div class="error_div"><?php echo YOU_ARE_ADMIN_SO_YOU_ARE_NOT_BOOK_THIS_SEMINAR;?></div>
 							<?php
 						} else if($avaliable>0)
                         {
@@ -480,22 +479,22 @@ $data = explode('"',translate(str_replace(" ","+",$seminar_detail['title']))); e
                 <form action="book-now.php?id=<?php echo $_REQUEST['id']; ?>" method="POST">
                     <div class="col-md-12 information-date">
                         <div class="col-md-12">
-                            <label>日から</label>
+                            <label><?php echo FROM_DATE;?></label>
                             <input type="date"  id="from_date" min="<?php echo date("Y-m-d",$fetsemiday['from_date']/1000); ?>" max="<?php echo date("Y-m-d",$fetsemiday['to_date']/1000); ?>" required class="form-control" name="fromdate" onchange="seldate();">
                         </div>
                         <div class="col-md-12" style="margin-top:10px;">
-                            <label>現在まで</label>
+                            <label><?php echo TO_DATE;?></label>
                             <input type="date" id="to_date" min="<?php echo date("Y-m-d",$fetsemiday['from_date']/1000); ?>" max="<?php echo date("Y-m-d",$fetsemiday['to_date']/1000); ?>" required class="form-control" name="todate" onchange="seldate();">
                         </div>
                         <div class="col-md-12" style="margin-top:10px;">
-                            <label>総席</label>
+                            <label><?php echo TOTAL_SEAT;?></label>
                             <input type="number" id="totseat" onkeyup="checkseat('<?php echo $avaliable; ?>')" required pattern="[0-9]{1,}" placeholder="チケットの数を入力してください"
 							title="数値を入力してください" class="form-control" name="totalseats" min="1">
-                            <label style="color:red;display:none;" id="seatmsg">申し訳ありませんが、利用可能な総席です : <?php $marutra = explode('"',translate(str_replace(" ","+",$avaliable))); echo $marutra[1] ; ?></label>
+                            <label style="color:red;display:none;" id="seatmsg"><?php echo SORRY_TOTAL_AVAILABLE_SEATS_IS;?>: <?php $marutra = explode('"',translate(str_replace(" ","+",$avaliable))); echo $marutra[1] ; ?></label>
                         </div>
                     </div>
                     <div class="submit-link"> 
-                        <button class="booking-btn" type="submit" id="booksub">今予約する</button>
+                        <button class="booking-btn" type="submit" id="booksub"><?php echo BOOK_NOW;?></button>
                     </div>	
                 </form>
 					<?php
@@ -503,7 +502,7 @@ $data = explode('"',translate(str_replace(" ","+",$seminar_detail['title']))); e
                         else
                         {
                     ?>
-                <div class="error_div">申し訳ありません、利用可能な座席がありません</div>
+                <div class="error_div"><?php echo SORRY_NO_AVAILABLE_SEATS;?></div>
 					<?php
                         }
                     ?>

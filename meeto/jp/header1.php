@@ -103,22 +103,19 @@ header {transform: translate3d(0,0px,0); height:84px;}
 					</a>
 					<a  class="l-height user-size" href="#" data-target="dropdown-menu" data-toggle="dropdown" style="text-transform:capitalize; float:left !important; color:#fff !important; background:none;margin-right:15px;line-height:44px;">
 						
-こんにちは <?php $marutra = explode('"',translate(str_replace(" ","+",$_SESSION['jpmeetou']['fname']))); echo $marutra[1]."   "; ?>   <i class="fa fa-caret-down"></i>
+<?php echo HI;?><?php $marutra = explode('"',translate(str_replace(" ","+",$_SESSION['jpmeetou']['fname']))); echo $marutra[1]."   "; ?>   <i class="fa fa-caret-down"></i>
 					</a>
 					
                     <div class="dropdown-menu sing-menu">
-                        <a class="dropdown-item f-left sing-menu" href="view-profile.php?id=<?php echo $_SESSION['jpmeetou']['id'];?>">ダッシュボード</a>
-                        <a class="dropdown-item f-left sing-menu" href="your-listing.php">あなたの掲載</a>
+                        <a class="dropdown-item f-left sing-menu" href="view-profile.php?id=<?php echo $_SESSION['jpmeetou']['id'];?>"><?php echo DASHBOARD; ?></a>
+                        <a class="dropdown-item f-left sing-menu" href="your-listing.php"><?php echo MY_LISTING; ?></a>
                        <!-- <a class="dropdown-item f-left sing-menu" href="your-listing.php">Your Reservation</a>-->
-                        <a class="dropdown-item f-left sing-menu" href="booking.php">
-私の予約</a>
-                        <a class="dropdown-item f-left sing-menu" href="my-wish-list.php">
-欲しい物のリスト</a>
-                        <a class="dropdown-item f-left sing-menu" href="Editprofile.php">
-プロファイル編集</a>
-                        <a class="dropdown-item f-left sing-menu" href="account.php">
-アカウント</a>
-                        <a class="dropdown-item f-left sing-menu" href="logout.php">ログアウト</a>
+                        <a class="dropdown-item f-left sing-menu" href="booking.php"><?php echo MY_BOOKING; ?></a>
+                        <a class="dropdown-item f-left sing-menu" href="my-wish-list.php"><?php echo WISHLIST; ?></a>
+                        <!--<a class="dropdown-item f-left sing-menu" href="Editprofile.php">
+</a>-->
+                        <a class="dropdown-item f-left sing-menu" href="account.php"><?php echo ACCOUNT; ?></a>
+                        <a class="dropdown-item f-left sing-menu" href="logout.php"><?php echo LOGOUT;?></a>
                     </div>
 				</div>
 				<div class="header-item app-btn-elem how-work">
@@ -140,13 +137,11 @@ header {transform: translate3d(0,0px,0); height:84px;}
                         { 
                     ?>
                 <div class="header-item app-btn-elem">
-                    <a href="#" class="link-btn h-track" data-toggle="modal" data-target=".bs-example-modal-sm">
-サインアップ</a>
+                    <a href="#" class="link-btn h-track" data-toggle="modal" data-target=".bs-example-modal-sm"><?php echo SIGNUP;?></a>
                 </div>
             	
             	<div class="header-item header-item-blog">
-                    <a id="some-id" class="link-btn h-track" href="#logindiv" data-toggle="modal" data-target=".bc-example-modal-sm">
-ログイン</a>
+                    <a id="some-id" class="link-btn h-track" href="#logindiv" data-toggle="modal" data-target=".bc-example-modal-sm"><?php echo LOGIN;?></a>
                 </div>
                 
             	<!--<div class="header-item dropdown shortlist-content header-item-shortlist">
@@ -158,13 +153,13 @@ header {transform: translate3d(0,0px,0); height:84px;}
                 
                 <div class="header-item login-content dropdown"></div>
                 <div class="header-item login-btn disabled how-work">
-                    <a class="link-btn" href="how-work.php">使い方</a>
+                    <a class="link-btn" href="how-work.php"><?php echo HOW_IT_WORK;?></a>
                 </div>
 				  <?php 
                      } 
                   ?>
                 <div class="header-item btn-display" style="margin-top:15px;">
-                    <a href="list_space.php" class="blue-button">あなたのセミナーを一覧表示する</a>
+                    <a href="list_space.php" class="blue-button"><?php echo LIST_YOUR_SEMINAR;?></a>
                 </div>
              
             </div>
@@ -180,7 +175,7 @@ header {transform: translate3d(0,0px,0); height:84px;}
             </div>
         </header>
 				<div class="header-item roundbtn-display" style="margin-top:15px;">
-                    <a href="list_space.php" class="blue-button">あなたのセミナーを一覧表示する</a>
+                    <a href="list_space.php" class="blue-button"><?php echo LIST_YOUR_SEMINAR;?></a>
                 </div>		
     </div>
 </body>

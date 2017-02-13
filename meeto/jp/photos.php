@@ -55,26 +55,25 @@ $rowusercompany=mysql_fetch_array(mysql_query("select * from user_company where 
          	   </div>					
 				<ul class="nav edit">	
 				<li>	
-					<a href="Editprofile.php">
-プロファイル編集</a>
+					<a href="Editprofile.php"><?php echo EDIT_PROFILE; ?></a>
 				</li>						
 			<?php 
            if($_SESSION['jpmeetou']['type']==1)
             {?>   
 				<li>						
-					<a href="photos.php" class="">写真</a>	
+					<a href="photos.php" class=""><?php echo PHOTOS; ?></a>	
 				</li>
 			<?
 			}
 		  ?>			
 				<li>	
-					<a href="Verification.php" class="">
-信頼と検証</a>				
+					<a href="Verification_app.php" class="">
+<?php echo TRUST_AND_VERIFICATION; ?></a>				
 				</li>			
 				</ul>		
 				<div class="top-margin-20"></div>
 				<span class="center-block">	
-				<a class="blue-button" href="view-profile.php?id=<?php echo $usphoid; ?>">プロフィールを見る</a>	
+				<a class="blue-button" href="view-profile.php?id=<?php echo $usphoid; ?>"><?php echo VIEW_PROFILE; ?></a>	
 				</span>					
 				<div class="top-margin-30"></div>
 			</div>
@@ -84,7 +83,7 @@ $rowusercompany=mysql_fetch_array(mysql_query("select * from user_company where 
 				<div class="row hedding-row">
 				<div class="col-md-12 Required-head">	
 				   <h5>
-写真</h5>		
+<?php echo PHOTOS; ?></h5>		
 				   </div>					
 						<div class="col-md-8 photo-right">
 							<div class="top-margin-20"></div>
@@ -105,7 +104,7 @@ $rowusercompany=mysql_fetch_array(mysql_query("select * from user_company where 
 							<div class="top-margin-10"></div>
 							
 							<button type="submit" name="subbtn" class="blue-button border-n">
-写真を更新する</button>
+<?php echo UPDATE_PHOTO; ?></button>
 							
 							<div class="top-margin-10">&nbsp;</div>
 							</center>

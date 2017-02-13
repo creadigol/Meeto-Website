@@ -58,13 +58,12 @@ $(window).scroll(function () {
         	<div class="container">
             	<div class="col-xs-12 col-sm-5 col-md-5">
                 	<div class="filt">
-                    	<h5 style="margin-bottom:15px;"><center>日付</center></h5>
+                    	<h5 style="margin-bottom:15px;"><center><?php echo DATES; ?></center></h5>
                         <div class="group-control" style="margin-bottom:5px;">
                         	<center>
-                                から&nbsp;
+                                <?php echo FROM; ?>&nbsp;
                                 <input type="date" placeholder="Check in date" id="startdate" name="checkin" onchange="seminarlisting('<?php echo $_REQUEST['id']; ?>');" class="date" >
-                                &nbsp; 
-に&nbsp;
+                                &nbsp;<?php echo TO; ?> &nbsp;
                                 <input type="date" placeholder="Check Out date" id="enddate" name="checkout" onchange="seminarlisting('<?php echo $_REQUEST['id']; ?>');" class="date">	
                             </center>
                         </div>
@@ -76,11 +75,11 @@ $(window).scroll(function () {
 				
                 <div class="col-xs-12 col-sm-7 col-md-7 seminar-Attendees-box">
                 	<div class="filt">
-                    	<h5><center>セミナー参加者</center></h5>
+                    	<h5><center><?php echo SEMINAR_ATTENDES; ?></center></h5>
                         <div class="group-control">
                         	<div class="Seminar-Attendees">
 								<?php 
-					           $purpose=mysql_query("select * from purpose order by id asc");
+					           $purpose=mysql_query("select * from purpose where status=1 order by id asc");
 					           while($purposedetail = mysql_fetch_array($purpose))
 					            { ?>
 						      <label>
@@ -100,11 +99,11 @@ $(window).scroll(function () {
 			
 				<div class="col-xs-12 col-sm-10 col-md-10">
                 	<div class="filt">
-                    	<h5><center>産業タイプ</center></h5>
+                    	<h5><center><?php echo INDUSTRY_TYPE; ?></center></h5>
                         <div class="group-control">
                         	<div class="Seminar-Attendees industry-type">
 								<?php 
-					           $industry=mysql_query("select * from industry order by id asc");
+					           $industry=mysql_query("select * from industry where status=1 order by id asc");
 					           while($industrydetail = mysql_fetch_array($industry))
 					            { ?>
 						      <label>
@@ -122,12 +121,11 @@ $(window).scroll(function () {
 
 				<div class="col-xs-12 col-sm-2 col-md-2 seminar-Attendees-box">
                 	<div class="filt">
-                    	<h5><center>
-セミナー・プレイス</center></h5>
+                    	<h5><center><?php echo SEMINAR_PLACE; ?></center></h5>
                         <div class="group-control">
                         	<div class="Seminar-Attendees seminar-place">
 								<?php 
-					           $semitype=mysql_query("select * from seminar_type order by id asc");
+					           $semitype=mysql_query("select * from seminar_type where status=1 order by id asc");
 					           while($semitypedetail = mysql_fetch_array($semitype))
 					            { ?>
 						      <label>

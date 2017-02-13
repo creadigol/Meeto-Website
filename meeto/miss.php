@@ -674,8 +674,19 @@ elseif($_REQUEST['kon']=="wishlist")
                 <!-- Wrapper for slides -->	
                     <div class="carousel-inner carousel-inner-small" role="listbox">
                            
-						<div class="item item-small active">					
-                            <img src="../img/<?php echo $selsemiphoto['image'] ?>"  style="transform:rotate(<?php echo $selsemiphoto['rotateval']; ?>deg)" alt="Chania" >					
+						<div class="item item-small active">
+							<?php
+							if($selsemiphoto['image']=="" || !file_exists("img/".$selsemiphoto['image']))	
+					   {?>	
+				        <img src="img/no-photo.jpg"  alt="Chania" >	
+					      
+					<?}						
+					 else
+					{?>
+							
+                       <img src="img/<?php echo $selsemiphoto['image'] ?>"  style="transform:rotate(<?php echo $selsemiphoto['rotateval']; ?>deg)" alt="Chania" >	
+					<?}
+					?>
                       </div>					 
                     </div>			
                 <!-- Left and right controls -->	

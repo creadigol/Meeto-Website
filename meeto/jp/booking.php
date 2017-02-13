@@ -42,8 +42,8 @@ a.booking_menu, a.booking_menu:hover{
 	           <div class="top-margin-20"> </div>					
 				<ul class="nav edit listing">	
 					<li><a href="#" class="tablinks active" onclick="openCity(event,'Verified')">
-ご予約</a></li>
-					<li><a href="#" class="tablinks" onclick="openCity(event,'Reservations')">前の予約</a></li>			
+<?php echo YOUR_BOOKINGS; ?></a></li>
+					<li><a href="#" class="tablinks" onclick="openCity(event,'Reservations')"><?php echo PREVIOUS_BOOKINGS; ?></a></li>			
 				</ul>					
 				<div class="top-margin-30"> </div>
 			</div>
@@ -52,7 +52,7 @@ a.booking_menu, a.booking_menu:hover{
 				<div class="top-margin-20"> </div>	
 				<div class="row hedding-row tabcontent" id="Verified">				
 						<div class="col-md-12 Required-head Verification-head menu-border booking-head">
-							<h5>ご予約</h5>
+							<h5><?php echo YOUR_BOOKINGS; ?></h5>
 						</div>
 							<div class="clearfix"></div>
 							<!--<div class="col-md-8 reservation">
@@ -73,11 +73,11 @@ a.booking_menu, a.booking_menu:hover{
 									?>
 									<thead>
 									<tr height="40px" class="table-padding table-head">
-											<td style="width:100px;"><strong>セミナー画像<strong></strong></strong></td>
-											<td style="width:100px"><strong>セミナー名</strong></td>
-											<td style="width:80px"><strong>ホスト</strong></td>
-											<td style="width:160px"><strong>日付と場所</strong></td>
-											<td style="width:50px"><strong>ホストの承認</strong></td>
+											<td style="width:100px;"><strong><?php echo SEMINAR_IMAGE; ?><strong></strong></strong></td>
+											<td style="width:100px"><strong><?php echo SEMINAR_NAME; ?></strong></td>
+											<td style="width:80px"><strong><?php echo HOST; ?></strong></td>
+											<td style="width:160px"><strong><?php echo DATES_AND_LOCATION; ?></strong></td>
+											<td style="width:50px"><strong><?php echo HOST_APPROVAL; ?></strong></td>
 											
 									</tr>
 										
@@ -116,17 +116,17 @@ a.booking_menu, a.booking_menu:hover{
 									 
 									<td><?php $marutra = explode('"',translate(str_replace(" ","+",$fetseminar['hostperson_name']))); echo $marutra[1]; ?></td>										
 									<td class="text-left">
-									<b>予約された : </b><?php echo $date=date('d-m-Y',$fetbooking['created_date']/1000); ?><br>
-									<b>日から : </b><?php echo date("d-m-Y",$fetbooking['from_date']/1000); ?> <br>
-									<b>現在まで : </b> <?php echo date("d-m-Y",$fetbooking['to_date']/1000); ?> <br>
-									<b>住所 : </b><?php $marutra = explode('"',translate(str_replace(" ","+",$fetseminar['address']))); echo $marutra[1]; ?><br>
-									<b>予約なし : </b> <?php echo $fetbooking['booking_no']; ?><br>
+									<b><?php echo BOOKED_ON; ?>  : </b><?php echo $date=date('d-m-Y',$fetbooking['created_date']/1000); ?><br>
+									<b><?php echo FROM_DATE; ?> : </b><?php echo date("d-m-Y",$fetbooking['from_date']/1000); ?> <br>
+									<b><?php echo TO_DATE; ?> : </b> <?php echo date("d-m-Y",$fetbooking['to_date']/1000); ?> <br>
+									<b><?php echo ADDRESS; ?> : </b><?php $marutra = explode('"',translate(str_replace(" ","+",$fetseminar['address']))); echo $marutra[1]; ?><br>
+									<b><?php echo BOOKING_NO; ?> : </b> <?php echo $fetbooking['booking_no']; ?><br>
 									</td>																
 									<?php if($fetbooking['approval_status']=='accepted')
 									{
 									?>
 									<td><p style=" color: green; font-weight: bold; "><?php $marutra = explode('"',translate(str_replace(" ","+",$fetbooking['approval_status']))); echo $marutra[1];  ?></p>
-									<div class="text-uppercase dawonlod-ticket" data-toggle="modal" data-target="#myModal" onclick="booked('<?php echo $fetbooking['id'];?>');" >ダウンロードチケット
+									<div class="text-uppercase dawonlod-ticket" data-toggle="modal" data-target="#myModal" onclick="booked('<?php echo $fetbooking['id'];?>');" ><?php echo DOWNLOAD_TICKET; ?>
 									</div>
 									</td>
 									<?php
@@ -146,7 +146,7 @@ a.booking_menu, a.booking_menu:hover{
 									else
 									{?>
 	                                   <div style="color:red;font-weight:bold;padding:10px;" align="center">
-			                            セミナーが見つかりません...！
+			                            <?php echo NO_SEMINARS_FOUND; ?>...！
 	                                  </div>
 									<?
 									}	
@@ -158,7 +158,7 @@ a.booking_menu, a.booking_menu:hover{
 
 							<div class="modal-dialog">
 
-							   Modal content
+							    <!-- Modal content-->
 
 							  <div class="modal-content modal-c">
 
@@ -168,8 +168,7 @@ a.booking_menu, a.booking_menu:hover{
 
 								  <button type="button" class="close" data-dismiss="modal">&times;</button>
 
-								  <h4 class="modal-title semibold-o">
-ダウンロードチケット</h4>
+								  <h4 class="modal-title semibold-o"><?php echo DOWNLOAD_TICKET; ?></h4>
 
 								</div>
 
@@ -197,8 +196,7 @@ a.booking_menu, a.booking_menu:hover{
 					
 					<div class="row hedding-row tabcontent" id="Reservations">				
 						<div class="col-md-12 Required-head Verification-head menu-border booking-head">
-							<h5>
-あなたの前の予約</h5>
+							<h5><?php echo YOUR_PREVIOUS_BOOKINGS; ?></h5>
 						</div>
 							<div class="clearfix"></div>
 							<!---<div class="col-md-8 reservation">
@@ -212,16 +210,12 @@ a.booking_menu, a.booking_menu:hover{
 								<table width="100%">
 									<thead>
 										<tr height="40px" class="table-padding table-head">
-											<td style="width:100px;"><strong><strong>で予約</strong></strong></td>
-											<td style="width:100px"><strong>
-プロパティ名</strong></td>
-											<td style="width:100px"><strong>
-ホスト
-</strong></td>
-											<td style="width:140px"><strong>
-日付と場所</strong></td>
+											<td style="width:100px;"><strong><strong><?php echo BOOKED_ON; ?></strong></strong></td>
+											<td style="width:100px"><strong><?php echo PROPERTY_NAME; ?></strong></td>
+											<td style="width:100px"><strong><?php echo HOST; ?></strong></td>
+											<td style="width:140px"><strong><?php echo DATES_AND_LOCATION; ?></strong></td>
 											
-											<td style="width:50px"><strong>ホストの承認</strong></td>
+											<td style="width:50px"><strong><?php echo HOST_APPROVAL; ?></strong></td>
 											
 										</tr>
 									</thead>								
@@ -239,11 +233,7 @@ a.booking_menu, a.booking_menu:hover{
 										<td><?php echo date('d-m-Y',$fetbooking['created_date']/1000); ?></td>	
 										<td><img src="../img/<?php echo $fetsemiphoto['image']; ?>" width="100" height="100" alt="Big Office - Electra City Tower"class="table-img"><a href="infomation.php?id=<?php echo $fetseminar['id']; ?>"><br><?php $marutra = explode('"',translate(str_replace(" ","+",$fetseminar['title']))); echo $marutra[1];  ?></a></td>		
 										<td><?php $marutra = explode('"',translate(str_replace(" ","+",$fetseminar['hostperson_name']))); echo $marutra[1];  ?></td>					
-										<td class="text-left"><br> <b>
-日から :</b> <br><?php echo $fetbooking['from_date']; ?> <br><b>
-現在まで :</b> <br><?php echo $fetbooking['to_date']; ?> <br><b>
-住所: </b><br><?php $marutra = explode('"',translate(str_replace(" ","+",$fetseminar['address']))); echo $marutra[1]; ?><br><label style="font-weight:bold;">
-予約なし :</label><?php echo $fetbooking['booking_no']; ?></td>			
+										<td class="text-left"><br> <b><?php echo FROM_DATE; ?> :</b> <br><?php echo $fetbooking['from_date']; ?> <br><b><?php echo TO_DATE; ?> :</b> <br><?php echo $fetbooking['to_date']; ?> <br><b><?php echo ADDRESS; ?>: </b><br><?php $marutra = explode('"',translate(str_replace(" ","+",$fetseminar['address']))); echo $marutra[1]; ?><br><label style="font-weight:bold;"><?php echo BOOKING_NO; ?> :</label><?php echo $fetbooking['booking_no']; ?></td>			
 										<td><p style=" color: #000; font-weight: bold; "><?php $marutra = explode('"',translate(str_replace(" ","+",$fetbooking['approval_status']))); echo $marutra[1];  ?>  </p></td>	
 										</tr>
 										

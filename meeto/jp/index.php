@@ -1,5 +1,6 @@
 <?php
 require_once('db.php'); 
+require_once('string.php'); 
 $fgh=0;
 	if(isset($_POST['signup']))
 	{	
@@ -327,7 +328,7 @@ $fgh=0;
 					
                     
 					<div class="col-md-12" id="deleteusermsg" style="padding:20px;"> 
-						<h4 style="color:green;font-weight:bolder;">メールIDはすでに存在しています..！</h4>
+						<h4 style="color:green;font-weight:bolder;"><?php echo EMAIL_ID_ALREADY_EXIST;?>..！</h4>
 						<div class="col-md-2 col-md-offset-10 btn btn-primary" onclick="$('#hidenewfac12').hide();">
 						Ok</div>
 					</div>
@@ -354,7 +355,7 @@ $fgh=0;
 					
                     
 					<div class="col-md-12" id="deleteusermsg" style="padding:20px;"> 
-						<h4 style="color:red;font-weight:bolder;">管理者によるアカウントブロック</h4>
+						<h4 style="color:red;font-weight:bolder;"><?php echo YOUR_ACCOUNT_BLOCK_BY_ADMIN;?>..</h4>
 						<div class="col-md-2 col-md-offset-10 btn btn-primary" style="color:black;font-weight:bolder;" onclick="$('#hidenewfac123').hide();">
 						Ok</div>
 					</div>
@@ -381,7 +382,7 @@ $fgh=0;
 					
                     
 					<div class="col-md-12" id="deleteusermsg" style="padding:20px;"> 
-						<h4 style="color:red;font-weight:bolder;">このメールIDは他のアカウントに添付されています！</h4>
+						<h4 style="color:red;font-weight:bolder;"><?php echo THIS_EMAIL_ID_ATTACHED_WITH_OTHER_ACCOUNT;?></h4>
 						<div class="col-md-2 col-md-offset-10 btn btn-primary" style="color:black;font-weight:bolder;" onclick="$('#hidenewfac123').hide();">
 						Ok</div>
 					</div>
@@ -408,8 +409,8 @@ $fgh=0;
 					
                     
 					<div class="col-md-12" id="deleteusermsg" style="padding:20px;"> 
-						<h4 style="color:red;font-weight:bolder;">無効なログインの詳細..！</h4>
-						<div class="col-md-2 col-md-offset-10 btn btn-primary" style="color:black;font-weight:bolder;" onclick="$('#hidenewfac123').hide();">
+						<h4 style="color:red;font-weight:bolder;"><?php echo INVALID_LOGIN_DETAIL;?>..！</h4>
+						<div class="col-md-2 col-md-offset-10 btn btn-primary" style="color:black;font-weight:bolder;" onclick="$('#hidenewfac123').hide();$('#logindiv').show();">
 						Ok</div>
 					</div>
              
@@ -490,16 +491,16 @@ $(document).ready(function(e) {
         
         <div class="img_layer">
             <div class="container slider-text text-center s-text">
-                <h1>Meetoへようこそ</h1>
-                <h3>あなたのニーズに応じて作業</h3>
+                <h1><?php echo  WELCOME_TO_MEETO;?></h1>
+                <h3><?php echo WORK_ACCORDING_TO_YOUR_NEED;?></h3>
             </div>
             <div class=""></div>
             <div class="submit-box">
                 <div class="submit">
                 
-                    <input type="text" value="" id="city" class="submit-input" onkeyup="seachcity();" placeholder="検索セミナー市">
+                    <input type="text" value="" id="city" class="submit-input" onkeyup="seachcity();" placeholder="<?php echo SEARCH_SEMINAR_CITY; ?>">
                     
-                    <div class="blue-button submit-button" style="line-height:44px !important;" onclick="cityname();">提出する</div>
+                    <div class="blue-button submit-button" style="line-height:44px !important;" onclick="cityname();"><?php echo SUBMIT;?></div>
                     <div class="submit-cityname" id="citysuggetion"></div>
                 </div>
             </div>
@@ -512,8 +513,8 @@ $(document).ready(function(e) {
 		<div class="row">
 		<div class="top-margin-20"></div>
 			<div class="col-lg-12 col-xs-12 text-center work">
-				<h2><b>あなたの新しいセミナーを探します</b></h2>
-				<p>だからいつでも、セミナーは何を学ぶ選びます</p>
+				<h2><b><?php echo FIND_YOUR_NEW_SEMINAR;?></b></h2>
+				<p><?php echo PICK_A_SEMINAR_TO_WORK_ANYWHERE_ANYTIME;?></p>
 			
 				<div class="top-margin-30"></div>	
 			</div>
@@ -579,7 +580,7 @@ $(document).ready(function(e) {
 
 <div class="home-containers" data-reactid="27"><!-- react-empty: 28 -->
 	<div id="featured-projects" class="featured-project-container container">
-    	<h2 class="header"><CENTER><B>今後のセミナー</B></CENTER></h2>
+    	<h2 class="header"><CENTER><B><?php echo UPCOMING_SEMINAR;?></B></CENTER></h2>
     	<span style="font-size: 0px;"></span>
         <div class="featured-projects-wrapper">
         	<div class="slider-container loaded">

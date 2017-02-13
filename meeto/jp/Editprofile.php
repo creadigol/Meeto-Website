@@ -4,6 +4,7 @@ require_once('condition.php');
 
    if($_POST)
  {	
+  
   $fname = mysql_real_escape_string($_POST['user_fname']);	
   $lname = mysql_real_escape_string($_POST['user_lname']);	
   $gender = mysql_real_escape_string($_POST['gender']);		
@@ -169,26 +170,24 @@ a.Editprofile_menu, a.Editprofile_menu:hover{
          	   </div>					
 				<ul class="nav edit">	
 				<li class="activet">	
-					<a href="#">プロファイル編集</a>
+					<a href="#"><?php echo EDIT_PROFILE; ?></a>
 				</li>
 		<?php 
            if($_SESSION['jpmeetou']['type']==1)
             {?>   
 				<li>						
-					<a href="photos.php" class="">写真</a>	
+					<a href="photos.php" class=""><?php echo PHOTOS; ?></a>	
 				</li>
 			<?
 			}
 		  ?>						
 				<li>	
-					<a href="Verification.php" class="">
-信頼と検証</a>				
+					<a href="Verification_app.php" class=""><?php echo TRUST_AND_VERIFICATION; ?></a>				
 				</li>			
 				</ul>		
 				<div class="top-margin-20"></div>
 				<span class="center-block">	
-				<a class="blue-button button-a" href="view-profile.php?id=<?php echo $_SESSION['jpmeetou']['id']; ?>">
-プロフィールを見る</a>	
+				<a class="blue-button button-a" href="view-profile.php?id=<?php echo $_SESSION['jpmeetou']['id']; ?>"><?php echo VIEW_PROFILE; ?></a>	
 				</span>			
 				
 				<div class="top-margin-30"></div>
@@ -201,74 +200,68 @@ a.Editprofile_menu, a.Editprofile_menu:hover{
 				<div class="top-margin-20"></div>			
 				<div class="row hedding-row">
 				<div class="col-md-12 Required-head">	
-				   <h5>必須</h5>		
+				   <h5><?php echo REQUIRED; ?></h5>		
 				   </div>					
 				   <ul class="nav">			
 				   <li class="li-input">	
 				     <div class="top-margin-10">&nbsp;</div>	
-				     <label class="users">ファーストネーム ：</label>				
+				     <label class="users"><?php echo FIRST_NAME; ?> ：</label>				
 				     <input type="text" class="input-name" name="user_fname" id="" pattern=".{3,}" required title="名前は最小3文字でなければなりません" value="<?php $marutra = explode('"',translate(str_replace(" ","+",$row['fname']))); echo $marutra[1];?> ">		
 					</li>				
 					<div class="clearfix"></div>
 					<li class="li-input">			
-					<label class="users">苗字 ：</label>		
+					<label class="users"><?php echo LAST_NAME; ?> ：</label>		
 					<input type="text" class="input-name" name="user_lname" id="" required value="<?php $marutra = explode('"',translate(str_replace(" ","+",$row['lname']))); echo $marutra[1]; ?> "></br>									<span class="tips-text">
-					
-あなたが他のユーザーとの確認予約をした後にのみ共有されます。						
-					</span>	
-					
+					<?php echo THIS_IS_ONLY_SHARED_ONCE_YOU_HAVE_A_CONFIRMED_BOOKING_WITH_ANOTHER_USER; ?>。</span>	
 					</li>								
 					  <div class="clearfix"></div>	
 					<li class="li-input">		
 					<label class="users" for="">
-わたし：</label>								
+<?php echo I_AM; ?>：</label>								
 					<select class="gends input-name" id="gender" name="gender">								
-					    <option value="Male" <?php if($rowuserdetail['gender']=='Male') echo "selected"; ?> >
-男性</option>	
+					    <option value="Male" <?php if($rowuserdetail['gender']=='Male') echo "selected"; ?> ><?php echo MALE; ?></option>	
 					    <option value="Female"  <?php if($rowuserdetail['gender']=='Female') echo "selected"; ?>>
-女性</option>
-						<option value=""  <?php if($rowuserdetail['gender']=='') echo "selected"; ?>>
-不特定
+<?php echo FEMALE; ?></option>
+						<option value=""  <?php if($rowuserdetail['gender']=='') echo "selected"; ?>><?php echo UNSPECIFIED; ?>
 </option>
 					</select>								
 					<br>								
 					<span class="tips-text">		
-					私たちは、解析のためにこのデータを使用して、他のユーザーと共有することはありません。							
+					<?php echo WE_USE_THIS_DATA_FOR_ANALYSIS_AND_NEVER_SHARE_IT_WITH_OTHER_USERS; ?>。							
 					</span>							
 					</li>							
 					<div class="clearfix"></div>
 					<li class="li-input">			
-					<label class="users" for="">
-誕生日：</label>	
+					<label class="users" for=""><?php echo BIRTH_DATE; ?>：</label>	
 						<?php
 						
 							$userdob=explode("-",$rowuserdetail['dob']);
 						?>
 					     <select class="mnths gends input-name" name="sel_month" >	
 							 <option  value="">
-月を選択</option>
+<?php echo SELECT_MONTH; ?></option>
 							 <option <?php if($userdob[1]=="01")echo "selected" ?> value="01">
-1月</option>	
+<?php echo JANUARY; ?></option>	
 							 <option <?php if($userdob[1]=="02")echo "selected" ?> value="02">
-2月</option>		
+<?php echo FEBRUARY; ?></option>		
 							 <option <?php if($userdob[1]=="03")echo "selected" ?> value="03">
-行進</option>	
-							 <option <?php if($userdob[1]=="04")echo "selected" ?> value="04">4月</option>
+<?php echo MARCH; ?></option>	
+							 <option <?php if($userdob[1]=="04")echo "selected" ?> value="04"><?php echo APRIL; ?></option>
 							 <option <?php if($userdob[1]=="05")echo "selected" ?> value="05">
-5月</option>	
+<?php echo MAY; ?></option>	
 							 <option <?php if($userdob[1]=="06")echo "selected" ?> value="06">
-六月</option>
-							 <option <?php if($userdob[1]=="07")echo "selected" ?> value="07">7月</option>
+<?php echo JUNE; ?></option>
+							 <option <?php if($userdob[1]=="07")echo "selected" ?> value="07"><?php echo JULY; ?></option>
 							 <option <?php if($userdob[1]=="08")echo "selected" ?> value="08">
-8月</option>
-							 <option <?php if($userdob[1]=="09")echo "selected" ?> value="09">9月</option>
+<?php echo AUGUST; ?></option>
+							 <option <?php if($userdob[1]=="09")echo "selected" ?> value="09"><?php echo SEPTEMBER; ?></option>
 							 <option <?php if($userdob[1]=="10")echo "selected" ?> value="10">
-10月</option>
-							 <option <?php if($userdob[1]=="11")echo "selected" ?> value="11">11月</option>	
-							 <option <?php if($userdob[1]=="12")echo "selected" ?> value="12">12月</option>
+<?php echo OCTOMBER; ?></option>
+							 <option <?php if($userdob[1]=="11")echo "selected" ?> value="11"><?php echo NOVEMBER; ?></option>	
+							 <option <?php if($userdob[1]=="12")echo "selected" ?> value="12"><?php echo DECEMBER; ?></option>
 						 </select>										
 						 <select class="mnths2 gends input-name" name="sel_date">
-							<option value="">日付を選択</option>
+							<option value=""><?php echo SELECT_DATE; ?></option>
 						<?php 
                            for ($x = 01; $x <= 31; $x++) 
 						   {
@@ -281,7 +274,7 @@ a.Editprofile_menu, a.Editprofile_menu:hover{
 						 </select>						
 						 <select class="dob21 gends input-name" name="sel_year"  >
 						       <option value="">
-年を選択</option>
+<?php echo SELECT_YEAR; ?></option>
 							<?php 
                            for ($x =2001; $x >= 1921; $x--) 
 						   {
@@ -294,19 +287,19 @@ a.Editprofile_menu, a.Editprofile_menu:hover{
 						 			
 						 </li>					
 						 <div class="clearfix"></div>
-						 <center><label id="emailvali" style="color:red; font-size:15px; display:none;">有効なメールIDを入力してください</label></center>
-						<center><label id="emptyemail" style="color:red; font-size:15px; display:none;">メールIDを入力してください</label></center>
+						 <center><label id="emailvali" style="color:red; font-size:15px; display:none;"><?php echo PLEASE_ENTER_VALID_EMAIL_ID; ?></label></center>
+						<center><label id="emptyemail" style="color:red; font-size:15px; display:none;"><?php echo PLEASE_ENTER_EMAIL_ID; ?></label></center>
 						 <li class="li-input">		
 							 <label class="users" for="">
-電子メールアドレス：<i class="lock"></i></label>										
+<?php echo EMAIL_ADDRESS; ?>：<i class="lock"></i></label>										
 							 <input type="email"  readonly class="input-name" name="email" id="email" required value="<?php $marutra = explode('"',translate(str_replace(" ","+",$row['email']))); echo $marutra[1];?> ">										</br>										
 							 							
 						 </li>								
 						 <div class="clearfix"></div>
-						 <center><label id="phonevali" style="color:red; font-size:15px; display:none;">有効な連絡先番号を入力してください</label></center>
+						 <center><label id="phonevali" style="color:red; font-size:15px; display:none;"><?php echo PLEASE_ENTER_VALID_CONTACT_NO; ?></label></center>
 						 <li class="li-input">				
 							<label class="users" for="">
-電話番号：</label>	
+<?php echo PHONE_NUMBER; ?>：</label>	
 							<input name="phone_no" id="phone_no" title="You can enter only numeric" pattern="[0-9+]{1,}" class="input-name" type="text" value="<?php echo $rowuserdetail['phoneno']; ?>">
 						
 							
@@ -318,10 +311,10 @@ a.Editprofile_menu, a.Editprofile_menu:hover{
 						</li>-->
 								<div class="clearfix"></div>
 								<li class="li-input">
-									<label class="users" for="">国：</label>
+									<label class="users" for=""><?php echo COUNTRY; ?>：</label>
 									<select id="country" class="input-name"  name="country" onchange="setstate(this.value);">
 										 <option value="">
-- 選択 -</option>
+- <?php echo SELECT_COUNTRY; ?> -</option>
 										<?php
 											$selcountry=mysql_query("select * from countries");
 											while($fetcountry=mysql_fetch_array($selcountry))
@@ -333,10 +326,10 @@ a.Editprofile_menu, a.Editprofile_menu:hover{
 										?>
 									</select>
 									<label class="users" for="">
-状態：</label>
+<?php echo STATE; ?>：</label>
 									<select id="allstate" class="input-name" name="state"  onchange="setcity(this.value);">
 										 <option value="">
-- 州の選択 -</option>
+- <?php echo SELECT_STATE; ?> -</option>
 										<?php
 											$selcountry=mysql_query("select * from states where country_id=$rowuserdetail[countryid]");
 											while($fetcountry=mysql_fetch_array($selcountry))
@@ -348,10 +341,10 @@ a.Editprofile_menu, a.Editprofile_menu:hover{
 											}
 										?>
 									</select>
-									<label class="users" for="">シティ：</label>
+									<label class="users" for=""><?php echo CITY; ?>：</label>
 									<select id="allcity" class="input-name" name="city" onchange="">
 										 <option value="">
-- 都市を選択 -</option>
+- <?php echo SELECT_CITY; ?> -</option>
 										<?php
 											$selcountry=mysql_query("select * from cities where state_id=$rowuserdetail[stateid]");
 											while($fetcountry=mysql_fetch_array($selcountry))
@@ -368,13 +361,13 @@ a.Editprofile_menu, a.Editprofile_menu:hover{
 								<li class="li-input">
 								
 										<label class="users" for="">
-あなたが住んでいる場所：</label>
+ <?php echo WHERE_YOU_LIVE; ?> ：</label>
 										<input type="text" class="input-name" name="address"  value="<?php $marutra = explode('"',translate(str_replace(" ","+",$rowuserdetail['address']))); echo $marutra[1]; ?>" >
 								</li>
 							
 								<li class="li-input">
 									<label class="users">
-あなた自身について説明しなさい：</label>
+<?php echo DESCRIBE_YOURSELF; ?>：</label>
 									<textarea class="input-name" style="height:200px;" name="yourself"><?php $marutra = explode('"',translate(str_replace(" ","+",$rowuserdetail['yourself']))); echo $marutra[1];  ?> </textarea>
 									<br>
 									
@@ -406,46 +399,42 @@ a.Editprofile_menu, a.Editprofile_menu:hover{
 					<div class="row hedding-row">
 						<div class="col-md-12 Required-head">
 							<h5>
-会社情報</h5>
+<?php echo COMPANY_DETAILS; ?></h5>
 						</div>
 							<ul class="nav">
 								<li class="li-input">
 								<div class="top-margin-10">&nbsp;</div>
-									<label class="users">
-会社名：</label>
+									<label class="users"><?php echo COMPANY_NAME; ?>：</label>
 									<input type="text" name="companyname" class="input-name"  id="" value="<?php $marutra = explode('"',translate(str_replace(" ","+",$rowusercompany['name']))); echo $marutra[1]; ?>">	
 								</li>
 									<div class="clearfix"></div>
 								<li class="li-input">
-									<label class="users">
-会社説明：</label>
+									<label class="users"><?php echo COMPANY_DESCRIPTION; ?>：</label>
 									<input type="text" name="companydesc" class="input-name" id="" value="<?php $marutra = explode('"',translate(str_replace(" ","+",$rowusercompany['description']))); echo $marutra[1];  ?>">	
 								</li>
 								    <div class="clearfix"></div>
 								<li class="li-input">
-									<label class="users">
-組織の種類：</label>
+									<label class="users"><?php echo ORGANIZATION_TYPE; ?>：</label>
 									<select id="Organization" class="input-name" name="Organization">
 										 <option value="">
-- 組織を選択します -</option>
+- <?php echo SELECT_ORGANIZATION; ?> -</option>
 										 <option value="営利団体" <?php if($rowusercompany['organization']=='Profit Organization' || $rowusercompany['organization']=='組織を選択します') echo "selected";?>>
-営利団体</option>
+<?php echo PROFIT_ORGANIZATION; ?></option>
 										 <option value="非営利団体" <?php if($rowusercompany['organization']=='Non-Profit Organization' || $rowusercompany['organization']=='営利団体') echo "selected";?>>
-非営利団体</option>
+<?php echo NON_PROFIT_ORGANIZATION; ?></option>
 									</select>
 								</li>
 								<li class="li-input">
-									<label class="users">ファクス番号：</label>
+									<label class="users"><?php echo FAX_NUMBER; ?>：</label>
 									<input name="fax_no" title="You can enter only numeric" pattern="[0-9+]{1,}" class="input-name" type="text" value="<?php $marutra = explode('"',translate(str_replace(" ","+",$rowusercompany['faxno']))); echo $marutra[1];  ?>">	
 								</li>
 								<li class="li-input">
 									<label class="users">
-URL：</label>
+<?php echo URL; ?> ：</label>
 									<input type="text" name="url" class="input-name"  id="url" value="<?php $marutra = explode('"',translate(str_replace(" ","+",$rowusercompany['url']))); echo $marutra[1]; ?>">	
 								</li>
 								<li>
-									<label class="users">
-タイムゾーン：</label>
+									<label class="users"><?php echo TIME_ZONE; ?>：</label>
 									<select class="input-name time-zone" id="" name="timezone">
 										<?php
 									$seltimedfl=mysql_fetch_array(mysql_query("select * from timezone where id='1'")); 
@@ -465,13 +454,12 @@ URL：</label>
 										*/?>
 									</select>
 
-									<span class="tips-text">
-あなたのタイムゾーン</span>
+									<span class="tips-text"><?php echo YOUR_TIME_ZONE; ?></span>
 
 								</li>
 								<div class="clearfix"></div>
 								<li class="li-input">
-									<label class="users">言語</label>
+									<label class="users"><?php echo LANGUAGES; ?></label>
 									<span class="no-numbr">
 										<ul class="nav">
 										 <?php
@@ -493,14 +481,14 @@ URL：</label>
 											<?php	
 											}
 										   ?>
-											<li><span style="width:100%" class="tips-text">あなたが話す言語</span></li>
+											<li><span style="width:100%" class="tips-text"><?php echo LANGUAGES_YOU_SPEAK; ?></span></li>
 										</ul>
 									</span>
 								</li>
 								<div class="clearfix"></div>
 								<li class="li-input">
 									<div class="col-md-8 col-md-offset-4 col-sm-8 col-sm-offset-4 col-xs-8 col-xs-offset-4">
-									<button type="submit" name="save" class="blue-button save border-n">セーブ</button>
+									<button type="submit" name="save" class="blue-button save border-n"><?php echo SAVE; ?></button>
 									</div>
 								</li>
 								

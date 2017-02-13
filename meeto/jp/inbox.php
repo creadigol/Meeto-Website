@@ -41,15 +41,15 @@ a.inbox_menu, a.inbox_menu:hover{
 							<div class="col-md-12 tabel-scroll">
 								<table width="95%" border="0" cellspacing="0" cellpadding="0" class="center-block li-padding" id=" ">
 								    <thead>
-									  <h3 class="Required-head">セミナー予約リスト</h3>
+									  <h3 class="Required-head"><?php echo YOUR_SEMINAR_BOOKING_LIST;?></h3>
  										<tr class="border-n inbox table-head inbox-table">
-											<td width="5%"><strong>スノー</strong></td>
-											<td width="13%"><strong>日付</strong></td>
-											<td width="17%"><strong>セミナー</strong></td>
-											<td width="17%"><strong>ユーザー</strong></td>
-											<td width="17%"><strong>総席</strong></td>
-											<td width="13%"><strong>予約</strong></td>
-											<td width="17%"><strong>アクション</strong></td>
+											<td width="5%"><strong><?php echo SNO; ?></strong></td>
+											<td width="13%"><strong><?php echo DATE1; ?></strong></td>
+											<td width="17%"><strong><?php echo SEMINAR; ?></strong></td>
+											<td width="17%"><strong><?php echo USER; ?></strong></td>
+											<td width="17%"><strong><?php echo TOTAL_SEATS; ?></strong></td>
+											<td width="13%"><strong><?php echo BOOKING_NO; ?></strong></td>
+											<td width="17%"><strong><?php echo ACTION; ?></strong></td>
 										</tr>
 									</thead>
 									<tbody>
@@ -77,8 +77,8 @@ a.inbox_menu, a.inbox_menu:hover{
 											if($bookseminar['approval_status']=='pending')
 											{
 											?>
-											<button type="button" value="accepted" class="green-button" onclick="seminarstatus('<?php echo $bookseminar['id'];?>',this.value);">受け入れる</button>
-											<button type="button" value="declined" class="red-button" onclick="seminarstatus('<?php echo $bookseminar['id'];?>',this.value);">低下</button>
+											<button type="button" value="accepted" class="green-button" onclick="seminarstatus('<?php echo $bookseminar['id'];?>',this.value);"><?php echo ACCEPT; ?></button>
+											<button type="button" value="declined" class="red-button" onclick="seminarstatus('<?php echo $bookseminar['id'];?>',this.value);"><?php echo DECLINE; ?></button>
 											<?php
 											}
 											elseif($bookseminar['approval_status']=='accepted')

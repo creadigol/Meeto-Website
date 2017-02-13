@@ -217,6 +217,31 @@ function facilityshow(id,aa)
     }
     });
 	 }
+	 
+	 function validateEmail(email) {
+    var emailReg = /^([\w-\.]+@([\w-]+\.)+[\w-]{2,15})?$/;
+    if (!emailReg.test(email)) {
+		$("#emailvali").show();
+        //alert('Please Enter Valid Email ID');
+      } 
+	  else
+	  {
+		  $("#emailvali").hide();
+	  }
+   }
+   function validateContact(phone)
+   {
+	var phoneReg = /^[0-9]+$/;
+    if (!phoneReg.test(phone)) {
+		$("#phonevali").show();
+        //alert('Please Enter Valid Email ID');
+      } 
+	  else
+	  {
+		  $("#phonevali").hide();
+	  }
+	   
+   }
 
 </script>
 <style>
@@ -233,7 +258,7 @@ function facilityshow(id,aa)
 					
                     <div class="col-md-12 page-header">
 						<div  class="col-md-6" align="left" style="color:blcak;">
-                        <h3>セミナーイメージ</h3>
+                        <h3><?php echo SEMINAR_IMAGE;?></h3>
 						</div>
 						<div  class="col-md-6 " align="right" >
 						<div class="col-md-2 col-md-offset-10 btn btn-danger" onclick="tgg();">X</div>
@@ -280,8 +305,7 @@ function facilityshow(id,aa)
 	<div class="text-center">
 	<div id="firstscreenhead" class="clearfix"><div>
 		<div class="top-margin-10 margin-main">&nbsp;</div>
-			<h3 class="space">
-あなたのセミナーを一覧表示</h3>
+			<h3 class="space"><?php echo EDIT_YOUR_SEMINAR;?></h3>
 		<div class="top-margin-20"></div>		
 	</div>
 	</div>
@@ -294,8 +318,7 @@ function facilityshow(id,aa)
 			<div class="col-md-12 seminar-type seminar-type-right">
 				<div class="col-md-2 list-name">
 					<div class="list-label">
-						<label>
-セミナー・プレイス :</label>
+						<label><?php echo SEMINAR_PLACE;?>:</label>
 					</div>	
 				</div>
 
@@ -320,8 +343,7 @@ function facilityshow(id,aa)
 						}
 					?>
 					</ul>
-					<a href="#" class="validation" id="typevalidation">
-セミナー場所を選択してください</a>
+					<a href="#" class="validation" id="typevalidation">セミナー場所を選択してください</a>
 				</div>
 			</div>	
 		
@@ -330,8 +352,7 @@ function facilityshow(id,aa)
 			<div class="col-md-12 seminar-type"> 
 				<div class="col-md-2 list-name">
 					<div class="list-label">
-						<label>
-セミナー参加者：</label>
+						<label><?php echo SEMINAR_ATTENDES;?>:</label>
 					</div>	
 				</div>
 
@@ -371,8 +392,7 @@ function facilityshow(id,aa)
 			<div class="col-md-12 seminar-type seminar-type-right">
 				<div class="col-md-2 list-name">
 					<div class="list-label">
-						<label>
-産業タイプ:</label>
+						<label><?php echo INDUSTRY_TYPE;?>:</label>
 					</div>	
 				</div>
 
@@ -404,8 +424,7 @@ function facilityshow(id,aa)
 						}
 					?>
 					</ul>
-					<a href="#" class="validation" id="Industry">
-でも業界を選択してください</a>
+					<a href="#" class="validation" id="Industry">でも業界を選択してください</a>
 				</div>
 			</div>		
 			
@@ -413,8 +432,7 @@ function facilityshow(id,aa)
 			<div class="col-md-6 col-md-offset-3 top-margin-30"> 
 				<div class="col-md-4 list-name">
 					<div class="list-label">
-						<label>
-総席 :</label>
+						<label><?php echo TOTAL_SEAT;?>:</label>
 					</div>	
 				</div>
 
@@ -450,8 +468,7 @@ function facilityshow(id,aa)
 			
 			<div class="col-md-12 text-center">
 				<div class="top-margin-20">&nbsp;</div>	
-						<a class="blue-button list-continue" id="continue" style="pointer-events: all;" onclick="checkvalid();">
-持続する</a>
+						<a class="blue-button list-continue" id="continue" style="pointer-events: all;" onclick="checkvalid();"><?php echo CONTINUE1;?></a>
 
 			</div>	
 		
@@ -470,15 +487,12 @@ function facilityshow(id,aa)
 			<div class="col-md-3"> 
 				<div class="row">
 					<ul class="tab nav left_side left_back">
-						<span>基本</span>
-					  <li class="tablinks active" onclick="openCity(event, 'Pricing')"><span>
-接触</span>
-					  	<span id="valtrue" class="glyphicon glyphicon-ok" style="color:green; font-size:20px; display:none; position: absolute; left: 100px;top:0px; padding:0px !important;"></span>
-						
-						 <span id="valfalse" class="glyphicon glyphicon-remove" style="color:red; font-size:20px; display:none; position: absolute; left: 100px;top:0px; padding:0px !important;"></span>
+						<span><?php echo BASIC;?></span>
+					  <li class="tablinks active" onclick="openCity(event, 'Pricing')"><span><?php echo CONTACT;?></span>
+					  
 					  
 					  </li>
-					  <li class="tablinks" onclick="openCity(event, 'Calendar')"><span>日</span>
+					  <li class="tablinks" onclick="openCity(event, 'Calendar')"><span><?php echo DAY;?></span>
 					  	<span id="daytrue" class="glyphicon glyphicon-ok" style="color:green; font-size:20px; display:none; position: absolute; left: 100px;top:0px; padding:0px !important;"></span>
 						
 						 <span id="dayfalse" class="glyphicon glyphicon-remove" style="color:red; font-size:20px; display:none; position: absolute; left: 100px;top:0px; padding:0px !important;"></span>				  
@@ -488,36 +502,31 @@ function facilityshow(id,aa)
 					
 
 					<ul class="tab nav left_side left-menu left_back">
-						<span>
-説明</span>
-					  <li class="tablinks" onclick="openCity(event, 'Overview')"><span>
-概要</span>
+						<span><?php echo DISCRIPTION;?></span>
+					  <li class="tablinks" onclick="openCity(event, 'Overview')"><span><?php echo OVERVIEW;?></span>
 					  	<span id="Overviewtrue" class="glyphicon glyphicon-ok" style="color:green; font-size:20px; display:none; position: absolute; left: 100px;top:0px; padding:0px !important;"></span>
 						
 						 <span id="Overviewfalse" class="glyphicon glyphicon-remove" style="color:red; font-size:20px; display:none; position: absolute; left: 100px;top:0px; padding:0px !important;"></span>							  
 					  </li>
-					  <li class="tablinks" onclick="openCity(event, 'Photos')"><span>写真</span>
-					  	<span id="Photostrue" class="glyphicon glyphicon-ok" style="color:green; font-size:20px; display:none; position: absolute; left: 100px;top:0px; padding:0px !important;"></span>
-						
-						 <span id="Photosfalse" class="glyphicon glyphicon-remove" style="color:red; font-size:20px; display:none; position: absolute; left: 100px;top:0px; padding:0px !important;"></span>							  
+					  <li class="tablinks" onclick="openCity(event, 'Photos')"><span><?php echo PHOTOS;?></span>
+					  							  
 					  </li>
 					</ul>
 
 
 
 					<ul class="tab nav left_side left-menu left_back">
-						<span>設定</span>
-					  <li class="tablinks" onclick="openCity(event,'Amenities')"><span>ファシリティ</span>					  
+						<span><?php echo SETTING;?></span>
+					  <li class="tablinks" onclick="openCity(event,'Amenities')"><span><?php echo FACILITIES;?></span>					  
 					  </li>
-					  <li class="tablinks" onclick="openCity(event, 'Location')"><span>
-ロケーション</span>
+					  <li class="tablinks" onclick="openCity(event, 'Location')"><span><?php echo LOCATION;?></span>
 					  	<span id="Locationtrue" class="glyphicon glyphicon-ok" style="color:green; font-size:20px; display:none; position: absolute; left: 100px;top:0px; padding:0px !important;"></span>
 						
 						 <span id="Locationfalse" class="glyphicon glyphicon-remove" style="color:red; font-size:20px; display:none; position: absolute; left: 100px;top:0px; padding:0px !important;"></span>							  
 					  </li>
 					 <!-- <li><a href="#" class="tablinks list-submit" onclick="openCity(event, 'Policy')">提出します</a></li>-->
 					  <!--<li><a class="tablinks list-submit" onclick="openCity(event, 'Policy')">Submit</a></li>-->
-					  <li style="padding-left: 14px;"><input type="submit"  class="tablinks list-submit" onclick="semivalidation()" name="subbtn" value="Submit"  style="width:100%;padding-left:0;text-align:left;background:none;border:none;"/></li>
+					  <li style="padding-left: 14px;"><input type="submit"  class="tablinks list-submit" onclick="semivalidation()" name="subbtn" value="<?php echo SUBMIT;?>"  style="width:100%;padding-left:0;text-align:left;background:none;border:none;"/></li>
 					</ul>
 				</div>
 			</div>
@@ -531,27 +540,24 @@ function facilityshow(id,aa)
 						<div class="clearfix"></div>
 							<div class="row price-border price-margin Location-row">
 								<div class="col-md-8 center">
-									 <h3>
-基本</h3>
-									 <p>
-日々の価格の賃借人は、あなたのリストを参照するデフォルトを設定します。 </p>
+									 <h3><?php echo BASIC;?></h3>
+									 <p><?php echo SET_THE_CONTACT_DETAIL_FOR_SEMINAR_LISTING;?></p>
 								</div>
 								<div class="col-md-9">
 									<div class="overview_title">									
-										<label class="overview-label">
-人のホスト名</label>
+										<label class="overview-label"><?php echo HOST_PERSON_NAME;?></label>
 										<input name="hostname" type="text" id="hostname" placeholder="Host Person Name" class="overview-input" required value="<?php $marutra = explode('"',translate(str_replace(" ","+",$seminar['hostperson_name']))); echo $marutra[1] ;?>" >
 									</div>
 									<div class="bottom-margin-20"> </div>
 									<div class="overview_title">									
-										<label class="overview-label">
-連絡先メールアドレス</label>
+										<label class="overview-label"><?php echo CONTACT_EMAIL;?></label>
+										<label id="emailvali" style="color:red; font-size:15px; display:none;">有効なメールIDを入力してください</label>
 										<input name="contactemail" type="email" id="contactemail" placeholder="Contact Email" class="overview-input" required value="<?php echo $seminar['contact_email'];?>">
 									</div>
 									<div class="bottom-margin-20"> </div>
 									<div class="overview_title">									
-										<label class="overview-label">
-連絡先番号</label>
+										<label class="overview-label"><?php echo CONTACT_NO;?></label>
+										<label id="phonevali" style="color:red; font-size:15px; display:none;">有効な連絡先番号を入力してください</label>
 										<input name="contactno" type="text" id="contactno" placeholder="Contact No" class="overview-input" required value="<?php echo $seminar['phoneno'];?>" >
 									</div>
 								</div>
@@ -569,10 +575,9 @@ function facilityshow(id,aa)
 
 								<div class="col-md-8 center">
 
-									 <h3>日</h3>
+									 <h3><?php echo DAY;?></h3>
 
-									 <p>
-日々の価格の賃借人は、あなたのリストを参照するデフォルトを設定します。 </p>
+									 <p><?php echo SET_DAY_TIME_DATAIL_FOR_SEMINAR_LISTING;?> </p>
 
 								</div>
 
@@ -580,11 +585,11 @@ function facilityshow(id,aa)
 
 									<div class="overview_title">									
 
-										<label class="overview-label">日から</label>
-										 <input type="text" name="fromdate" value="<?php echo date("Y-m-d",$seminardate['from_date']/1000);?>" id="txtFrom" placeholder="From Date" class="overview-input" />
+										<label class="overview-label"><?php echo FROM_DATE;?></label>
+										 <input type="text" name="fromdate" value="<?php echo date("Y-m-d",$seminardate['from_date']/1000);?>" id="txtFrom" placeholder="<?php echo FROM_DATE;?>" class="overview-input" />
 										<!--<input type="date" required min="<?php echo $dt; ?>" id="semifromdate" name="fromdate" placeholder="From Date" class="overview-input" value="<?php echo date("Y-m-d",$seminardate['from_date']/1000);?>">-->
-										<label class="overview-label">現在まで</label>
-										<input type="text" name="todate" value="<?php echo date("Y-m-d",$seminardate['to_date']/1000);?>" id="txtTo" placeholder="To Date" class="overview-input" />
+										<label class="overview-label"><?php echo TO_DATE;?></label>
+										<input type="text" name="todate" value="<?php echo date("Y-m-d",$seminardate['to_date']/1000);?>" id="txtTo" placeholder="<?php echo TO_DATE;?>" class="overview-input" />
 										<!--<input type="date" required min="<?php echo $dt; ?>" id="semitodate" name="todate" placeholder="To Date" class="overview-input" value="<?php 
                                          echo date("Y-m-d",$seminardate['to_date']/1000);?>">-->
 
@@ -598,13 +603,12 @@ function facilityshow(id,aa)
 									<!-- Custom styles for this template -->
  
 										<link href="css/timepicki.css" rel="stylesheet">
-										<label class="overview-label">時から</label>
+										<label class="overview-label"><?php echo START_SEMINAR_TIME;?></label>
 
-										<input id="timepicker1" style="cursor:pointer;" class="timepicker1" type="text" name="fromtime" placeholder="Select Time" value="<?php echo date("g:i a",$seminardate['from_date']/1000);?>" />
-										<label class="overview-label">
-時間に</label>
+										<input id="timepicker1" style="cursor:pointer;" class="timepicker1" type="text" name="fromtime" placeholder="<?php echo START_SEMINAR_TIME;?>" value="<?php echo date("g:i a",$seminardate['from_date']/1000);?>" />
+										<label class="overview-label"><?php echo END_SEMINAR_TIME;?></label>
 
-										<input id="timepicker1" style="cursor:pointer;" class="timepicker1" type="text" name="totime" placeholder="Select Time" value="<?php 
+										<input id="timepicker1" style="cursor:pointer;" class="timepicker1" type="text" name="totime" placeholder="<?php echo START_SEMINAR_TIME;?>" value="<?php 
                                          echo date("g:i a",$seminardate['to_date']/1000);?>"/>
                                         <!--<label class="overview-label">" 
 例：午前11時または午後11時00分 "</label>-->
@@ -640,18 +644,16 @@ function facilityshow(id,aa)
 
 								<div class="col-md-8 center">
 
-									 <h3>
-概要</h3>
+									 <h3><?php echo OVERVIEW;?></h3>
 
-									 <p>
-日々の価格の賃借人は、あなたのリストを参照するデフォルトを設定します。 </p>
+									 <p><?php echo SET_SEMINAR_DETAIL_FOR_SEMINAR_LISTING;?> </p>
 
 								</div>
 
 								<div class="col-md-9">
 
 									<div class="overview_title">									
-										<label class="overview-label">タイトル</label>
+										<label class="overview-label"><?php echo TITLE;?></label>
 										<input type="text" required name="title" value="<?php $marutra = explode('"',translate(str_replace(" ","+",$seminar['title']))); echo $marutra[1] ;?>" id="title" placeholder="Title" class="overview-input">
 
 									</div>
@@ -659,8 +661,7 @@ function facilityshow(id,aa)
 									<div class="bottom-margin-20"> </div>
 									<div class="overview_title">									
 
-										<label class="overview-label">
-キャッチフレーズ</label>
+										<label class="overview-label"><?php echo TAGLINE;?></label>
 
 										<input type="text"  name="tagline" value="<?php $marutra = explode('"',translate(str_replace(" ","+",$seminar['tagline']))); echo $marutra[1] ;?>" id="tagline" placeholder="Tagline" class="overview-input">
 
@@ -686,7 +687,7 @@ function facilityshow(id,aa)
 									<div class="bottom-margin-20"> </div>
 									<div class="overview_title">									
 
-										<label class="overview-label">説明 &nbsp;&nbsp;</label>
+										<label class="overview-label"><?php echo DISCRIPTION;?> &nbsp;&nbsp;</label>
 										<textarea  class="overview-input" name="description" placeholder="説明" rows="8" style="color:#000 !important;"><?php $marutra = explode('"',translate(str_replace(" ","+",$seminar['description']))); echo $marutra[1] ;?></textarea>	
 									</div>
 								</div>
@@ -712,10 +713,9 @@ function facilityshow(id,aa)
 
 										<img src="../img/cam.png" class="img-responsive center-block">
 
-										 <h3>写真または2を追加！</h3>
+										 <h3><?php echo ADD_A_PHOTO;?></h3>
 
-										 <span>
-または3つ、またはそれ以上！賃借人は、あなたのスペースの特徴を強調写真と場所に行くことを好みます。</span>
+										 <span><?php echo SET_SEMINAR_PHOTOS_FOR_SEMINAR_LISTING;?></span>
 
 												<span id="choosefileset"></span>
 												<input class="add-photo choose-img" id="jsimgid0" type="file" name="semiimage[]" onchange="setimg(0, this);addimgmaru()"/>
@@ -841,11 +841,9 @@ function facilityshow(id,aa)
 
 								<div class="col-md-6 center">
 
-									 <h3>
-ファシリティ</h3>
+									 <h3><?php echo FACILITIES;?></h3>
 
-									 <p>ほとんどのホストのリストで、一般的な設備。
- </p>
+									 <p><?php echo COMMON_FACILITIES_AT_MOST_HOSTS_LISTINGS;?></p>
 								</div>
 								<div class="col-md-12">
 									<ul class="nav facility">
@@ -891,8 +889,7 @@ function facilityshow(id,aa)
 																					
 											<li>											
 												<div class="overview_title">									
-													<label class="overview-label" for="">
-国<span style="color:red;">*</span></label>
+													<label class="overview-label" for=""><?php echo COUNTRY;?><span style="color:red;">*</span></label>
 													<select id="country" class="overview-input"  name="country" onchange="setstate(this.value);">
 														<?php
 															$selcountry=mysql_query("select * from countries ");
@@ -914,8 +911,7 @@ function facilityshow(id,aa)
 											<li>
 
 												<div class="overview_title">	
-													<label class="overview-label">
-状態<span style="color:red;">*</span></label>
+													<label class="overview-label"><?php echo STATE;?><span style="color:red;">*</span></label>
 													<select id="allstate" class="overview-input" name="state"  onchange="setcity(this.value);" >
 													<?php
 															$selstate=mysql_query("select * from states where country_id='".$seminar['countryid']."'");
@@ -935,7 +931,7 @@ function facilityshow(id,aa)
 											<li>
 
 												<div class="overview_title">									
-													<label class="overview-label">シティ<span style="color:red;">*</span></label>
+													<label class="overview-label"><?php echo CITY;?><span style="color:red;">*</span></label>
 													<select id="allcity" class="overview-input" name="city" onchange="">
 														<?php
 															$selcountry=mysql_query("select * from cities where state_id='".$seminar['stateid']."'");
@@ -955,8 +951,7 @@ function facilityshow(id,aa)
 											<li>
 
 												<div class="overview_title">									
-													<label class="overview-label">
-住所<span style="color:red;">*</span></label>
+													<label class="overview-label"><?php echo STREET_ADDRESS;?><span style="color:red;">*</span></label>
 													<input type="text" name="streetaddress" class="overview-input"
 													value="<?php $marutra = explode('"',translate(str_replace(" ","+",$seminar['address']))); echo $marutra[1] ;?>" >
 												</div>
@@ -966,7 +961,7 @@ function facilityshow(id,aa)
 											<li>
 
 												<div class="overview_title">									
-													<label class="overview-label">郵便番号<span style="color:red;">*</span></label>
+													<label class="overview-label"><?php echo ZIP_CODE;?><span style="color:red;">*</span></label>
 													<input type="text" id="zipcode" name="zipcode" class="overview-input" value="<?php echo $seminar['zipcode'];?>">
 
 												</div>
@@ -990,11 +985,9 @@ function facilityshow(id,aa)
 									
 
 												<div class="overview_title">									
-													<label class="overview-label">
-ロケーション</label>
+													<label class="overview-label"><?php echo LOCATION;?></label>
 
-													<input type="text" id="pac-input" placeholder="
-場所を入力してください。" class="overview-input" value="<?php $marutra = explode('"',translate(str_replace(" ","+",$seminar['address']))); echo $marutra[1] ;?>">
+													<input type="text" id="pac-input" placeholder="場所を入力してください。" class="overview-input" value="<?php $marutra = explode('"',translate(str_replace(" ","+",$seminar['address']))); echo $marutra[1] ;?>">
 													
 												<script>
 										  // This example adds a search box to a map, using the Google Place Autocomplete
@@ -1096,12 +1089,11 @@ function facilityshow(id,aa)
 										<img src="../img/map-pin.png" id="pinimg" class="img-responsive map-pin">
 																			
 										<div class="clearfix"></div>										
-										<div class="top-margin-10">&nbsp;</div>
+										<!--<div class="top-margin-10">&nbsp;</div>
 
-											<a href="#" class="text-uppercase blue-button add-button" data-toggle="modal" data-target="#myModal">
-アドレスを追加</a>
+											<a href="#" class="text-uppercase blue-button add-button" data-toggle="modal" data-target="#myModal">アドレスを追加</a>
 
-										<div class="bottom-margin-10">&nbsp;</div>	
+										<div class="bottom-margin-10">&nbsp;</div>-->	
 
 									</div>
 									

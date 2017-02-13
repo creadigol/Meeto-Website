@@ -58,8 +58,7 @@ $missid=$_SESSION['jpmeetou']['id'];
 if($_REQUEST['kon']=="setstate")
 { 
 ?>
-<option value="">-- 
-州を選択 -- </option>
+<option value="">--<?php echo SELECT_STATE; ?>-- </option>
 <?php
 	$selcity=mysql_query("select * from states where country_id=$_REQUEST[id] order by name");
 	while($fetcity=mysql_fetch_array($selcity))
@@ -73,7 +72,7 @@ if($_REQUEST['kon']=="setstate")
 if($_REQUEST['kon']=="setcity")
 { 
 ?>
-<option value="">-- 都市を選びなさい -- </option>
+<option value="">--<?php echo SELECT_CITY; ?>-- </option>
 <?php
 	$selcity=mysql_query("select * from cities where state_id=$_REQUEST[id] order by name");
 	while($fetcity=mysql_fetch_array($selcity))
@@ -130,14 +129,14 @@ if($_REQUEST['kon']=='listseminar')
 		  <?php  $marutra = explode('"',translate(str_replace(" ","+",$seminar['tagline']))); echo  $marutra[1];?>
 			<h4 class="semibold-o link_text"><?php  $marutra = explode('"',translate(str_replace(" ","+",$seminar['title']))); echo  $marutra[1];?></h4>
 			<h5 class="semibold-o gray_text"><?php  $marutra = explode('"',translate(str_replace(" ","+",$seminar['tagline']))); echo  $marutra[1];?></h5> 
-			<h5 class="forgot">*期限切れのセミナー*</h5>
+			<h5 class="forgot">*<?php echo SEMINAR_EXPIRED;?>*</h5>
 			<?
 			 }
 			 elseif($seminar['approval_status']=='rejected')
 			 {?>
 			 <h4 class="semibold-o link_text"><?php  $marutra = explode('"',translate(str_replace(" ","+",$seminar['title']))); echo  $marutra[1];?></h4>
 			 <h5 class="semibold-o gray_text"><?php  $marutra = explode('"',translate(str_replace(" ","+",$seminar['tagline']))); echo  $marutra[1];?> </h5>
-			 <h5 class="forgot">あなたのセミナーは管理者によって拒否されました</h5> 
+			 <h5 class="forgot"><?php echo YOUR_SEMINAE_REJECTED_BY_ADMIN;?></h5> 
 			 <?
 			 }
 			 else
@@ -165,7 +164,7 @@ if($_REQUEST['kon']=='listseminar')
 	else
 	{?>
 		<div style="color:red;font-weight:bold;padding:10px;" align="center">
-			セミナーが見つかりません...！
+			<?php echo SEMINAR_EXPIRED;?>...！
 	   </div>
 	<?
 	}
@@ -206,10 +205,10 @@ if($_REQUEST['kon']=='viewlisting')
 								<table width="100%">
 									<thead>
 										<tr height="40px" class="table-padding table-head">
-											<td style="width:100px;"><strong>ユーザー</strong></td>
-											<td style="width:100px"><strong>名</strong></td>
-											<td style="width:100px"><strong>Eメール</strong></td>
-											<td style="width:140px"><strong>予約された座席</strong></td>
+											<td style="width:100px;"><strong><?php echo USER;?></strong></td>
+											<td style="width:100px"><strong><?php echo NAME;?></strong></td>
+											<td style="width:100px"><strong><?php echo EMAIL;?></strong></td>
+											<td style="width:140px"><strong><?php echo BOOKED_SEAT;?></strong></td>
 											
 										</tr>
 									</thead>
@@ -256,7 +255,7 @@ if($_REQUEST['kon']=='viewlisting')
 				   {?>
 					<div class="clearfix"></div><br/><br/>
 						<div style="color:red;font-weight:bold;padding:10px;" align="center">
-			                セミナー誰も予約していない...！
+			                <?php SEMINAR_DID_NOT_BOOK_ANYONE;?>...！
 	                     </div>					
 				   <?
 				   }
@@ -280,8 +279,7 @@ if($_REQUEST['kon']=='setwishlist')
 	  <div class="modal-content modal-c">
 		<div class="modal-header model-head">
 		  <button type="button" class="close" data-dismiss="modal">&times;</button>
-		  <h4 class="modal-title">
-ウィッシュリストに保存します</h4>
+		  <h4 class="modal-title"><?php echo SAVE_TO_WISH_LIST;?></h4>
 		</div>
 		<div class="modal-body">
 		  <div class="row">
@@ -303,14 +301,14 @@ if($_REQUEST['kon']=='setwishlist')
 			</div>
 			<div class="col-md-8 col-md-offset-2 text-center seminar-pop">
 			<div class="top-margin-10"></div>	
-				<span>メモを追加</span>
+				<span><?php echo ADD_NOTES;?></span>
 				<textarea name="add-notes" class="add-notes" id="wishnotes" rows="5" placeholder='注意...'></textarea>
 			<div class="top-margin-10"></div>	
 			</div>
 		
 			<div class="col-md-12 text-center seminar-pop">
 				<div class="modal-footer">
-				  <button type="button" onclick="addtowishlist(<?php echo $_REQUEST['id']; ?>);" class="blue-button f-right border-n" data-dismiss="modal">終わりました</button>
+				  <button type="button" onclick="addtowishlist(<?php echo $_REQUEST['id']; ?>);" class="blue-button f-right border-n" data-dismiss="modal"><?php echo DONE;?></button>
 				</div>									
 			</div>									
 		  </div>
@@ -526,11 +524,10 @@ if($_REQUEST['kon']=='cityseminarlist')
                     </div>
                     <div class="sem_on_det">
 						<div style="margin-bottom:7px;">
-							<span>
-セミナー・プレイス :</span><span><?php $marutra = explode('"',translate(str_replace(" ","+",$fetsemitype['name']))); echo $marutra[1]; ?></span>
+							<span><?php echo SEMINAR_PLACE;?>:</span><span><?php $marutra = explode('"',translate(str_replace(" ","+",$fetsemitype['name']))); echo $marutra[1]; ?></span>
 						</div>
 						<div>
-							<span>セミナー市 :</span><span><?php $marutra = explode('"',translate(str_replace(" ","+",$seminarcity['name']))); echo $marutra[1]; ?></span>
+							<span><?php echo SEMINAR_CITY;?> :</span><span><?php $marutra = explode('"',translate(str_replace(" ","+",$seminarcity['name']))); echo $marutra[1]; ?></span>
 						</div>
                     </div>
 					   
@@ -586,8 +583,7 @@ if($_REQUEST['kon']=='cityseminarlist')
 							?>
 								<a href="infomation.php?id=<?php echo $fetseminar['id']; ?>">
 									
-									<div style="color:white; background-color:#7323DC" class="book_btn">
-本</div>
+									<div style="color:white; background-color:#7323DC" class="book_btn"><?php echo BOOK;?></div>
 								</a><!--blue-button-->
 							<?php
 									}
@@ -596,8 +592,7 @@ if($_REQUEST['kon']=='cityseminarlist')
 							?>
 								<a href="infomation.php?id=<?php echo $fetseminar['id']; ?>">
 						
-									<div class="book_btn">
-本</div>
+									<div class="book_btn"><?php echo BOOK;?></div>
 								</a>
 							<?php
 									}
@@ -607,8 +602,7 @@ if($_REQUEST['kon']=='cityseminarlist')
 							?>
 								<a href="infomation.php?id=<?php echo $fetseminar['id']; ?>">
 									
-									<div class="book_btn">
-本</div>
+									<div class="book_btn"><?php echo BOOK;?></div>
 								</a>
 							<?php
 								}
@@ -627,7 +621,7 @@ if($_REQUEST['kon']=='cityseminarlist')
 		?>
 		 <div class="col-md-12" >
 				<div align="center" style="color:red;font-weight:bold;">
-					セミナーは、この都市には見られません...！
+					<?php echo SEMINAR_NOT_FOUND_IN_THIS_CITY;?>
 				</div>
 			</div>
 			<?php
@@ -666,47 +660,47 @@ elseif($_REQUEST['kon']=="wishlist")
                 <!-- Wrapper for slides -->	
                     <div class="carousel-inner carousel-inner-small" role="listbox">
 					<div class="item item-small active">					
-                            <img src="../img/<?php echo $selsemiphoto['image'] ?>"  style="transform:rotate(<?php echo $selsemiphoto['rotateval']; ?>deg)" alt="Chania" >					
+                           <?php
+							if($selsemiphoto['image']=="" || !file_exists("../img/".$selsemiphoto['image']))	
+					   {?>	
+				        <img src="../img/no-photo.jpg"  alt="Chania" >	
+					      
+					<?}						
+					 else
+					{?> 
+							
+							
+							<img src="../img/<?php echo $selsemiphoto['image'] ?>"  style="transform:rotate(<?php echo $selsemiphoto['rotateval']; ?>deg)" alt="Chania" >	
+					<? }
+					?>
                       </div>
-                            <?php
-						/*							
-                            $i=0;						
-                            while($fetsemiphoto=mysql_fetch_array($selsemiphoto))	
-                                {					
-                               $i++;					
-                            ?>						
-                        <div class="item item-small <?php if($i==1) echo 'active'; ?>">					
-                            <img src="../img/<?php echo $fetsemiphoto['image'] ?>"  style="transform:rotate(<?php echo $fetsemiphoto['rotateval']; ?>deg)" alt="Chania" >					
-                        </div>	
-                            <?php		
-                                }				
-                                $i=0;			
-                          */  ?>				
+                            				
                     </div>			
                 <!-- Left and right controls -->	
                     <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">					  
                        	 
-                        <span class="sr-only">
-前</span>				
+                        <span class="sr-only"><?php echo PREV1; ?></span>				
                     </a>					
                     <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
                        					  
-                        <span class="sr-only">
-次</span>			
+                        <span class="sr-only"><?php echo NEXT1; ?></span>			
                     </a>				
                 </div>			
-            </div>				
+            </div>
+	
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12 wish-border wish_detail">			
                 <h4>					
                    <!--<a href="infomation.php?id=<?php echo $fetwish['seminar_id']; ?>" class=""><?php $marutra = explode('"',translate(str_replace(" ","+",$fetsemidetail['title']))); echo $marutra[1] ; ?></a>-->	
-					<a href="<?php if($fetsemidetail['status']==1 && $fetsemidetail['approval_status']=='approved' ) { echo "infomation.php?id=$fetsemidetail[id]"; } else { echo "#";} ?>"><?php echo $fetsemidetail['title']; ?></a>
+					<a href="<?php if($fetsemidetail['status']==1 && $fetsemidetail['approval_status']=='approved' ) { echo "infomation.php?id=$fetsemidetail[id]"; } else { echo "#";} ?>"><?php $marutra = explode('"',translate(str_replace(" ","+",$fetsemidetail['title']))); echo $marutra[1] ; ?></a>
                 </h4>	
-                <span><?php $marutra = explode('"',translate(str_replace(" ","+",$fetsemidetail['tagline']))); echo $marutra[1] ; ?></span>
-                <!--<div class="bottom-margin-10"></div>-->
-                <p><?php $marutra = explode('"',translate(str_replace(" ","+",$fetwish['notes']))); echo $marutra[1] ; ?></p>		
+                <!--<span><?php $marutra = explode('"',translate(str_replace(" ","+",$fetsemidetail['tagline']))); echo $marutra[1] ; ?></span>-->
+                <!--<div class="bottom-margin-10"></div>--> 
+				<p><b><?php echo DATE1;?> : </b><?php echo $date = date("d-m-Y",$fetwish['created_date']/1000);?><p>
+				<p><b><?php echo TOTAL_SEAT;?> : </b> <?php echo $fetsemidetail['total_booked_seat'].'/'.$fetsemidetail['total_seat'];?><p>
+                <p><?php $marutra = explode('"',translate(str_replace(" ","+",$fetwish['notes']))); echo $marutra[1] ; ?></p>
             </div>		
             <div class="col-lg-2 col-md-2 col-sm-2 col-xs-2 text-center wish-border wish_detail">
-            	<button class="blue-button border-n" onclick="wishlist('<?php echo $fetwish['id'];?>');">削除</button>	
+            	<button class="blue-button border-n" onclick="wishlist('<?php echo $fetwish['id'];?>');"><?php echo DELETE1; ?></button>	
             </div>		
         </div>	
 <?php	
@@ -717,7 +711,7 @@ elseif($_REQUEST['kon']=="wishlist")
 	{
 		?>
 		<div style="color:red;font-weight:bold;padding:10px;" align="center">
-				ウィッシュリスト内のセミナーではありません...！
+				<?php echo SEMINARS_NOT_IN_YOUR_WISHLIST; ?>...！
 			</div>
 		<?
 	}
@@ -804,31 +798,31 @@ if($_REQUEST['kon']=="booked")
 										
 										?>
 											<li>
-												<div class="col-md-4 col-sm-4 col-xs-12 text-right download-text"><strong>ユーザー名 :</strong></div>
+												<div class="col-md-4 col-sm-4 col-xs-12 text-right download-text"><strong><?php echo USER_NAME;?> :</strong></div>
 												<div class="col-md-8 col-sm-8 col-xs-12 download-margin"><?php $marutra = explode('"',translate(str_replace(" ","+",$_SESSION['jpmeetou']['fname']))); echo $marutra[1];?> <?php $marutra = explode('"',translate(str_replace(" ","+",$_SESSION['jpmeetou']['lname']))); echo $marutra[1]; ?> </div>
 											</li>
 											<li>
-												<div class="col-md-4 col-sm-4 col-xs-12 text-right download-text"><strong>セミナータイトル :</strong></div>
+												<div class="col-md-4 col-sm-4 col-xs-12 text-right download-text"><strong><?php echo SEMINAR_TITLE;?> :</strong></div>
 												<div class="col-md-8 col-sm-8 col-xs-12 download-margin"><?php $marutra = explode('"',translate(str_replace(" ","+",$bookedseminar['title']))); echo $marutra[1]; ?></div>
 											</li>
 
 											<li>
-												<div class="col-md-4 col-sm-4 col-xs-12 text-right download-text"><strong>日付からセミナー :</strong></div>
+												<div class="col-md-4 col-sm-4 col-xs-12 text-right download-text"><strong><?php echo SEMINAR_FROM_DATE;?> :</strong></div>
 												<div class="col-md-8 col-sm-8 col-xs-12 download-margin"><?php echo date("d-m-Y",$bookedtiket['from_date']/1000);?></div>
 											</li>
 
 											<li>
-												<div class="col-md-4 col-sm-4 col-xs-12 text-right download-text"><strong>日にセミナー :</strong></div>
+												<div class="col-md-4 col-sm-4 col-xs-12 text-right download-text"><strong><?php echo SEMINAR_TO_DATE;?> :</strong></div>
 												<div class="col-md-8 col-sm-8 col-xs-12 download-margin"><?php echo date("d-m-Y",$bookedtiket['to_date']/1000);?></div>
 											</li>
 
 											<li>
-												<div class="col-md-4 col-sm-4 col-xs-12 text-right download-text"><strong>総ブックシート :</strong></div>
+												<div class="col-md-4 col-sm-4 col-xs-12 text-right download-text"><strong><?php echo TOTAL_BOOK_SEAT;?> :</strong></div>
 												<div class="col-md-8 col-sm-8 col-xs-12 download-margin"><?php echo $bookedtiket['book_seat'];?></div>
 											</li>
 											
 											<li>
-												<div class="col-md-4 col-sm-4 col-xs-12 text-right download-text"><strong>予約番号 :</strong></div>
+												<div class="col-md-4 col-sm-4 col-xs-12 text-right download-text"><strong><?php echo BOOKING_NO;?> :</strong></div>
 												<div class="col-md-8 col-sm-8 col-xs-12 download-margin"><?php echo $bookedtiket['booking_no'];?></div>
 											</li>
 											
@@ -836,9 +830,9 @@ if($_REQUEST['kon']=="booked")
 									</div>
 									<div class="clearfix"></div>
 									<div class="modal-footer model-head">
-								  <button type="button" class="blue-button f-left border-n" data-dismiss="modal">キャンセル</button>
+								  <button type="button" class="blue-button f-left border-n" data-dismiss="modal"><?php echo CANCEL;?></button>
 								  <a target="_blank" download  href="tcpdf/examples/print_pdf.php?bkid=<?php echo $_REQUEST['btid']; ?>&sem_id=<?php echo $bookedtiket['seminar_id'];?>">
-								  <button type="button"  class="blue-button f-right border-n">ダウンロード</button>
+								  <button type="button"  class="blue-button f-right border-n"><?php echo DOWNLOAD;?></button>
 								  </a>
 								</div>	
   <?php
@@ -883,8 +877,8 @@ if($_REQUEST['kon']=="review")
 				   {
 					   ?>
 						<tr><div id="noreview">
-					    <h4>まだレビューはありません</h4>
-                        <p>ここに滞在し、あなたは、このホストに彼らの最初のレビューを与えることができます！ </p> 
+					    <h4><?php echo NO_REVIEWS_YET;?></h4>
+                        <p><?php echo STAY_HERE_AND_YOU_COULD_GIVE_THIS_HOST_THEIR_FIRST_REVIEW;?> </p> 
                       </div>
 						</tr>
 					   <?php

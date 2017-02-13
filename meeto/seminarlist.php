@@ -84,7 +84,7 @@ $(window).scroll(function () {
                         <div class="group-control">
                         	<div class="Seminar-Attendees">
 								<?php 
-					           $purpose=mysql_query("select * from purpose order by id asc");
+					           $purpose=mysql_query("select * from purpose where status=1 order by id asc");
 					           while($purposedetail = mysql_fetch_array($purpose))
 					            { ?>
 						      <label>
@@ -105,7 +105,7 @@ $(window).scroll(function () {
                         <div class="group-control">
                         	<div class="Seminar-Attendees industry-type">
 								<?php 
-					           $industry=mysql_query("select * from industry order by id asc");
+					           $industry=mysql_query("select * from industry where status=1 order by id asc");
 					           while($industrydetail = mysql_fetch_array($industry))
 					            { ?>
 						      <label>
@@ -127,7 +127,7 @@ $(window).scroll(function () {
                         <div class="group-control">
                         	<div class="Seminar-Attendees seminar-place">
 								<?php 
-					           $semitype=mysql_query("select * from seminar_type order by id asc");
+					           $semitype=mysql_query("select * from seminar_type where status=1 order by id asc");
 					           while($semitypedetail = mysql_fetch_array($semitype))
 					            { ?>
 						      <label>

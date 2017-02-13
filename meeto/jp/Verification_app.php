@@ -72,24 +72,24 @@ if($_REQUEST['uid']==$_SESSION['jpmeetou']['id'] )
          	   </div>					
 				<ul class="nav edit">	
 				<li class="activet">	
-					<a href="Editprofile.php">プロファイル編集</a>
+					<a href="Editprofile.php"><?php echo EDIT_PROFILE;?></a>
 				</li>						
 				<?php 
 			if($_SESSION['jpmeetou']['type']==1)
 				{?>   
 				<li>						
-					<a href="photos.php" class="">写真</a>	
+					<a href="photos.php" class=""><?php echo PHOTOS;?></a>	
 				</li>
 				<?
 				}
 				?>			
 				<li>	
-					<a href="#" class="">信頼と検証</a>				
+					<a href="#" class=""><?php echo TRUST_AND_VERIFICATION;?></a>				
 				</li>			
 				</ul>		
 				<div class="top-margin-20"></div>
 				<span class="center-block">	
-				<a class="blue-button button-a" href="view-profile.php?id=<?php echo $_SESSION['jpmeetou']['id']; ?>">プロフィールを見る</a>	
+				<a class="blue-button button-a" href="view-profile.php?id=<?php echo $_SESSION['jpmeetou']['id']; ?>"><?php echo VIEW_PROFILE;?></a>	
 				</span>			
 				
 				<div class="top-margin-30"></div>
@@ -99,11 +99,9 @@ if($_REQUEST['uid']==$_SESSION['jpmeetou']['id'] )
 				<div class="top-margin-20"></div>			
 				<div class="row hedding-row">				
 						<div class="col-md-8 verify-id">
-							<p><b>あなたのIDを確認します</b></p> 
-							<p>
-あなたの認証IDを取得すると、コミュニティの信頼関係の構築を支援する最も簡単な方法です。私たちは、公式のIDにオンラインアカウントからの情報を照合することによって、あなたを確認します。</p> 
-							<p>
-または、あなただけが下記する検証を追加することを選択することができます。</p> 
+							<p><b><?php echo VERIFY_YOUR_ID; ?></b></p> 
+							<p>あなたの認証IDを取得すると、コミュニティの信頼関係の構築を支援する最も簡単な方法です。私たちは、公式のIDにオンラインアカウントからの情報を照合することによって、あなたを確認します。</p> 
+							<p>または、あなただけが下記する検証を追加することを選択することができます。</p> 
 						</div>
 
 						<div class="col-md-4 text-center verify-button">
@@ -112,9 +110,13 @@ if($_REQUEST['uid']==$_SESSION['jpmeetou']['id'] )
 						if($row['email_verify']==0)	
 						{						
 						?>							
-						<button type="submit"  name="subbtn" class="blue-button">私を確認します</button>								
+						<button type="submit"  name="subbtn" class="blue-button"><?php echo VERIFY_ME; ?></button>								
 						<?php					
-						}						
+						}
+						else
+						 {
+							 echo "<h5>Verified</h5>"; 
+						 }							
 						?>
 							
 						</div>
@@ -124,7 +126,7 @@ if($_REQUEST['uid']==$_SESSION['jpmeetou']['id'] )
 				   
 				   <div class="row hedding-row">
 						<div class="col-md-12 Required-head Verification-head">	
-							<h5>検証	
+							<h5><?php echo VERIFICATIONS;?>	
 							<img src="img/quest.png" class="r-left" onMouseOver="show_sidebar()" onMouseOut="hide_sidebar()" />
 							
 							<div id="sidebar" class="verifi">
@@ -138,26 +140,19 @@ if($_REQUEST['uid']==$_SESSION['jpmeetou']['id'] )
 							<div class="notification_action viewd">
 							  <p class="nothing">   </p>
 							  <h5 class="black-tetx"><b>
-メールアドレスの確認</b></h5>
+<?php echo EMAIL_ADDRESS_VERIFICATION; ?></b></h5>
 							  <br>
 							  <?php		
 							  if($row['email_verify']==0)
 							  {
-								  echo "Not Verified";
+								  echo NOT_VERIFIED;
 							  }						
 							  else	
 							  {
-								  echo "Verified"; 
+								  echo VERIFIED; 
 							  }								 					
 							  ?>
 							  
-							  <p class="nothing"></p>
-							  <br>
-							  <h5 class="black-tetx"><b>電話番号の確認</b></h5>
-							  <br>
-							 
-検証されていない			 
-							</div>
 						</div>
 				   </div>
 					<div class="top-margin-20">&nbsp;</div>

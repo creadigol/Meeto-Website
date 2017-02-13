@@ -66,13 +66,13 @@ $_SESSION['jpmeetou']['fname']=$fetuser['fname'];
 	<div id="header">
     	<header class="" data-reactroot="" data-react-checksum="2097816972">
             <div class="city-select">
-                <div class="header">検索を開始するには、あなたの都市を選択</div>
+                <div class="header"><?php echo SELECT_YOUR_CITY_TO_START_SEARCH;?></div>
                 <i class="icon-close close-city-selection"></i>
                 <div>
                     <div class="search-city-container">
                     	<div class="Select is-searchable">
                             <div class="Select-control">
-                            	<div class="Select-placeholder" onClick="$('.Select-menu-outer').show();">あなたの街を入力</div>
+                            	<div class="Select-placeholder" onClick="$('.Select-menu-outer').show();"><?php echo TYPE_YOUR_CITY;?></div>
                                 <div class="Select-input" style="display:inline-block;">
                                 	<input value="" style="width:5px;box-sizing:content-box;"/>
                                 	<div style="position:absolute;visibility:hidden;height:0;width:0;overflow:scroll;white-space:nowrap;"></div>
@@ -99,7 +99,7 @@ $_SESSION['jpmeetou']['fname']=$fetuser['fname'];
                         </div>
                     </div>
                     <div class="cs-divider"></div>
-                    <div class="cs-popular-line">または人気の都市から選びます</div>
+                    <div class="cs-popular-line"><?php echo SELECT_FROME_POPULAR_CITIES;?></div>
                     <div class="popular-cities-container">
                         <div class="popular-cities-wrapper">
                             <span class="popular-cities-content">
@@ -155,23 +155,23 @@ $_SESSION['jpmeetou']['fname']=$fetuser['fname'];
                             ?>
 					</a>
 					<a  class="l-height user-size" href="#" data-target="dropdown-menu" data-toggle="dropdown" style="text-transform:capitalize; float:left !important; color:#fff !important; background:none;margin-right:15px;line-height:44px;">
-						こんにちは <?php $marutra = explode('"',translate(str_replace(" ","+",$_SESSION['jpmeetou']['fname']))); echo $marutra[1]."   "; ?>   <i class="fa fa-caret-down"></i>
+						<?php echo HI;?><?php $marutra = explode('"',translate(str_replace(" ","+",$_SESSION['jpmeetou']['fname']))); echo $marutra[1]."   "; ?>   <i class="fa fa-caret-down"></i>
 					</a>
 					
                     <div class="dropdown-menu sing-menu">
-                        <a class="dropdown-item f-left sing-menu" href="view-profile.php?id=<?php echo $_SESSION['jpmeetou']['id'];?>">ダッシュボード</a>
-                        <a class="dropdown-item f-left sing-menu" href="your-listing.php">あなたの掲載</a>
+                        <a class="dropdown-item f-left sing-menu" href="view-profile.php?id=<?php echo $_SESSION['jpmeetou']['id'];?>"><?php echo DASHBOARD; ?></a>
+                        <a class="dropdown-item f-left sing-menu" href="your-listing.php"><?php echo MY_LISTING; ?></a>
                        <!-- <a class="dropdown-item f-left sing-menu" href="your-listing.php">Your Reservation</a>-->
-                        <a class="dropdown-item f-left sing-menu" href="booking.php">私の予約</a>
-                        <a class="dropdown-item f-left sing-menu" href="my-wish-list.php">欲しい物のリスト</a>
+                        <a class="dropdown-item f-left sing-menu" href="booking.php"><?php echo MY_BOOKING; ?></a>
+                        <a class="dropdown-item f-left sing-menu" href="my-wish-list.php"><?php echo WISHLIST; ?></a>
                         <!--<a class="dropdown-item f-left sing-menu" href="Editprofile.php">プロファイル編集</a>-->
-                        <a class="dropdown-item f-left sing-menu" href="Editprofile.php">アカウント</a>
-                        <a class="dropdown-item f-left sing-menu" href="logout.php">ログアウト</a>
+                        <a class="dropdown-item f-left sing-menu" href="Editprofile.php"><?php echo ACCOUNT; ?></a>
+                        <a class="dropdown-item f-left sing-menu" href="logout.php"><?php echo LOGOUT;?></a>
                     </div>
 				</div>
 				<div class="header-item app-btn-elem how-work">
 					<!--<a href="inbox.php" class="header-nev" style="font-size:23px;color:#fff;"><i class="fa fa-envelope" style="line-height:44px;"></i></a>-->
-					<a class="link-btn" href="how-work.php">使い方</a>
+					<a class="link-btn" href="how-work.php"><?php echo HOW_IT_WORK;?></a>
 				</div>
 				
 				<div class="header-item dropdown shortlist-content header-item-shortlist">
@@ -189,11 +189,11 @@ $_SESSION['jpmeetou']['fname']=$fetuser['fname'];
                         { 
                     ?>
                 <div class="header-item app-btn-elem">
-                    <a href="#" class="link-btn h-track main_signup">サインアップ</a><!-- data-toggle="modal" data-target=".bs-example-modal-sm"-->
+                    <a href="#" class="link-btn h-track main_signup"><?php echo SIGNUP;?></a><!-- data-toggle="modal" data-target=".bs-example-modal-sm"-->
                 </div>
             	
             	<div class="header-item header-item-blog">
-                    <a id="some-id" class="link-btn h-track main_login" href="#logindiv">ログイン</a><!-- data-toggle="modal" data-target=".bc-example-modal-sm"-->
+                    <a id="some-id" class="link-btn h-track main_login" href="#logindiv"><?php echo LOGIN;?></a><!-- data-toggle="modal" data-target=".bc-example-modal-sm"-->
                 </div>
                 
             	<!--<div class="header-item dropdown shortlist-content header-item-shortlist">
@@ -205,13 +205,13 @@ $_SESSION['jpmeetou']['fname']=$fetuser['fname'];
                 
                 <div class="header-item login-content dropdown"></div>
                 <div class="header-item login-btn disabled how-work">
-                    <a class="link-btn" href="how-work.php">使い方</a>
+                    <a class="link-btn" href="how-work.php"><?php echo HOW_IT_WORK;?></a>
                 </div>
 				  <?php 
                      } 
                   ?>
                 <div class="header-item btn-display" style="margin-top:15px;">
-                    <a href="list_space.php" class="blue-button">あなたのセミナーを一覧表示する</a>
+                    <a href="list_space.php" class="blue-button"><?php echo LIST_YOUR_SEMINAR;?></a>
                 </div>
              
             </div>
@@ -227,7 +227,7 @@ $_SESSION['jpmeetou']['fname']=$fetuser['fname'];
             </div>
         </header>
 				<div class="header-item roundbtn-display" style="margin-top:15px;">
-                    <a href="list_space.php" class="blue-button">あなたのセミナーを一覧表示する</a>
+                    <a href="list_space.php" class="blue-button"><?php echo LIST_YOUR_SEMINAR;?></a>
                 </div>
     </div>
 </body>

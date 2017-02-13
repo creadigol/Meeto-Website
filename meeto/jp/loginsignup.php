@@ -90,13 +90,13 @@ session_start();
 									$loginUrl = $helper->getLoginUrl('http://www.meeto.jp/login-callback.php', $permissions);
 									
 								?>
-									<a href="<? echo $loginUrl;?>" onclick="return facebookjp();" class="btn btn-fb"><i class="fa fa-facebook"></i>&nbsp; フェイスブック</a>
+									<a href="<? echo $loginUrl;?>" onclick="return facebookjp();" class="btn btn-fb"><i class="fa fa-facebook"></i>&nbsp;<?php echo FACEBOOK;?></a>
 									
 								<!--	<a href="#" class="btn btn-ln"><i class="fa fa-linkedin"></i>&nbsp; Linkedin</a> -->
 									<a class="text-center center-block margin-main"><span class="text-center">OR</span></a>
-									<a href="#" class="btn btn-email main_signup_op"><i class="fa fa-envelope-o"></i>&nbsp; メールでサイン</a><!-- data-toggle="modal" data-target=".ac-example-modal-sm"-->
+									<a href="#" class="btn btn-email main_signup_op"><i class="fa fa-envelope-o"></i>&nbsp; <?php echo SIGN_WITH_EMAIL;?></a><!-- data-toggle="modal" data-target=".ac-example-modal-sm"-->
 									<hr />								
-									<span>既にメンバー？<a href="#" class="forgot main_signup_login_btn">ログイン</a><!-- data-toggle="modal" data-target=".bc-example-modal-sm" onclick="$('#firstdiv').hide()"--></span>
+									<span><?php echo ALREADY_A_MEMBER; ?><a href="#" class="forgot main_signup_login_btn"><?php echo LOGIN;?></a><!-- data-toggle="modal" data-target=".bc-example-modal-sm" onclick="$('#firstdiv').hide()"--></span>
 								</div>							
 					</div>
 				  </div>
@@ -110,7 +110,7 @@ session_start();
 					<div class="modal-content">					 
 								<div class="social-buttons">
 									
-									<a href="<?php echo $loginUrl;?>" onclick="return facebookjp();" class="btn btn-fb"><i class="fa fa-facebook"></i>&nbsp; フェイスブック</a>
+									<a href="<?php echo $loginUrl;?>" onclick="return facebookjp();" class="btn btn-fb"><i class="fa fa-facebook"></i>&nbsp;<?php echo FACEBOOK;?></a>
 									<!--<a href="#" class="btn btn-tw"><i class="fa fa-twitter"></i>&nbsp; ツイッター</a>
 									<a href="#" class="btn btn-go"><i class="fa fa-google-plus"></i>&nbsp; グーグル</a>
 									<a class="text-center center-block margin-main"><span class="text-center"><b>OR</b></span></a>-->
@@ -130,9 +130,10 @@ session_start();
 										 
 										<span class="text-right r-left">
 										<a href="forget_pass.php" class="forgot">パスワードをお忘れですか ？</a>
-										</span> 										<button type="submit" name="login" class="btn btn-lo">ログイン</button> 
+										</span> 										
+										<button type="submit" name="login" class="btn btn-lo"><?php echo LOGIN;?></button> 
 				                     </form>
-									<span>アカウントを持っていないのですか？ <a href="#" class="forgot signup_page_btn">アカウントを作成する</a><!-- data-toggle="modal" data-target=".ac-example-modal-sm" onclick="$('#logindiv').hide()"--></span>  
+									<span><?php echo DONT_HAVE_AN_ACCOUNT;?> <a href="#" class="forgot signup_page_btn"><?php echo CREATED_ACCOUNT;?></a><!-- data-toggle="modal" data-target=".ac-example-modal-sm" onclick="$('#logindiv').hide()"--></span>  
 								</div>				
 					</div>
 				  </div>
@@ -147,8 +148,7 @@ session_start();
 					<div class="modal-content">
 						 
 								<div class="social-buttons">
-									<a href="<?php echo $loginUrl;?>" class="btn btn-fb"><i class="fa fa-facebook"></i>&nbsp; 
-フェイスブック</a>
+									<a href="<?php echo $loginUrl;?>" class="btn btn-fb"><i class="fa fa-facebook"></i>&nbsp; <?php echo FACEBOOK;?></a>
 
 									<!--<a href="#" class="btn btn-tw"><i class="fa fa-twitter"></i>&nbsp; ツイッター</a>
 									<a href="#" class="btn btn-go"><i class="fa fa-google-plus"></i>&nbsp; 
@@ -158,25 +158,20 @@ session_start();
 									<div class="top-margin-10"></div>
 									 <form action="index.php" method="post" enctype="multipart/form-data">
 										<div class="form-group">
-										  <input type="text" name="user_fname" class="form-control" id="usr" placeholder="
-ファーストネーム" pattern=".{3,}" required title="名前は最小3文字でなければなりません">
+										  <input type="text" name="user_fname" class="form-control" id="usr" placeholder="ファーストネーム" pattern=".{3,}" required title="名前は最小3文字でなければなりません">
 										</div>
 										
 										<div class="form-group">
-										  <input type="text" name="user_lname" class="form-control" id="usr" placeholder="
-苗字" required >
+										  <input type="text" name="user_lname" class="form-control" id="usr" placeholder="苗字" required >
 										</div>
 										
 										<div class="form-group">
-										  <input type="email" name="email" class="form-control" id="usr" placeholder="
-電子メールアドレス" required >
+										  <input type="email" name="email" class="form-control" id="usr" placeholder="電子メールアドレス" required >
 										</div>
 										<div class="form-group">
-										  <input type="password" name="pass" class="form-control" id="pwd" placeholder="パスワード" pattern=".{6,}" required title="
-パスワードは最小6文字でなければなりません">
+										  <input type="password" name="pass" class="form-control" id="pwd" placeholder="パスワード" pattern=".{6,}" required title="パスワードは最小6文字でなければなりません">
 										</div>
-										 <span class=""><input class="check" id="remember" type="checkbox"> &nbsp; 
-最新のニュースを私に知らせます</span>
+										 <span class=""><!--<input class="check" id="remember" type="checkbox"> &nbsp; 最新のニュースを私に知らせます--></span>
 										 
 										 		<div class="top-margin-10"></div>	
 												
@@ -203,12 +198,9 @@ session_start();
 										
 										</div>-->
 									 
-									<button type="submit" name="signup" class="btn btn-lo">
-アカウントを作成する</button> 									
+									<button type="submit" name="signup" class="btn btn-lo"><?php echo CREATED_ACCOUNT;?></button> 									
 									  </form>
-									  <span>
-既にメンバー？<a href="#" class="forgot login_page_btn">
-ログイン</a><!-- data-toggle="modal" data-target=".bc-example-modal-sm" onclick="$('#second').hide()"--></span>
+									  <span><?php echo ALREADY_A_MEMBER;?><a href="#" class="forgot login_page_btn"><?php echo LOGIN;?></a><!-- data-toggle="modal" data-target=".bc-example-modal-sm" onclick="$('#second').hide()"--></span>
 								</div>
 								
 					</div>

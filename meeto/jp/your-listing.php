@@ -56,11 +56,9 @@ a.listing_menu, a.listing_menu:hover{
 						<div class="col-md-12 Required-head listing-menu-button">
 							<div class="row">
 							<select name="listing" onchange="showlisting('','',this.value);" >
-							<option value="">
-すべてのリストを表示</option>
-							<option value="approved">
-ショー承認</option>
-							<option value="pending">保留中のショー</option>
+							<option value=""><?php echo SHOW_ALL_LISTING; ?></option>
+							<option value="approved"><?php echo SHOW_APPROVED; ?></option>
+							<option value="pending"><?php echo SHOW_PENDING; ?></option>
 							</select>          
 															
 							</div>
@@ -77,14 +75,14 @@ a.listing_menu, a.listing_menu:hover{
 							<div class="col-md-8 reservation">
 							<div class="top-margin-10"></div>
 							<br>
-								<p><a href="#" class="forgot">過去の予約履歴を表示します。</a></p>
+								<p><a href="#" class="forgot"><?php echo VIEW_PAST_RESERVATION_HISTORY; ?></a></p>
 							</div>
 				   </div>
 						
 	 
 				   
 				   
-				<div class="row hedding-row tabcontent" id="Verified">				
+				<!--<div class="row hedding-row tabcontent" id="Verified">				
 						<div class="col-md-12 Required-head">
 							<h5>認証ID</h5s>
 						</div>
@@ -116,7 +114,7 @@ a.listing_menu, a.listing_menu:hover{
 								<div class="top-margin-10"></div>
 							</div>
 							
-				   </div>
+				   </div>-->
 				</div>
 			
 			</form>				

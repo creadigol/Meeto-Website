@@ -12,8 +12,7 @@
  <!-- img -->
 	<div class="container content_text">
 			
-				<h1>
-使い方</h1>
+				<h1><?php echo HOW_IT_WORK;?></h1>
 					
 				<img src="img/how-work.jpg" class="img-responsive center-block" />
 				<div class="bottom-margin-20">&nbsp;</div>

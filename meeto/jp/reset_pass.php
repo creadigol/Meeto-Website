@@ -45,27 +45,23 @@ $seluserdetail=mysql_fetch_array(mysql_query("select * from user where id='".$id
 				<div class="top-margin-20"></div>			
 				<div class="row hedding-row">
 				<div class="col-md-12 Required-head">	
-				   <h5>
-あなたのパスワードをリセット</h5>		
+				   <h5><?php echo RESET_YOUR_PASSWORD;?></h5>		
 				   </div>					
 				   <ul class="nav">						
 					<div class="clearfix"></div>
 					<li class="li-input">			
-					<label class="users">
-新しいパスワード ：</label>		
+					<label class="users">新しいパスワード ：</label>		
 					<input type="password" class="input-name" name="new_password" id="" required pattern=".{6,}" title="Password should be minimum 6 character"value="">	
 					</br>
 					</li>								
 					  <div class="clearfix"></div>	
 					<li class="li-input">			
-					<label class="users">
-パスワードを認証する ：</label>		
+					<label class="users">パスワードを認証する ：</label>		
 					<input type="password" class="input-name" name="confirm_password" id="" required pattern=".{6,}" required title="Password should be minimum 6 character" value=""></br>
 					</li>
 					<li class="li-input">
 					  <div class="col-md-8 col-md-offset-4">
-					   <button type="submit" name="submit_butto" class="blue-button save border-n">
-パスワードを更新します</button>
+					   <button type="submit" name="submit_butto" class="blue-button save border-n"><?php echo UPDATE_PASSWORD;?></button>
 					  </div>
 					</li>
 					<div class="top-margin-20">&nbsp;</div>

@@ -419,7 +419,7 @@ $fgh=0;
                     
 					<div class="col-md-12" id="deleteusermsg" style="padding:20px;"> 
 						<h4 style="color:red;font-weight:bolder;">Invalid Login Detail..!</h4>
-						<div class="col-md-2 col-md-offset-10 btn btn-primary" style="color:black;font-weight:bolder;" onclick="$('#hidenewfac123').hide();">
+						<div class="col-md-2 col-md-offset-10 btn btn-primary" style="color:black;font-weight:bolder;" onclick="$('#hidenewfac123').hide();$('#logindiv').show();">
 						Ok</div>
 					</div>
              

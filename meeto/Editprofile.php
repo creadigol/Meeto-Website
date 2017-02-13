@@ -304,7 +304,7 @@ a.Editprofile_menu, a.Editprofile_menu:hover{
 								<li class="li-input">
 									<label class="users" for="">Country:</label>
 									<select id="country" class="input-name"  name="country" onchange="setstate(this.value);">
-										 <option value="">--Select--</option>
+										 <option value="">--Select country--</option>
 										<?php
 											$selcountry=mysql_query("select * from countries where id='109'");
 											while($fetcountry=mysql_fetch_array($selcountry))

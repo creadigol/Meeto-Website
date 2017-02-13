@@ -96,9 +96,7 @@
 <html lang="en">
   <?php	require_once('head1.php');   ?>
   <!-- NAVBAR================================================== -->
- 
-
-<script type="text/javascript">
+  <script type="text/javascript">
 $(function () {
     $("#txtFrom").datepicker({
         numberOfMonths: 1,
@@ -118,7 +116,7 @@ $(function () {
     });
 });
 </script>
-  <script>
+ <script>
 $(function() 
  { 
       $( "#semifromdate,#semitodate" ).datepicker({
@@ -129,26 +127,14 @@ $(function()
       dateFormat:"dd-mm-yy"
      });
  });
-
+ 
  function datelimit()
 {
-	var fromdate = document.getElementById('datepicker').value;
-	$(document).ready(function() {
-		$(function() {
-		$("#datepicker1").datepicker(
-		  {
-			  dateFormat: 'dd-mm-yy',
-			  minDate: fromdate,
-		  }
-		);
-		});
-		
-
+	var fromdate = document.getElementById('semifromdate').value;
+	document.getElementById('semitodate').min=fromdate;
 	
-	document.getElementById('datepicker1').min=fromdate;
-	
-	var fromdate = document.getElementById('datepicker1').value;
-	document.getElementById('datepicker').max=fromdate;
+	var fromdate = document.getElementById('semitodate').value;
+	document.getElementById('semifromdate').max=fromdate;
 }
 function timelimit()
 {
@@ -159,6 +145,9 @@ function timelimit()
 	document.getElementById('fromtime').max=totime;
 
 }
+
+
+ 
   </script>
   <script>
 var myCenter;
@@ -581,11 +570,17 @@ function facilityshow(id,aa)
 					  <div class="col-md-12 right_side">
 
 						<div class="clearfix"></div>
+
 							<div class="row price-border price-margin Location-row">
+
 								<div class="col-md-8 center">
+
 									 <h3>Day</h3>
+
 									 <p>Set Day & Time detail for seminar listing</p>
+
 								</div>
+
 								<div class="col-md-9">
 
 									<div class="overview_title">
@@ -602,25 +597,46 @@ function facilityshow(id,aa)
 										<input type="text" name="todate" id="txtTo" placeholder="To Date" class="overview-input" />
 										<!--<input type="date" required min="<?php echo $dt; ?>" id="semitodate" name="todate" onchange="datelimit();"  placeholder="To Date" class="overview-input">-->
 									</div>
-									<div class="bottom-margin-20"></div>
+									
+									<div class="bottom-margin-20"> </div>
+
 									<div class="overview_title">									
 										<link href="css/bootstrap_time.css" rel="stylesheet">
+
 									<!-- Custom styles for this template -->
+ 
 										<link href="css/timepicki.css" rel="stylesheet">
-										<label class="overview-label">Everyday Start Seminar Time<span style="color:red;">*</span></label>
+										<label class="overview-label">Start Seminar Time<span style="color:red;">*</span></label>
+
+										
 										<input id="timepicker1"  style="cursor:pointer;" class="timepicker1" type="text" name="fromtime" placeholder="Select Time"/>
-										<label class="overview-label">Everyday End Seminar Time<span style="color:red;">*</span></label>
-										<input id="timepicker1"  style="cursor:pointer;" class="timepicker1" type="text" name="totime" placeholder="Select Time"/>										
+										<label class="overview-label">End Seminar Time<span style="color:red;">*</span></label>
+										<input id="timepicker1"  style="cursor:pointer;" class="timepicker1" type="text" name="totime" placeholder="Select Time"/>
+
+										
                                        <!-- <label class="overview-label">" Ex : 11:00 am or 11:00 pm "</label>-->
 									</div>
+
 									<div class="bottom-margin-20"> </div>
 								</div>
+
+								
+						
+
 							</div>
 
 							<div class="clearfix"></div>
+
+							
+
+							
+
 						</div>
 
 					</div>
+
+
+
 					<div id="Overview" class="tabcontent">
 
 					  <div class="col-md-12 right_side">
@@ -684,6 +700,9 @@ function facilityshow(id,aa)
 						
 
 					</div>
+
+					
+
 					<div id="Photos" class="tabcontent">
 
 					  <div class="col-md-12 right_side">
@@ -1196,13 +1215,11 @@ function facilityshow(id,aa)
 
 	<script src="js/ie10-viewport-bug-workaround.js"></script> 
 
- <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+	<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
  <script src="js/timepicki.js"></script>
- 
     <script>
 	$('.timepicker1').timepicki();
     </script>
- 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.6/jquery.min.js" type="text/javascript"></script>
 <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"
 type="text/javascript"></script>
@@ -1214,14 +1231,10 @@ rel="Stylesheet"type="text/css"/>
 <script src="js/all.js"></script>
 <!-- jQuery Code executes on Date Format option ----->
 <script src="js/script.js"></script>
-
+ 
 
 </html>
-
 <script>
-
-
-
 
 function openCity(evt, cityName) {
 

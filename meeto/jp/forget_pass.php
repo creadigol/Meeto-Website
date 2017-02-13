@@ -70,17 +70,16 @@ if(isset($_REQUEST['submit_butto']))
 				<div class="top-margin-20"></div>			
 				<div class="row hedding-row">
 				<div class="col-md-12 Required-head">	
-				   <h5>あなたのパスワードを忘れます</h5>		
+				   <h5><?php echo FORGET_YOUR_PASSWORD;?></h5>		
 				   </div>					
 				   <ul class="nav">							
 					<div class="clearfix"></div>
 					<li class="li-input">			
-					<label class="users">メールアドレスを入力 :</label>		
+					<label class="users"><?php echo ENTER_YOUR_EMAIL ?> :</label>		
 					<input type="email" class="input-name" name="useremail" id="" required value=""></br>
 					<li class="li-input">
 					  <div class="col-md-8 col-md-offset-4">
-					   <button type="submit" name="submit_butto" class="blue-button save border-n">
-提出します</button>
+					   <button type="submit" name="submit_butto" class="blue-button save border-n"><?php echo SUBMIT;?></button>
 					  </div>
 					</li>
 					<div class="top-margin-20">&nbsp;</div>

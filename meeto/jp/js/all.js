@@ -180,23 +180,9 @@ function checkvalid()
 }
 function semivalidation()
 {
-	if (document.getElementById('hostname').value==""
-                 || document.getElementById('contactemail').value==""
-				 ||  document.getElementById('contactno').value=="")
-    {
-		$("#valfalse").show();
-		$("#valtrue").hide();
-	}
-	else
-	{
-		$("#valtrue").show();
-		$("#valfalse").hide();
-	}
 	
-	if (document.getElementById('semifromdate').value==""
-                 || document.getElementById('semitodate').value==""
-				 ||  document.getElementById('fromtime').value=="" 
-				 ||  document.getElementById('totime').value=="")
+	if (document.getElementById('txtFrom').value==""
+                 || document.getElementById('txtTo').value=="")
     {
 		$("#dayfalse").show();
 		$("#daytrue").hide();
@@ -220,16 +206,6 @@ function semivalidation()
 		$("#Overviewfalse").hide();
 	}
 	
-	if (document.getElementById('semiimage').value=="")
-    {
-		$("#Photosfalse").show();
-		$("#Photostrue").hide();
-	}
-	else
-	{
-		$("#Photostrue").show();
-		$("#Photosfalse").hide();
-	}
 	if (document.getElementById('country').value==""
                  || document.getElementById('pac-input').value==""
 				 || document.getElementById('allstate').value==""
@@ -310,11 +286,18 @@ function booked(bid)
 		}); 
  
 }
+
 function review(sid)
 {
 	var notes=document.getElementById('givenreview').value;
-	document.getElementById('givenreview').value = "";
-     $.ajax({
+	if(document.getElementById('givenreview').value=="")
+	{
+		
+	}
+	else
+	{
+	  document.getElementById('givenreview').value = "";
+       $.ajax({
 		url: "miss.php?kon=review&notes="+notes+"&sid="+sid, 
 		type: "POST",
 		success: function(data)
@@ -322,6 +305,8 @@ function review(sid)
 	   $("#review").html(data);		
 		}
 		}); 
+	}
+	
  
 }
  
