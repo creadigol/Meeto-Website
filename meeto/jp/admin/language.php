@@ -35,7 +35,7 @@ include('config.php');
 		var textt=$("#facility_new_text").val();
 		if(shu=="delete_fac")
 		{
-			if(confirm('あなたは確かにレコードの削除されていますか...？'))
+			if(confirm('確かにレコードを削除しますか...？'))
 			{
 				
 			}

@@ -4,7 +4,9 @@ include('config.php');
 	if(isset($_REQUEST[sub_fac]))
 	{
 		$industry = $_REQUEST['addnewfac'];
-		$in=mysql_query("insert into industry values(0,'$industry','','list-page/category.png',1)");
+		$jpindustry = $_REQUEST['addnewjpfac'];
+		
+		$in=mysql_query("insert into industry values(0,'$industry','$jpindustry','list-page/category.png',1)");
 		echo "<script>alert('Sucessfully Added');</script>"; 
 	}
 ?>
@@ -16,6 +18,37 @@ include('config.php');
 <? include('header.php');
 	 ?>
 	<script>
+	function ConvertEntoJp()
+	{
+		var enIndustry=$("#enIndustry").val();
+		if(enIndustry!='')
+		{
+	      $.ajax({
+		url: "miss2.php?kon=ConvertEntoJp&EntoJP="+enIndustry, 
+		type: "POST",
+		success: function(data)
+		{
+			$("#jpIndustry").val(data);
+		}
+		});	    
+		}
+	}
+	function ConvertJPtoEn()
+	{
+		var jpIndustry=$("#jpIndustry").val();
+		if(jpIndustry!='')
+		{
+	      $.ajax({
+		url: "miss2.php?kon=ConvertJPtoEn&JPtoEn="+jpIndustry, 
+		type: "POST",
+		success: function(data)
+		{
+			
+			$("#enIndustry").html(data);
+		}
+		});	    
+		}
+	}
 	
 	function adm_facility(id,shu)
 	{
@@ -73,16 +106,26 @@ include('config.php');
                     </div>
 					<div class="col-md-12"> 
 						<form method="post" role="form">
-							 <div class="form-group">
-                                            <label>Title</label>
-                                            <input class="form-control" type="text" name="addnewfac" required="" placeholder="Add New Industry" >
-                                        </div>
-										<div class="col-lg-12">
-											<center>
-												<input type="submit" name="sub_fac" class="btn btn-primary" value="Add">
-												
-											</center>
-										</div>
+						<div class="form-group add_facility">
+                                <label>English Industry</label>
+                                <span class="add_input_span">
+                                	<input class="form-control" type="text" name="addnewfac" required="" id="enIndustry" placeholder="Add Industry">
+                                </span><br>
+                                <span class="con_btn" title="" onclick="ConvertEntoJp();">Click to Convert Japanese Convert</span>
+                            </div>
+							<div class="form-group add_facility">
+							   	<label>Japanese Industry</label> 
+								<span class="add_input_span">
+                                	<input class="form-control" type="text" name="addnewjpfac" required="" id="jpIndustry" placeholder="業種の追加">
+                                </span>
+							</div>
+							<div class="col-lg-12">
+								<center>
+									<input type="submit" name="sub_fac" class="btn btn-primary" value="Add">
+									
+								</center>
+							</div>
+							 
 						</form>
 					  <br><br>
 					</div>

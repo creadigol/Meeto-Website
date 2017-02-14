@@ -1,9 +1,10 @@
 <?php
 include('config.php');
 	include('condition.php');
+    require_once('header.php');
 	if(isset($_REQUEST[sub_fac]))
 	{
-		$in=mysql_query("insert into facility values(0,'$_REQUEST[addnewfac]','',1,'','')");
+		$in=mysql_query("insert into facility values(0,'$_REQUEST[addnewfac]','$_REQUEST[addnewjpfac]',1,'','')");
 			echo "<script>alert('Sucessfully Added');</script>"; 
 	}
 	if($_REQUEST[id]!="")
@@ -24,9 +25,49 @@ include('config.php');
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <!-- Mirrored from webthemez.com/demo/matrix-free-bootstrap-admin-template/table.html by HTTrack Website Copier/3.x [XR&CO'2014], Wed, 04 May 2016 11:33:21 GMT -->
-<? include('header.php');
-	 ?>
+
 	<script>
+	function checkvali()
+	{
+		var enFacility=$("#jpFacility").val();
+		if(enFacility=='')
+		{
+			$("#jpFacility").css({'background-color' : '#FFFFEEE'});
+
+		}
+	}
+	function ConvertEntoJp()
+	{
+		var enFacility=$("#enFacility").val();
+		if(enFacility!='')
+		{
+	      $.ajax({
+		url: "miss2.php?kon=ConvertEntoJp&EntoJP="+enFacility, 
+		type: "POST",
+		success: function(data)
+		{
+			$("#jpFacility").val(data);
+		}
+		});	    
+		}
+	}
+	function ConvertJPtoEn()
+	{
+		var jpFacility=$("#jpFacility").val();
+		if(jpFacility!='')
+		{
+	      $.ajax({
+		url: "miss2.php?kon=ConvertJPtoEn&JPtoEn="+jpFacility, 
+		type: "POST",
+		success: function(data)
+		{
+			
+			$("#enFacility").html(data);
+		}
+		});	    
+		}
+	}
+	
 	function facilitydetails(fid){
 		window.location.href='facilitydetails.php?fid='+fid;
 	}
@@ -86,16 +127,26 @@ include('config.php');
                     </div>
 					<div class="col-md-12"> 
 						<form method="post" role="form">
-							 <div class="form-group">
-                                            <label>Title</label>
-                                            <input class="form-control" type="text" name="addnewfac" required="" placeholder="Add New Facility" >
-                                        </div>
-										<div class="col-lg-12">
-											<center>
-												<input type="submit" name="sub_fac" class="btn btn-primary" value="Add">
-												
-											</center>
-										</div>
+							<div class="form-group add_facility">
+                                <label>English Facility</label>
+                                <span class="add_input_span">
+                                	<input class="form-control" type="text" name="addnewfac" required="" id="enFacility" placeholder="Add Facility">
+                                </span><br>
+                                <span class="con_btn" title="Click here to Convert English text into japanese" onclick="ConvertEntoJp();">Click to Convert Japanese</span>
+                            </div>
+							<div class="form-group add_facility">
+							   	<label>Japanese Facility</label> 
+								<span class="add_input_span">
+                                	<input class="form-control" type="text" name="addnewjpfac" required="" id="jpFacility" placeholder="施設を追加する">
+                                </span>
+								<!--<span class="con_btn" onclick="ConvertJPtoEn();">Convert</span>-->
+							</div>
+							<div class="col-lg-12">
+								<center>
+									<input type="submit" name="sub_fac" onclick="checkvali();" class="btn btn-primary" value="Add">
+									
+								</center>
+							</div>
 						</form>
 					  <br><br>
 					</div>

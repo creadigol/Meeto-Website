@@ -12,7 +12,7 @@ include('config.php');
 			$sel=mysql_query("select id from seminar_type order by id desc");
 			$fet=mysql_fetch_array($sel);
 			$navuname = "list-page/new_purpose".$fet[0].".png";
-			$in=mysql_query("insert into seminar_type values(0,'$_REQUEST[addnewfac]','','$navuname',1,'','')");
+			$in=mysql_query("insert into seminar_type values(0,'$_REQUEST[addnewfac]','$_REQUEST[addnewjpfac]','$navuname',1,'','')");
 			$path1 = "../img/" . $navuname;
 			//echo $in;
 			//echo $path1;
@@ -138,8 +138,7 @@ include('config.php');
                     <div class="col-md-12 page-header">
 						<div  class="col-md-6" align="left" style="color:black;">
                         <h3>
-                            
-新しい場所を追加します。
+                            新しい場所を追加します。
                         </h3>
 						</div>
 						<div  class="col-md-6 " align="right" >
@@ -156,15 +155,20 @@ include('config.php');
 											</div>
 											<div class="form-group col-md-9 col-md-offset-4">
 									
-                                            <label>タイトル</label>
-												<input class="form-control" type="text" name="addnewfac" required="" placeholder="
-新しい場所を追加します。" style="width:50%;">
+                                            <label>英語の場所</label>
+												<input class="form-control" type="text" name="addnewjpfac" required="" placeholder="場所を追加" style="width:50%;">
+											</div>
+											<div class="form-group col-md-9 col-md-offset-4">
+									
+                                            <label>日本の場所</label>
+											<div><span style="color:red;">*</span>腎臓は英語の会話に同じです。<br>
+											必要ならGoogle Translatorの助けを借りて</div>
+												<input class="form-control" type="text" name="addnewfac" required="" placeholder="場所を追加" style="width:50%;">
 											</div>
 											
 											<div class="col-md-3 col-md-offset-5">
 												
-												&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" name="sub_fac" class="btn btn-primary" value="
-加えます">
+												&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<input type="submit" name="sub_fac" class="btn btn-primary" value="加えます">
 											<br><br>
 										</div>
 						</form>
@@ -232,7 +236,7 @@ include('config.php');
 									?>
                                         <tr class="odd gradeX">
 										<td ><center><img src="../img/<? echo $data['image'];?>" width="50" height="50" class="img-circle" /></center></td>
-                                            <td><? $marutra = explode('"',translate(str_replace(" ","+",$data['name']))); echo $marutra[1] ; ?></td>
+                                            <td><? //$marutra = explode('"',translate(str_replace(" ","+",$data['name']))); echo $marutra[1] ; ?><?php echo $data['name_jp'] ?></td>
                                             <td><center><? if($data['status']=='1'){
 											?>
 												<i class="fa fa-thumbs-o-up" title="Active" style="color:green;cursor:pointer;" onclick="window.location='place.php?id=<?php echo $data['id'];?>&shuup=dec'"></i>

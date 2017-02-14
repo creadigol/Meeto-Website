@@ -3,8 +3,10 @@ include('config.php');
 	include('condition.php');
 	if(isset($_REQUEST[sub_fac]))
 	{
-		$industry = $_REQUEST['addnewfac']; 
-		$in=mysql_query("insert into industry values(0,'$industry','$industry','list-page/category.png',1)");
+		$industry = $_REQUEST['addnewjpfac']; 
+		$enindustry = $_REQUEST['addnewfac']; 
+		
+		$in=mysql_query("insert into industry values(0,'$enindustry','$industry','list-page/category.png',1)");
 		echo "<script>alert('Sucessfullyを追加しました');</script>"; 
 	}
 ?>
@@ -16,13 +18,12 @@ include('config.php');
 <? include('header.php');
 	 ?>
 	<script>
-	
 	function adm_facility(id,shu)
 	{
 		var textt=$("#facility_new_text").val();
 		if(shu=="delete_fac")
 		{
-			if(confirm('あなたは確かにレコードの削除されていますか...？'))
+			if(confirm('確かにレコードを削除しますか...？'))
 			{
 				
 			}
@@ -62,8 +63,7 @@ include('config.php');
                     <div class="col-md-12 page-header">
 						<div  class="col-md-6" align="left" style="color:black;">
                         <h3>
-                            
-新産業を追加
+                            新産業を追加
                         </h3>
 						</div>
 						<div  class="col-md-6 " align="right" >
@@ -75,15 +75,20 @@ include('config.php');
 					<div class="col-md-12"> 
 						<form method="post" role="form">
 							 <div class="form-group">
-                                            <label>
-タイトル</label>
-                                            <input class="form-control" type="text" name="addnewfac" required="" placeholder="
-新産業を追加" >
+                                            <label>日本産業</label>
+                                            <input class="form-control" type="text" name="addnewjpfac" required="" placeholder="業種の追加" >
                                         </div>
+										
+										<div class="form-group">
+                                            <label>英語産業</label>
+											<div><span style="color:red;">*</span>腎臓は英語の会話に同じです。<br>
+											必要ならGoogle Translatorの助けを借りて</div>
+                                            <input class="form-control" type="text" name="addnewfac" required="" placeholder="業種の追加" >
+                                        </div>
+										
 										<div class="col-lg-12">
 											<center>
-												<input type="submit" name="sub_fac" class="btn btn-primary" value="
-加えます">
+												<input type="submit" name="sub_fac" class="btn btn-primary" value="加えます">
 												
 											</center>
 										</div>
@@ -107,14 +112,12 @@ include('config.php');
                     <div class="col-md-12 page-header">
 						<div  class="col-md-6" align="left">
                         <h1>
-                           
-産業
+                           産業
                         </h1>
 						</div>
 						<div  class="col-md-6 " align="right" >
 						<div class="col-md-4 col-md-offset-8 btn btn-primary" onclick="facilityshow();">
-							
-新産業を追加 <i class="fa fa-plus" style="font-size:10px;"></i>
+							新産業を追加 <i class="fa fa-plus" style="font-size:10px;"></i>
 						</div>
 						</div>
                     </div>
@@ -126,8 +129,7 @@ include('config.php');
                     <!-- Advanced Tables -->
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                             
-業種一覧
+                             業種一覧
                         </div>
                         <div class="panel-body">
                             <div class="table-responsive" id="admin_industry">
@@ -135,14 +137,11 @@ include('config.php');
                                 <table class="table table-striped table-bordered table-hover animated jello infinte" id="">
                                     <thead>
                                         <tr>
-                                            <th><center>
-名</center></th>
+                                            <th><center>名</center></th>
                                         
                                             
-											<th><center>
-更新</center></th>
-											<th><center>
-削除</center></th>
+											<th><center>更新</center></th>
+											<th><center>削除</center></th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -151,7 +150,7 @@ include('config.php');
 										while($data=mysql_fetch_array($query)){
 									?>
                                         <tr class="odd gradeX">
-                                            <td><? $marutra = explode('"',translate(str_replace(" ","+", $data['name']))); echo $marutra[1]; ?></td>
+                                            <td><?// $marutra = explode('"',translate(str_replace(" ","+", $data['name']))); echo $marutra[1]; ?><?php echo $data['name_jp'] ?></td>
                                             <td><center><span class="fa fa-upload" title="Update" style="cursor:pointer;color:green;" area-hidden="true" onclick="adm_facility('<?php echo $data[id]; ?>','update');"></span></center></td>
 											<td><center><span class="fa fa-trash-o" title="Delete" style="cursor:pointer;color:red;" area-hidden="true" onclick="adm_facility('<?php echo $data[id]; ?>','delete_fac');"></span></center></td>
                                         </tr>

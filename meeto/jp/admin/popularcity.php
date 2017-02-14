@@ -244,7 +244,7 @@ function setcity(cid)
 						<div  class="col-md-6 " align="right" >
 						<div class="col-md-5 col-md-offset-7 btn btn-primary" onclick="facilityshow();">
 							 
-市ピックを設定します。<i class="fa fa-pencil" style="font-size:15px;"></i>
+新しい都市を設定します。<i class="fa fa-pencil" style="font-size:15px;"></i>
 						</div>
 						</div>
                     </div>
@@ -257,7 +257,7 @@ function setcity(cid)
                     <div class="panel panel-default">
                         <div class="panel-heading">
                              
-シティ一覧
+都市一覧
                         </div>
                         <div class="panel-body">
                             <div class="table-responsive" id="admin_place">

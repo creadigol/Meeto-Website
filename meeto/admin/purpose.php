@@ -14,7 +14,7 @@ include('config.php');
 			$sel=mysql_query("select id from purpose order by id desc");
 			$fet=mysql_fetch_array($sel);
 			$navuname = "list-page/new_purpose".$fet[0].".png";
-			$in=mysql_query("insert into purpose values(0,'$_REQUEST[addnewfac]','','$navuname',1,'','')");
+			$in=mysql_query("insert into purpose values(0,'$_REQUEST[addnewfac]','$_REQUEST[addnewjpfac]','$navuname',1,'','')");
 			
 			//echo $in;
 			//echo $path1;
@@ -68,8 +68,41 @@ include('config.php');
 <? include('header.php');
 	 ?>
 	<script type="text/javascript">
+	
+function ConvertEntoJp()
+	{
+		var enAttendees=$("#enAttendees").val();
+		if(enAttendees!='')
+		{
+	      $.ajax({
+		url: "miss2.php?kon=ConvertEntoJp&EntoJP="+enAttendees, 
+		type: "POST",
+		success: function(data)
+		{
+			$("#jpAttendees").val(data);
+		}
+		});	    
+		}
+	}
+	function ConvertJPtoEn()
+	{
+		var jpAttendees=$("#jpAttendees").val();
+		if(jpAttendees!='')
+		{
+	      $.ajax({
+		url: "miss2.php?kon=ConvertJPtoEn&JPtoEn="+jpAttendees, 
+		type: "POST",
+		success: function(data)
+		{
+			
+			$("#enAttendees").html(data);
+		}
+		});	    
+		}
+	}	
+	
 
-	function changesempic(input)
+function changesempic(input)
 {
 	if (input.files && input.files[0]) {
     var reader = new FileReader();
@@ -152,15 +185,26 @@ include('config.php');
                     </div>
 					<div class="col-md-12"> 
 						<form method="post" role="form" enctype="multipart/form-data"> 
-											<div class="col-md-3 col-md-offset-5">
+											<div class="form-group add_facility">
 											<input type="file" name="upsempic" id="id_upsempic" style="display:none;" onchange="changesempic(this);">
-												<label  for="id_upsempic" style="border:1px solid black;border-radius:100%;" align="center"><img align="center" src="../img/no-photo.jpg" style="border-radius:100%;" width="100" height="100" class="img-circle" id="id_upsempicimg" /></label>
+												<label  for="id_upsempic" style="border-radius:100%;" align="center"><img align="center" src="../img/no-photo.jpg" style="border:1px solid black;border-radius:100%;" width="100" height="100" class="img-circle" id="id_upsempicimg" /></label>
 											</div>
-											<div class="form-group col-md-9 col-md-offset-4">
-									
-                                            <label>Title</label>
-												<input class="form-control" type="text" name="addnewfac" required="" placeholder="Add New Purpose"  style="width:50%;">
-											</div>
+											<br>
+								<div class="form-group add_facility">
+                                     <label>English Attendees</label>
+                                      <span class="add_input_span">
+                                	  <input class="form-control" type="text" name="addnewfac" required="" id="enAttendees" placeholder="Add Attendees">
+                                   </span><br>
+                                <span class="con_btn" title="Click here to Convert English text into japanese" onclick="ConvertEntoJp();">Click to Convert Japanese</span>
+                              </div>
+							<div class="form-group add_facility">
+							   	<label>Japanese Attendees</label> 
+								<span class="add_input_span">
+                                	<input class="form-control" type="text" name="addnewjpfac" required="" id="jpAttendees" placeholder="出席者を追加">
+                                </span>
+								<!--<span class="con_btn" onclick="ConvertJPtoEn();">Convert</span>-->
+							</div>
+				
 											
 											<div class="col-md-3 col-md-offset-5">
 												

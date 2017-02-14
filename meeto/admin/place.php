@@ -13,7 +13,7 @@ include('config.php');
 			$sel=mysql_query("select id from seminar_type order by id desc");
 			$fet=mysql_fetch_array($sel);
 			$navuname = "list-page/new_purpose".$fet[0].".png";
-			$in=mysql_query("insert into seminar_type values(0,'$_REQUEST[addnewfac]','','$navuname',1,'','')");
+			$in=mysql_query("insert into seminar_type values(0,'$_REQUEST[addnewfac]','$_REQUEST[addnewjpfac]','$navuname',1,'','')");
 			$path1 = "../img/" . $navuname;
 			//echo $in;
 			//echo $path1;
@@ -64,6 +64,38 @@ include('config.php');
 <? include('header.php');
 	 ?>
 	<script type="text/javascript">
+	
+	function ConvertEntoJp()
+	{
+		var enPlace=$("#enPlace").val();
+		if(enPlace!='')
+		{
+	      $.ajax({
+		url: "miss2.php?kon=ConvertEntoJp&EntoJP="+enPlace, 
+		type: "POST",
+		success: function(data)
+		{
+			$("#jpPlace").val(data);
+		}
+		});	    
+		}
+	}
+	function ConvertJPtoEn()
+	{
+		var jpPlace=$("#jpPlace").val();
+		if(jpPlace!='')
+		{
+	      $.ajax({
+		url: "miss2.php?kon=ConvertJPtoEn&JPtoEn="+jpPlace, 
+		type: "POST",
+		success: function(data)
+		{
+			
+			$("#enPlace").html(data);
+		}
+		});	    
+		}
+	}
 
 	function changesempic(input)
 {
@@ -148,15 +180,27 @@ include('config.php');
                     </div>
 					<div class="col-md-12"> 
 						<form method="post" role="form" enctype="multipart/form-data"> 
-											<div class="col-md-3 col-md-offset-5">
-											<input type="file" name="upsempic" id="id_upsempic" style="display:none;" onchange="changesempic(this);">
-												<label  for="id_upsempic" style="border:1px solid black;border-radius:100%;" align="center"><img align="center" src="../img/no-photo.jpg" style="border-radius:100%;" width="100" height="100" class="img-circle" id="id_upsempicimgplace" /></label>
-											</div>
-											<div class="form-group col-md-9 col-md-offset-4">
-									
-                                            <label>Title</label>
-												<input class="form-control" type="text" name="addnewfac" required="" placeholder="Add New Place"  style="width:50%;">
-											</div>
+							<div class="form-group add_facility">
+								<input type="file" name="upsempic" id="id_upsempic" style="display:none;" onchange="changesempic(this);">
+								<label  for="id_upsempic" style="border-radius:100%;" align="center">
+									<img align="center" src="../img/no-photo.jpg" style="border-radius:100%;border:1px solid black;" width="100" height="100" class="img-circle" id="id_upsempicimgplace" />
+								</label>
+							</div>
+							<br>
+							<div class="form-group add_facility">
+									<label>English Place</label>
+                                    <span class="add_input_span">
+                                  		<input class="form-control" type="text" name="addnewfac" required="" id="enPlace" placeholder="Add Place">
+                                    </span><br>
+                                    <span class="con_btn" onclick="ConvertEntoJp();">Click to  Convert Japanese</span>
+                            </div>
+							<div class="form-group add_facility">
+							   	<label>Japanese Place</label> 
+								<span class="add_input_span">
+                                	<input class="form-control" type="text" name="addnewjpfac" required="" id="jpPlace" placeholder="場所を追加">
+                                </span>
+									<!--<span class="con_btn" onclick="ConvertJPtoEn();">Convert</span>-->
+							</div>
 											
 											<div class="col-md-3 col-md-offset-5">
 												

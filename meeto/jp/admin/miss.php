@@ -1,4 +1,59 @@
 <?php 
+function sendPushNotification($to, $message, $why)
+{   
+	$filename = "FCM_LOG.txt";
+	$myfile = fopen($filename, "a");
+	$txt = "\n\n########## Date : ".date('d-m-Y H:i:s')." ##########\n";
+	fwrite($myfile, $txt);
+	$toGcm = "To:- ".$to."\n";
+	fwrite($myfile, $toGcm);
+	$whyGcm = "Why:- ".$why."\n";
+	fwrite($myfile, $whyGcm);
+	fclose($myfile);
+		
+	$fields = array(
+		'to' => $to,
+		'data' => $message,
+	);
+	
+	// Set POST variables
+	$url = 'https://fcm.googleapis.com/fcm/send';
+
+	$headers = array(
+		'Authorization: key=' . API_KEY_FCM,
+		'Content-Type: application/json'
+	);
+	// Open connection
+	$ch = curl_init();
+
+	// Set the url, number of POST vars, POST data
+	curl_setopt($ch, CURLOPT_URL, $url);
+
+	curl_setopt($ch, CURLOPT_POST, true);
+	curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+	// Disabling SSL Certificate support temporarly
+	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+
+	curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($fields));
+
+	// Execute post
+	$result = curl_exec($ch);
+	if ($result === FALSE) {
+		die('Curl failed: ' . curl_error($ch));
+	}
+
+	// Close connection
+	curl_close($ch);
+
+	$myfile = fopen($filename, "a");
+	fwrite($myfile, $result);
+	fclose($myfile);
+		
+	return $result;
+}
+
 	require_once('header.php');
 	include('config.php');
 	include('condition.php');
@@ -36,6 +91,20 @@ if($_REQUEST['kon']=="setcity")
 	if($_REQUEST['kon'] =='approvalsam')
 	{
 		$updatestatus=mysql_query("update `seminar` SET `approval_status`='".$_REQUEST[status]."'  WHERE `id`='".$_REQUEST['sid']."' ");
+		
+		$seminarData = mysql_fetch_array(mysql_query("select * from seminar where id='".$_REQUEST['sid']."'"));
+		$userData = mysql_fetch_array(mysql_query("select * from user where id='".$seminarData['uid']."'"));
+		
+		$gcmData['sid'] = $seminarData['id'];
+		$gcmData['sn'] = $seminarData['title'];
+		$gcmData['st'] = $_REQUEST[status];
+		$gcmData['ty'] = SEMINAR_APPROVE_DECLINE;
+		
+		$gcmResponse = array();
+		$gcmResponse['data']['message'] = $gcmData;
+		
+		$ids = $userData['gcm_id'];
+		sendPushNotification($ids, $gcmResponse, "SEMINAR_APPROVE_DECLINE");
 	}
 	
 	if($_REQUEST['kon'] =='deletesam')
@@ -170,7 +239,7 @@ if($_REQUEST['kon'] =='user')
                                         </div>
 										<div class="form-group">
                                             <label>Eメール</label>
-                                            <input class="form-control" type="text" name="email" value="<?php $marutra = explode('"',translate(str_replace(" ","+",$data['email']))); echo $marutra[1] ; ?>">
+                                            <input class="form-control" type="text" name="email" readonly value="<?php $marutra = explode('"',translate(str_replace(" ","+",$data['email']))); echo $marutra[1] ; ?>">
                                             <p class="help-block error"><?php $marutra = explode('"',translate(str_replace(" ","+",$erroremail))); echo $marutra[1]; ?></p>
                                         </div>
 										<div class="form-group">
@@ -468,7 +537,7 @@ if($_REQUEST['kon'] =='seminardetails')
                                             <select class="form-control" name="country" id="country" class="country" onchange="seminardetails('<?php echo $_REQUEST['sid']; ?>',this.value);">
 											<?php
 													
-														$querycounty=mysql_query("select * from  countries ");
+														$querycounty=mysql_query("select * from  countries where id='109'");
 												
 												
 												while($country=mysql_fetch_array($querycounty))
@@ -571,14 +640,12 @@ if($_REQUEST['kon'] =='seminardetails')
                                             <p class="help-block"></p>
                                         </div>
                                         <div class="form-group">
-                                            <label>
-住所</label>
+                                            <label>住所</label>
                                             <input class="form-control" type="text" name="address" value="<?php $marutra = explode('"',translate(str_replace(" ","+",$data['address']))); echo $marutra[1] ; ?>">
                                             <p class="help-block error"><?php $marutra = explode('"',translate(str_replace(" ","+",$erroraddress))); echo $marutra[1] ; ?></p>
                                         </div>
 										 <div class="form-group">
-                                            <label>
-キャッチフレーズ</label>
+                                            <label>キャッチフレーズ</label>
                                             <input class="form-control" type="text" name="tagline" value="<?php $marutra = explode('"',translate(str_replace(" ","+",$data['tagline']))); echo $marutra[1] ; ?>" readonly>
                                             <p class="help-block error"></p>
                                         </div>
@@ -612,22 +679,21 @@ if($_REQUEST['kon'] =='seminardetails')
 											$typequery=mysql_query("select * from `seminar_type` where `id`= $data[typeid] ");
 											$type=mysql_fetch_array($typequery);
 											?>
-                                            <input class="form-control" type="text" name="type" value="<?php $marutra = explode('"',translate(str_replace(" ","+",$type['name']))); echo $marutra[1] ; ?>" readonly>
+                                            <input class="form-control" type="text" name="type" value="<?php echo $type['name_jp'] ?>" readonly>
                                             <p class="help-block error"><?php $marutra = explode('"',translate(str_replace(" ","+",$errortype))); echo $marutra[1] ; ?></p>
                                         </div>
 										<!--<div class="form-group">
-                                            <label>
-目的</label>
+                                            <label>目的</label>
 											<?php 
 											$purposequery=mysql_query("select * from `seminar_purpose` where `id` = $data[puposeid] ");
 											$purpose=mysql_fetch_array($purposequery);
 											?>
                                             <input class="form-control" type="text" name="purpose" value="<?php $marutra = explode('"',translate(str_replace(" ","+",$purpose['name']))); echo $marutra[1] ; ?>" readonly>
-                                            <p class="help-block error"><?php $marutra = explode('"',translate(str_replace(" ","+",$errorpurpose))); echo $marutra[1] ; ?></p>
+                                            <p class="help-block error">
+											<?php $marutra = explode('"',translate(str_replace(" ","+",$errorpurpose))); echo $marutra[1] ; ?></p>
                                         </div>-->
 										<div class="form-group">
-                                            <label>
-連絡先番号。</label>
+                                            <label>連絡先番号。</label>
                                             <input class="form-control" type="text" name="contact" value="<?php echo $data['phoneno']; ?>">
                                             <p class="help-block error"><?php $marutra = explode('"',translate(str_replace(" ","+",$errorcontact))); echo $marutra[1] ; ?></p>
                                         </div>
@@ -683,7 +749,7 @@ if($_REQUEST['kon'] =='seminardetails')
 									?>
                                         <tr class="odd gradeX">
 											
-                                            <td><? $marutra = explode('"',translate(str_replace(" ","+",$detaildata['name']))); echo $marutra[1] ; ?></td>
+                                            <td><? //$marutra = explode('"',translate(str_replace(" ","+",$detaildata['name']))); echo $marutra[1] ; ?><?php echo $detaildata['name_jp'];?></td>
                                             <td><center><? if($data['status']=='1'){
 											?>
 												<i class="fa fa-thumbs-o-up" title="Active" style="color:green;cursor:pointer;" onclick="facilitystatus('0','<?php echo $data['id']; ?>','<?php echo $data['seminar_id']; ?>');"></i>
@@ -738,7 +804,7 @@ if($_REQUEST['kon'] =='seminardetails')
 									?>
                                         <tr class="odd gradeX">
 											
-                                            <td><? $marutra = explode('"',translate(str_replace(" ","+",$detaildata['name']))); echo $marutra[1] ; ?></td>
+                                            <td><? //$marutra = explode('"',translate(str_replace(" ","+",$detaildata['name']))); echo $marutra[1] ; ?><?php echo $detaildata['name_jp'];?></td>
                                             <td><center><? if($data['status']=='1'){
 											?>
 												<i class="fa fa-thumbs-o-up" title="Active" style="color:green;cursor:pointer;" onclick="attendeesstatus('0','<?php echo $data['id']; ?>','<?php echo $data['seminar_id']; ?>');"></i>
@@ -793,7 +859,7 @@ if($_REQUEST['kon'] =='industrytype')
 									?>
                                         <tr class="odd gradeX">
 											
-                                            <td><? $marutra = explode('"',translate(str_replace(" ","+",$detaildata['name']))); echo $marutra[1] ; ?></td>
+                                            <td><? echo $detaildata['name_jp']; ?></td>
                                             <td><center><? if($data['status']=='1'){
 											?>
 												<i class="fa fa-thumbs-o-up" title="Active" style="color:green;cursor:pointer;" onclick="industrystatus('0','<?php echo $data['id']; ?>','<?php echo $data['seminar_id']; ?>');"></i>
@@ -834,11 +900,9 @@ if($_REQUEST['kon'] =='industrytype')
                                     <thead>
                                         <tr>
                                             <th><center>名</center></th>
-                                            <th><center>
-状態</center></th>
+                                            <th><center>状態</center></th>
                                            
-											<th><center>
-更新</center></th>
+											<th><center>更新</center></th>
 											<th><center>削除</center></th>
                                         </tr>
                                     </thead>
@@ -919,14 +983,11 @@ if($_REQUEST['kon'] =='industrytype')
 <table class="table table-striped table-bordered table-hover animated jello infinte" id="">
                                     <thead>
                                         <tr>
-                                            <th><center>
-名</center></th>
+                                            <th><center>名</center></th>
                                         
                                             
-											<th><center>
-更新</center></th>
-											<th><center>
-削除</center></th>
+											<th><center>更新</center></th>
+											<th><center>削除</center></th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -939,13 +1000,13 @@ if($_REQUEST['kon'] =='industrytype')
 												if($_REQUEST[id]==$data[id] && $_REQUEST[shu]=="update")
 												{
 													?>
-													<td><input type="text" style="width:100%;padding:5px;" value="<? $marutra = explode('"',translate(str_replace(" ","+",$data['name']))); echo $marutra[1] ;?>" id="facility_new_text"/></td>
+													<td><input type="text" style="width:100%;padding:5px;" value="<?php echo $data['name_jp']; ?>" id="facility_new_text"/></td>
 													<?php
 												}
 												else
 												{
 													?>
-													<td><? $marutra = explode('"',translate(str_replace(" ","+",$data['name']))); echo $marutra[1] ; ?></td>
+													<td><?php echo $data['name_jp']; ?></td>
 													<?php
 												}
 										?>
@@ -997,10 +1058,8 @@ if($_REQUEST['kon'] =='industrytype')
 		<table class="table table-striped table-bordered table-hover" id="">
                                     <thead>
                                         <tr>
-                                            <th><center>
-名</center></th>
-                                            <th><center>
-状態</center></th>
+                                            <th><center>名</center></th>
+                                            <th><center>状態</center></th>
                                          
 											<th><center>更新</center></th>
 											<th><center>削除</center></th>

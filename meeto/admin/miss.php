@@ -1,4 +1,59 @@
 <?php 
+function sendPushNotification($to, $message, $why)
+{   
+	$filename = "FCM_LOG.txt";
+	$myfile = fopen($filename, "a");
+	$txt = "\n\n########## Date : ".date('d-m-Y H:i:s')." ##########\n";
+	fwrite($myfile, $txt);
+	$toGcm = "To:- ".$to."\n";
+	fwrite($myfile, $toGcm);
+	$whyGcm = "Why:- ".$why."\n";
+	fwrite($myfile, $whyGcm);
+	fclose($myfile);
+		
+	$fields = array(
+		'to' => $to,
+		'data' => $message,
+	);
+	
+	// Set POST variables
+	$url = 'https://fcm.googleapis.com/fcm/send';
+
+	$headers = array(
+		'Authorization: key=' . API_KEY_FCM,
+		'Content-Type: application/json'
+	);
+	// Open connection
+	$ch = curl_init();
+
+	// Set the url, number of POST vars, POST data
+	curl_setopt($ch, CURLOPT_URL, $url);
+
+	curl_setopt($ch, CURLOPT_POST, true);
+	curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+	// Disabling SSL Certificate support temporarly
+	curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+
+	curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($fields));
+
+	// Execute post
+	$result = curl_exec($ch);
+	if ($result === FALSE) {
+		die('Curl failed: ' . curl_error($ch));
+	}
+
+	// Close connection
+	curl_close($ch);
+
+	$myfile = fopen($filename, "a");
+	fwrite($myfile, $result);
+	fclose($myfile);
+		
+	return $result;
+}
+
 	require_once('header.php');
 	include('config.php');
 	include('condition.php');
@@ -36,6 +91,20 @@ if($_REQUEST['kon']=="setcity")
 	if($_REQUEST['kon'] =='approvalsam')
 	{
 		$updatestatus=mysql_query("update `seminar` SET `approval_status`='".$_REQUEST[status]."'  WHERE `id`='".$_REQUEST['sid']."' ");
+		
+		$seminarData = mysql_fetch_array(mysql_query("select * from seminar where id='".$_REQUEST['sid']."'"));
+		$userData = mysql_fetch_array(mysql_query("select * from user where id='".$seminarData['uid']."'"));
+		
+		$gcmData['sid'] = $seminarData['id'];
+		$gcmData['sn'] = $seminarData['title'];
+		$gcmData['st'] = $_REQUEST[status];
+		$gcmData['ty'] = SEMINAR_APPROVE_DECLINE;
+		
+		$gcmResponse = array();
+		$gcmResponse['data']['message'] = $gcmData;
+		
+		$ids = $userData['gcm_id'];
+		sendPushNotification($ids, $gcmResponse, "SEMINAR_APPROVE_DECLINE");
 	}
 	
 	if($_REQUEST['kon'] =='deletesam')
@@ -165,7 +234,7 @@ if($_REQUEST['kon'] =='user')
                                         </div>
 										<div class="form-group">
                                             <label>Email</label>
-                                            <input class="form-control" type="text" name="email" value="<?php echo $data['email']; ?>">
+                                            <input class="form-control" type="text" readonly name="email" value="<?php echo $data['email']; ?>">
                                             <p class="help-block error"><?php echo $erroremail; ?></p>
                                         </div>
 										<div class="form-group">
@@ -461,7 +530,7 @@ if($_REQUEST['kon'] =='seminardetails')
                                             <select class="form-control" name="country" id="country" class="country" onchange="seminardetails('<?php echo $_REQUEST['sid']; ?>',this.value);">
 											<?php
 													
-														$querycounty=mysql_query("select * from  countries ");
+														$querycounty=mysql_query("select * from  countries where id='109'");
 												
 												
 												while($country=mysql_fetch_array($querycounty))
@@ -1217,20 +1286,3 @@ if($_REQUEST['kon'] =='industrytype')
 		<?php
 	}
 ?>
-
-
-<script>
-	/* function state(cid,sid){
-		alert(cid);
-		alert(sid);
-		$.ajax({
-		url: "miss.php?kon=state&cid="+cid+"&sid="+sid, 
-		type: "POST",
-		success: function(data)
-		{
-			$("#state").html(data);
-		}
-		});
-	} */
-	
-</script>

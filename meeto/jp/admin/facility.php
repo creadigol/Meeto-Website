@@ -3,7 +3,7 @@ include('config.php');
 	include('condition.php');
 	if(isset($_REQUEST[sub_fac]))
 	{
-		$in=mysql_query("insert into facility values(0,'$_REQUEST[addnewfac]','',1,'','')");
+		$in=mysql_query("insert into facility values(0,'$_REQUEST[addnewfac]','$_REQUEST[addnewjpfac]',1,'','')");
 			echo "<script>alert('Sucessfullyを追加しました');</script>"; 
 	}
 	if($_REQUEST[id]!="")
@@ -35,7 +35,7 @@ include('config.php');
 		var textt=$("#facility_new_text").val();
 		if(shu=="delete_fac")
 		{
-			if(confirm('あなたは確かにレコードの削除されていますか...？'))
+			if(confirm('確かにレコードを削除しますか...？'))
 			{
 				
 			}
@@ -87,12 +87,18 @@ include('config.php');
 					<div class="col-md-12"> 
 						<form method="post" role="form">
 							 <div class="form-group">
-                                            <label>タイトル</label>
-                                            <input class="form-control" type="text" name="addnewfac" required="" placeholder="新しい施設を追加" >
+                                            <label>日本の施設</label>
+                                            <input class="form-control" type="text" name="addnewjpfac" required="" placeholder="施設を追加する" >
+                                        </div>
+										<div class="form-group">
+                                            <label>英語施設</label>
+											<div><span style="color:red;">*</span>腎臓は英語の会話に同じです。<br>
+											必要ならGoogle Translatorの助けを借りて</div>
+                                            <input class="form-control" type="text" name="addnewfac" required="" placeholder="施設を追加する" >
                                         </div>
 										<div class="col-lg-12">
 											<center>
-												<input type="submit" name="sub_fac" class="btn btn-primary" value="加えます">
+												<input type="submit" name="sub_fac" class="btn btn-primary" value="追加します">
 												
 											</center>
 										</div>
@@ -121,8 +127,7 @@ include('config.php');
 						</div>
 						<div  class="col-md-6 " align="right" >
 						<div class="col-md-4 col-md-offset-8 btn btn-primary" onclick="facilityshow();">
-							 
-新しい施設を追加 &nbsp;<i class="fa fa-plus" style="font-size:10px;"></i>
+							 新しい施設を追加 &nbsp;<i class="fa fa-plus" style="font-size:10px;"></i>
 						</div>
 						</div>
                     </div>
@@ -134,8 +139,7 @@ include('config.php');
                     <!-- Advanced Tables -->
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                             
-施設の一覧
+                             施設の一覧
                         </div>
                         <div class="panel-body">
                             <div class="table-responsive" id="admin_facility">
@@ -152,11 +156,11 @@ include('config.php');
                                     </thead>
                                     <tbody>
 									<?
-										$query=mysql_query("select * from `facility` ");
+										$query=mysql_query("select * from `facility`");
 										while($data=mysql_fetch_array($query)){
 									?>
                                         <tr class="odd gradeX">
-                                            <td><? $marutra = explode('"',translate(str_replace(" ","+",$data['name']))); echo $marutra[1] ; ?></td>
+                                            <td><?// $marutra = explode('"',translate(str_replace(" ","+",$data['name']))); echo $marutra[1] ; ?><?php echo $data['name_jp']; ?></td>
                                             <td><center><? if($data['status']==1){
 											?>
 												<i class="fa fa-thumbs-o-up" title="Active" style="color:green;cursor:pointer;" onclick="window.location='facility.php?id=<?php echo $data['id'];?>&shuup=dec'"></i>
