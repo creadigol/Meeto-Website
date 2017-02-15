@@ -75,7 +75,7 @@ include('config.php');
                     <div class="col-md-12 page-header">
 						<div  class="col-md-6" align="left" style="color:black;">
                         <h3>
-                           新しい施設を追加
+                           <?php echo ADD_NEW_FACILITY;?>
                         </h3>
 						</div>
 						<div  class="col-md-6 " align="right" >
@@ -87,18 +87,18 @@ include('config.php');
 					<div class="col-md-12"> 
 						<form method="post" role="form">
 							 <div class="form-group">
-                                            <label>日本の施設</label>
-                                            <input class="form-control" type="text" name="addnewjpfac" required="" placeholder="施設を追加する" >
+                                            <label><?php echo JAPANESE_FACILITY;?></label>
+                                            <input class="form-control" type="text" name="addnewjpfac" required="" placeholder="<?php echo ADD_FACILITY;?>" >
                                         </div>
 										<div class="form-group">
-                                            <label>英語施設</label>
-											<div><span style="color:red;">*</span>腎臓は英語の会話に同じです。<br>
-											必要ならGoogle Translatorの助けを借りて</div>
-                                            <input class="form-control" type="text" name="addnewfac" required="" placeholder="施設を追加する" >
+                                            <label><?php echo ENGLISH_FACILITY;?></label>
+											<div><span style="color:red;">*</span><?php echo KINDLY_ENTER_ENGLISH_CONVERSATION_THE_SAME;?><br>
+											<?php echo IF_REQUIRED_TAKE_HELP_OF_GOOGLE_TRANSLATER;?></div>
+                                            <input class="form-control" type="text" name="addnewfac" required="" placeholder="<?php echo ADD_FACILITY;?>" >
                                         </div>
 										<div class="col-lg-12">
 											<center>
-												<input type="submit" name="sub_fac" class="btn btn-primary" value="追加します">
+												<input type="submit" name="sub_fac" class="btn btn-primary" value="<?php echo SUBMIT;?>">
 												
 											</center>
 										</div>
@@ -122,12 +122,12 @@ include('config.php');
                     <div class="col-md-12 page-header">
 						<div  class="col-md-6" align="left">
                         <h1>
-                            施設
+                            <?php echo FACILITY;?> 
                         </h1>
 						</div>
 						<div  class="col-md-6 " align="right" >
 						<div class="col-md-4 col-md-offset-8 btn btn-primary" onclick="facilityshow();">
-							 新しい施設を追加 &nbsp;<i class="fa fa-plus" style="font-size:10px;"></i>
+							 <?php echo ADD_NEW_FACILITY;?> &nbsp;<i class="fa fa-plus" style="font-size:10px;"></i>
 						</div>
 						</div>
                     </div>
@@ -139,7 +139,7 @@ include('config.php');
                     <!-- Advanced Tables -->
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                             施設の一覧
+                             <?php echo FACILITY_LIST;?>
                         </div>
                         <div class="panel-body">
                             <div class="table-responsive" id="admin_facility">
@@ -147,11 +147,11 @@ include('config.php');
                                 <table class="table table-striped table-bordered table-hover" id="">
                                     <thead>
                                         <tr>
-                                            <th><center>名</center></th>
-                                            <th><center>状態</center></th>
+                                            <th><center><?php echo NAME;?></center></th>
+                                            <th><center><?php echo STATUS;?></center></th>
                                             
-											<th><center>更新</center></th>
-											<th><center>削除</center></th>
+											<th><center><?php echo UPDATE;?></center></th>
+											<th><center><?php echo DELETE1;?></center></th>
                                         </tr>
                                     </thead>
                                     <tbody>

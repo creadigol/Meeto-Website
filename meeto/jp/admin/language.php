@@ -75,8 +75,7 @@ include('config.php');
                     <div class="col-md-12 page-header">
 						<div  class="col-md-6" align="left" style="color:black;">
                         <h3>
-                           
-新しい言語を追加します。
+                          <?php echo ADD_NEW_LANGUAGE;?>
                         </h3>
 						</div>
 						<div  class="col-md-6 " align="right" >
@@ -88,14 +87,12 @@ include('config.php');
 					<div class="col-md-12"> 
 						<form method="post" role="form">
 							 <div class="form-group">
-                                            <label>タイトル</label>
-                                            <input class="form-control" type="text" name="addnewfac" required="" placeholder="
-新しい言語を追加します。">
+                                            <label><?php echo TITLE;?></label>
+                                            <input class="form-control" type="text" name="addnewfac" required="" placeholder="<?php echo ADD_NEW_LANGUAGE;?>">
                                         </div>
 										<div class="col-lg-12">
 											<center>
-												<input type="submit" name="sub_fac" class="btn btn-primary" value="
-加えます">
+												<input type="submit" name="sub_fac" class="btn btn-primary" value="<?php echo SUBMIT;?>">
 												
 											</center>
 										</div>
@@ -119,13 +116,12 @@ include('config.php');
                     <div class="col-md-12 page-header">
 						<div  class="col-md-6" align="left">
                         <h1>
-                            言語
+                           <?php echo LANGUAGE;?>
                         </h1>
 						</div>
 						<div  class="col-md-6 " align="right" >
 						<div class="col-md-4 col-md-offset-8 btn btn-primary" onclick="facilityshow();">
-							 
-新しい言語を追加します。 &nbsp;<i class="fa fa-plus" style="font-size:10px;"></i>
+							 <?php echo ADD_NEW_LANGUAGE;?>&nbsp;<i class="fa fa-plus" style="font-size:10px;"></i>
 						</div>
 						</div>
                     </div>
@@ -137,8 +133,7 @@ include('config.php');
                     <!-- Advanced Tables -->
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                             
-言語の一覧
+                             <?php echo LANGUAGE_LIST;?>
                         </div>
                         <div class="panel-body">
                             <div class="table-responsive" id="admin_language">
@@ -146,14 +141,11 @@ include('config.php');
                                 <table class="table table-striped table-bordered table-hover" id="">
                                     <thead>
                                         <tr>
-                                            <th><center>名</center></th>
-                                            <th><center>
-状態</center></th>
+                                            <th><center><?php echo NAME;?></center></th>
+                                            <th><center><?php echo STATUS;?></center></th>
                                           
-											<th><center>
-更新</center></th>
-											<th><center>
-削除</center></th>
+											<th><center><?php echo UPDATE;?></center></th>
+											<th><center><?php echo DELETE1;?></center></th>
                                         </tr>
                                     </thead>
                                     <tbody>

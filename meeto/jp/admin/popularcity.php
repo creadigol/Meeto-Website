@@ -138,7 +138,7 @@ function setcity(cid)
                     <div class="col-md-12 page-header">
 						<div  class="col-md-6" align="left" style="color:#000;">
                         <h3>
-                           市のイメージを設定します
+                           <?php echo SET_CITY_IMAGE;?>
                         </h3>
 						</div>
 						<div  class="col-md-6 " align="right" >
@@ -167,9 +167,9 @@ function setcity(cid)
 											<div class="col-md-12">
 									
 									<select id="country" class="input-name"  name="country" style="width:100%!important;" onchange="setstate(this.value);">
-										 <option value="">--国を選択--</option>
+										 <option value="">--<?php echo SELECT_COUNTRY;?>--</option>
 										<?php
-											$selcountry=mysql_query("select * from countries");
+											$selcountry=mysql_query("select * from countries where id!=101");
 											while($fetcountry=mysql_fetch_array($selcountry))
 											{
 										?>
@@ -182,7 +182,7 @@ function setcity(cid)
 									<div class="col-md-12">
 									
 									<select id="allstate" class="input-name" name="state" style="width:100%!important;"  onchange="setcity(this.value);">
-										 <option value="">--州を選択--</option>
+										 <option value="">--<?php echo SELECT_STATE;?>--</option>
 										<?php
 											$selcountry=mysql_query("select * from states where country_id=$rowuserdetail[countryid]");
 											while($fetcountry=mysql_fetch_array($selcountry))
@@ -198,7 +198,7 @@ function setcity(cid)
 									<div class="col-md-12">
 									
 									<select id="allcity" class="input-name" style="width:100%!important;" name="city" onchange="">
-										 <option value="city">--都市を選びなさい--</option>
+										 <option value="city">--<?php echo SELECT_CITY;?>--</option>
 										<?php
 											$selcountry=mysql_query("select * from cities where state_id=$rowuserdetail[stateid]");
 											while($fetcountry=mysql_fetch_array($selcountry))
@@ -214,7 +214,7 @@ function setcity(cid)
 							
 											</div>
 											<div class="col-md-3 col-md-offset-4">
-												&nbsp;&nbsp;&nbsp;<input type="submit" name="sub_fac" class="btn btn-primary" value="更新">
+												&nbsp;&nbsp;&nbsp;<input type="submit" name="sub_fac" class="btn btn-primary" value="<?php echo SET;?>">
 											<br><br>
 										</div>
 						</form>
@@ -237,14 +237,12 @@ function setcity(cid)
                     <div class="col-md-12 page-header">
 						<div  class="col-md-6" align="left">
                         <h1>
-                            
-人気の都市
+                            <?php echo POPULAR_CITY;?>
                         </h1>
 						</div>
 						<div  class="col-md-6 " align="right" >
 						<div class="col-md-5 col-md-offset-7 btn btn-primary" onclick="facilityshow();">
-							 
-新しい都市を設定します。<i class="fa fa-pencil" style="font-size:15px;"></i>
+							 <?php echo SET_CITY_IMAGE;?><i class="fa fa-pencil" style="font-size:15px;"></i>
 						</div>
 						</div>
                     </div>
@@ -256,8 +254,7 @@ function setcity(cid)
                     <!-- Advanced Tables -->
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                             
-都市一覧
+                             <?php echo CITY_LIST;?>
                         </div>
                         <div class="panel-body">
                             <div class="table-responsive" id="admin_place">
@@ -265,13 +262,10 @@ function setcity(cid)
                                 <table class="table table-striped table-bordered table-hover" id="">
                                     <thead>
                                         <tr>
-										<th><center>
-画像</center></th>
-                                            <th><center>
-市の名前</center></th>
+										<th><center><?php echo IMAGE;?></center></th>
+                                            <th><center><?php echo CITY_NAME;?></center></th>
 											
-                                            <th><center>
-状態</center></th>
+                                            <th><center><?php echo STATUS;?></center></th>
                                             
 											
                                         </tr>

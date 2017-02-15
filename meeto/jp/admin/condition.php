@@ -1,4 +1,5 @@
 <?php
+include('../string.php');
 	if($_SESSION['jpmeeto']['adminid'] == "")
 	{
 		//echo $_SESSION['jpmeeto']['adminid'];

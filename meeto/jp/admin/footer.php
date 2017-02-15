@@ -1,6 +1,6 @@
 <footer><p> 
-著作権@ 2016。 <a href="http://www.creadigol.biz/meeto/admin/index.php">Meeto</a>
-すべての権利を保有します。</p></footer>
+<?php echo COPYRIGHT_COPY;?> 2016。 <a href="http://www.creadigol.biz/meeto/admin/index.php">Meeto</a>
+<?php echo ALL_RIGHT_RESERVED;?></p></footer>
 <!-- JS Scripts-->
 <!-- jQuery Js -->
 <script src="assets/js/jquery-1.10.2.js"></script>

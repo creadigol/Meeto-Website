@@ -29,6 +29,7 @@
 			 <div class="row">
                     <div class="col-md-12">
                         <h1 class="page-header">
+						<?php echo SEMINAR_REVIEWS;?>
                         </h1>
                     </div>
                 </div> 
@@ -39,29 +40,24 @@
                     <!-- Advanced Tables -->
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                             セミナーレビュー
+                             <?php echo SEMINAR_REVIEWS;?>
                         </div>
                         <div class="panel-body">
                             <div class="table-responsive">
                                 <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                     <thead>
                                         <tr>
-                                            <th>
-写真</th>
-                                            <th>
-タイトル</th>
-                                            <th>ホスト名</th>
-											<th>ホストメール</th>
+                                            <th><?php echo IMAGE;?></th>
+                                            <th><?php echo TITLE;?></th>
+                                            <th><?php echo HOST_NAME;?></th>
+											<th><?php echo HOST_EMAIL;?></th>
 											<!--<th>Description</th>
                                             <th>Total Seat</th>
                                             <th>Booked Seat</th>
                                             <th>資格</th>-->
-                                            <th>
-承認状況</th>
-                                            <th>
-状態</th>
-                                            <th>
-アクション</th>
+                                            <th><?php echo APPROVAL_STATUS;?></th>
+                                            <th><?php echo STATUS;?></th>
+                                            <th><?php echo ACTION;?></th>
                                             
                                         </tr>
                                     </thead>

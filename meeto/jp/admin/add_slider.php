@@ -103,7 +103,7 @@ include('config.php');
                     <div class="col-md-12 page-header">
 						<div  class="col-md-6" align="left" style="color:black;">
                         <h3>
-                           新しい壁紙を追加
+                           <?php echo ADD_NEW_WALLPAPER;?>
                         </h3>
 						</div>
 						<div  class="col-md-6 " align="right" >
@@ -155,12 +155,12 @@ include('config.php');
                     <div class="col-md-12 page-header">
 						<div  class="col-md-6" align="left">
                         <h1>
-                          壁紙
+                          <?php echo WALLPAPER;?>
                         </h1>
 						</div>
 						<div  class="col-md-6 " align="right" >
 						<div class="col-md-5 col-md-offset-7 btn btn-primary" onclick="facilityshow();">
-							 新しい写真を追加<i class="fa fa-plus" style="font-size:10px;"></i>
+							 <?php echo ADD_NEW_WALLPAPER;?><i class="fa fa-plus" style="font-size:10px;"></i>
 						</div>
 						</div>
                     </div>
@@ -172,7 +172,7 @@ include('config.php');
                     <!-- Advanced Tables -->
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            ホーム壁紙リスト
+                            <?php echo HOME_WALLPAPER_LIST;?>
                         </div>
                         <div class="panel-body">
                             <div class="table-responsive" id="admin_place">
@@ -180,13 +180,11 @@ include('config.php');
                                 <table class="table table-striped table-bordered table-hover" id="">
                                     <thead>
                                         <tr>
-										<th><center>画像</center></th>
+										<th><center><?php echo IMAGE;?></center></th>
                                             
 											
-                                            <th><center>
-状態</center></th>
-                                             <th><center>
-削除</center></th>
+                                            <th><center><?php echo STATUS;?></center></th>
+                                             <th><center><?php echo DELETE1;?></center></th>
 											
                                         </tr>
                                     </thead>
@@ -201,10 +199,10 @@ include('config.php');
                                             <? if($data['status']=='1'){
 											?>
                                             <td><center>
-												<font color="green" size="5" style="font-weight:bold;margin-top:30px;">アクティブ</font>
+												<font color="green" size="5" style="font-weight:bold;margin-top:30px;"><?php echo ACTIVE;?></font>
 												</center></td>
 												<td><center>
-												<font color="green" size="5" style="font-weight:bold;margin-top:30px;">アクティブ</font>
+												<font color="green" size="5" style="font-weight:bold;margin-top:30px;"><?php echo ACTIVE;?></font>
 												</center></td>
 											<?
 											}else{

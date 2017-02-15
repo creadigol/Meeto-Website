@@ -1,11 +1,14 @@
 <?php
+/********** Website *****/
+
+
 /*BUTTON*/
 define('SIGNUP','サインアップ');
 define('LOGIN','ログイン');
 define('HOW_IT_WORK','使い方');
 define('HI','こんにちは');
-define('LIST_YOUR_SEMINAR','あなたのセミナーを一覧表示する');
-define('SUBMIT','提出する');
+define('LIST_YOUR_SEMINAR','セミナーを登録する(企業)');
+define('SUBMIT','登録する');
 
 
 define('FACEBOOK','フェイスブック');
@@ -25,13 +28,13 @@ define('INVALID_LOGIN_DETAIL','無効なログインの詳細');
 
 define('SELECT_FROME_POPULAR_CITIES','または人気の都市から選びます');
 define('TYPE_YOUR_CITY','あなたの街を入力');
-define('SELECT_YOUR_CITY_TO_START_SEARCH','検索を開始するには、あなたの都市を選択');
-define('WELCOME_TO_MEETO','ようこそMeeto');
-define('WORK_ACCORDING_TO_YOUR_NEED','あなたのニーズに応じて作業');
+define('SELECT_YOUR_CITY_TO_START_SEARCH','検索を開始するには、都市を選択');
+define('WELCOME_TO_MEETO','ようこそMeetoへ');
+define('WORK_ACCORDING_TO_YOUR_NEED','“面接”から“会って話す”へ');
 define('SEARCH_SEMINAR_CITY','検索セミナー市');
-define('FIND_YOUR_NEW_SEMINAR','あなたの新しいセミナーを探します');
-define('PICK_A_SEMINAR_TO_WORK_ANYWHERE_ANYTIME','だからいつでも、セミナーは何を学ぶ選びます');
-define('UPCOMING_SEMINAR','今後のセミナー');
+define('FIND_YOUR_NEW_SEMINAR','セミナーを探します');
+define('PICK_A_SEMINAR_TO_WORK_ANYWHERE_ANYTIME','都市別セミナー選択');
+define('UPCOMING_SEMINAR','あたらしいセミナー');
 define('CITIES_NOT_FOUND','都市が見つかりません');
 
 
@@ -44,13 +47,13 @@ define('SEMINAR_ATTENDES','セミナー参加者');
 define('INDUSTRY_TYPE','産業タイプ');
 define('TOTAL_SEAT','総席数');
 define('SEMINAR_NOT_FOUND','');
-define('SEMINAR_CITY','セミナー市');
+define('SEMINAR_CITY','セミナー開催市');
 
 /*USER MENU*/
 define('DASHBOARD','ダッシュボード');
-define('MY_LISTING','あなたの掲載');
-define('MY_BOOKING','私の予約');
-define('WISHLIST','欲しい物のリスト');
+define('MY_LISTING','登録したセミナー');
+define('MY_BOOKING','予約一覧');
+define('WISHLIST','ウィッシュリスト');
 define('ACCOUNT','アカウント');
 define('LOGOUT','ログアウト');
 
@@ -59,28 +62,28 @@ define('LOGOUT','ログアウト');
 
 define('PLEASE_SELECT_SEMINAR_PLACE','セミナー場所を選択してください');
 define('PLEASE_SELECT_SEMINAR_ATTENDEES','セミナーの参加者を選択してください');
-define('PLEASE_SELECT_ANY_INDUSTRY','でも業界を選択してください');
+define('PLEASE_SELECT_ANY_INDUSTRY','業種を選択してください');
 
 
 define('BASIC','ベーシック');
 define('SET_THE_CONTACT_DETAIL_FOR_SEMINAR_LISTING','セミナーリストの連絡先の詳細を設定する');
-define('CONTACT','接触');
-define('CONTINUE1','持続する');
+define('CONTACT','コンタクト');
+define('CONTINUE1','継続する');
 define('HOST_PERSON_NAME','人のホスト名');
 define('CONTACT_EMAIL','連絡先メールアドレス');
 define('CONTACT_NO','連絡先番号');
 
 define('DAY','日');
-define('SET_DAY_TIME_DATAIL_FOR_SEMINAR_LISTING','セミナーリストのセミナーの詳細を設定します。');
+define('SET_DAY_TIME_DATAIL_FOR_SEMINAR_LISTING','セミナーリストの詳細を設定します。');
 
 define('FROM_DATE','日から');
 define('TO_DATE','現在まで');
-define('START_SEMINAR_TIME','毎日始まるセミナー時間');
-define('END_SEMINAR_TIME','毎日終了セミナー時間');
+define('START_SEMINAR_TIME','セミナー開始時間');
+define('END_SEMINAR_TIME','セミナー終了時間');
 
 define('DISCRIPTION','説明');
 define('OVERVIEW','概要');
-define('SET_SEMINAR_DETAIL_FOR_SEMINAR_LISTING','セミナーリストのセミナーの詳細を設定します。');
+define('SET_SEMINAR_DETAIL_FOR_SEMINAR_LISTING','セミナーリストの詳細を設定します。');
 define('TITLE','タイトル');
 define('TAGLINE','キャッチフレーズ');
 
@@ -90,7 +93,7 @@ define('ADD_A_PHOTO','写真を追加');
 define('SET_SEMINAR_PHOTOS_FOR_SEMINAR_LISTING','セミナーの写真を設定するセミナーのリスト');
 define('SETTING','設定');
 define('FACILITIES','ファシリティ');
-define('COMMON_FACILITIES_AT_MOST_HOSTS_LISTINGS','ほとんどのホストリストには共通の設備があります。');
+define('COMMON_FACILITIES_AT_MOST_HOSTS_LISTINGS','共通の設備。');
 define('LOCATION','ロケーション');
 define('COUNTRY','国');
 define('STATE','状態');
@@ -104,11 +107,11 @@ define('BASIC_DETAIL','基本的な詳細');
 define('SEATS','席');
 define('ABOUT_THIS_SEMINAR','このセミナーについて');
 define('SEMINAR_ADDRESS','セミナーの住所');
-define('ABOUT_THE_HOST','ホストについて');
+define('ABOUT_THE_HOST','開催者について');
 define('DATE1','日付');
 define('BOOK_NOW','今予約する');
-define('SORRY_NO_AVAILABLE_SEATS','申し訳ありません、利用可能な座席がありません');
-define('SORRY_TOTAL_AVAILABLE_SEATS_IS','申し訳ありませんが、利用可能な総席です :');
+define('SORRY_NO_AVAILABLE_SEATS','申し訳ありません、利用可能なシートがありません');
+define('SORRY_TOTAL_AVAILABLE_SEATS_IS','申し訳ありませんが、満席です :');
 define('YOU_ARE_ADMIN_SO_YOU_ARE_NOT_BOOK_THIS_SEMINAR','あなたは管理者ですので、このセミナーを予約しないでください');
 define('EDIT_YOUR_SEMINAR','セミナーの編集');
 
@@ -117,8 +120,8 @@ define('EDIT_YOUR_SEMINAR','セミナーの編集');
 
 
 define('NO_REVIEWS_YET','まだレビューはありません');
-define('TOTAL_AVAILABLE_SEATS','利用可能な総席');
-define('STAY_HERE_AND_YOU_COULD_GIVE_THIS_HOST_THEIR_FIRST_REVIEW','ここに滞在し、あなたは、このホストに彼らの最初のレビューを与えることができます');
+define('TOTAL_AVAILABLE_SEATS','利用可能なシート');
+define('STAY_HERE_AND_YOU_COULD_GIVE_THIS_HOST_THEIR_FIRST_REVIEW','セミナー主催者に彼らの最初のレビューを与えることができます');
 
 /* CITYSEMINAR LIST */
 define('FROM','から');
@@ -132,7 +135,7 @@ define('UPDATE_PASSWORD','パスワードを更新します');
 
 /*BOOK_NOW */
 define('OVERVIEW_OF_YOUR_BOOKING','ご予約の概要');
-define('BACK_TO_YOUR_BOOKING','戻る申し出へ');
+define('BACK_TO_YOUR_BOOKING','戻る');
 define('PLACE','場所：');
 define('PERSONAL_INFORMATION','個人情報');
 define('MESSAGE','メッセージ');
@@ -151,7 +154,7 @@ define('DOWNLOAD','ダウンロード');
 
 define('SAVE_TO_WISH_LIST','ウィッシュリストに保存します');
 define('ADD_NOTES','メモを追加');
-define('DONE','終わりました');
+define('DONE','完了');
 
 define('ADDRESS','住所');
 define('SELECT_COUNTRY','国を選択');
@@ -238,7 +241,7 @@ define('DELETE1','削除');
 
 /* EDIT PROFILE */
 
-define('NAME','名');
+
 define('EDIT_PROFILE','プロファイル編集');
 define('FIRST_NAME','ファーストネーム');
 define('LAST_NAME','苗字');
@@ -269,8 +272,8 @@ define('PLEASE_ENTER_EMAIL_ID','メールIDを入力してください');
 define('EMAIL_ADDRESS','電子メールアドレス');
 define('PLEASE_ENTER_VALID_CONTACT_NO','有効な連絡先番号を入力してください');
 define('PHONE_NUMBER','電話番号');
-define('WHERE_YOU_LIVE','あなたが住んでいる場所');
-define('DESCRIBE_YOURSELF','あなた自身について説明しなさい');
+define('WHERE_YOU_LIVE','住所');
+define('DESCRIBE_YOURSELF','説明欄');
 define('COMPANY_DETAILS','会社の詳細');
 define('COMPANY_NAME','会社名');
 define('COMPANY_DESCRIPTION','会社概要');
@@ -315,6 +318,108 @@ define('NO_SEMINAR_FOUND','セミナーが見つかりません');
 
 
 
+/*************** Admin Side ****************/
+
+/*  Home page  */
+define('SUMMARY_OF_YOUR_WEB','あなたのWebの概要');
+define('DASHBOARD','ダッシュボード');
+define('PENDING_SEMINARS','保留中のセミナー');
+define('USERS','ユーザー');
+define('SEMINAR','セミナー');
+
+/*Side menu  */
+
+define('FACILITY','施設');
+define('INDUSTRY','産業');
+define('LANGUAGE','言語');
+define('ATTENDEES','出席者');
+define('POPULAR_CITY','人気の都市');
+define('HOME_WALLPAPER','ホーム壁紙');
+
+/* Footer */
+define('COPYRIGHT_COPY','著作権とコピー');
+define('ALL_RIGHT_RESERVED','すべての権利を保有します。');
+
+/* User list  */
+
+define('SUCCESSFULLY_DELETE','削除に成功しました');
+define('USER_LIST','ユーザーリスト');
+define('PHOTO','写真');
+define('NAME','名');
+define('PHONE_NO','電話番号。');
+define('STATUS','状態');
+
+/* Seminar_list */ 
+define('SEMINAR_LIST','セミナー一覧');
+define('HOST_NAME','ホスト名');
+define('HOST_EMAIL','ホストメール');
+define('APPROVAL_STATUS','承認状況');
+
+/* Facility */
+define('ADD_NEW_FACILITY','新しい施設を追加');
+define('JAPANESE_FACILITY','英語施設');
+define('ENGLISH_FACILITY','日本の施設');
+define('ADD_FACILITY','施設を追加する');
+define('KINDLY_ENTER_ENGLISH_CONVERSATION_THE_SAME','親切に英語の会話を同じように入力してください。');
+define('IF_REQUIRED_TAKE_HELP_OF_GOOGLE_TRANSLATER','必要ならGoogle Translatorの助けを借りて');
+define('FACILITY_LIST','施設の一覧');
+define('UPDATE','更新');
+
+/* Industry */
+define('ADD_NEW_INDUSTRY','新産業を追加');
+define('ENGLISH_INDUSTRY','英語産業');
+define('JAPANESE_INDUSTRY','日本産業');
+define('ADD_INDUSTRY','業種の追加');
+define('INDUSTRY_LIST','業界リスト');
+ 
+ /* Language */
+define('ADD_NEW_LANGUAGE','新しい言語を追加します。');
+define('LANGUAGE_LIST','言語の一覧');
+
+define('ADD_NEW_ATTENDEES','新しい出席者を追加');
+define('ENGLISH_ATTENDEES','日本語変換');
+define('JAPANESE_ATTENDEES','英語の出席者');
+define('ADD_ATTENDEES','出席者を追加');
+define('ATTENDEES_LIST','出席者リスト');
+define('IMAGE','画像');
+
+
+/* REVIEW , PLACE , CITY  */
+
+define('SEMINAR_REVIEWS','セミナーのレビュー。');
+define('ADD_NEW_PLACE','新しい場所を追加します。');
+define('ENGLISH_PLACE','日本の場所');
+define('JAPANESE_PLACE','英語の場所');
+define('ADD_PLACE','場所を追加');
+define('ADD','加えます');
+define('PLACE_LIST','目的のリスト');
+
+
+define('SET_CITY_IMAGE','市のイメージを設定します');
+define('SET','セット');
+define('CITY_LIST','都市一覧');
+define('CITY_NAME','市の名前');
+define('ADD_NEW_WALLPAPER','新しい壁紙を追加');
+define('WALLPAPER','壁紙');
+define('HOME_WALLPAPER_LIST','家の壁紙のリスト');
+define('ACTIVE','アクティブ');
+
+
+
+define('SEMINAR_DETAILS','セミナー詳細');
+define('HOST_SEMINAR','ホスト・セミナー');
+define('DESCRIPTION','説明');
+define('GENDER','性別');
+define('DATE_OF_BIRTH','生年月日');
+define('ABOUT_YOU','あなたについて');
+define('LANGUAGES_KNOWN','既知の言語');
+define('RESET1','キャンセル');
+define('SEMINAR_FACILITY','セミナー施設');
+
 
 
 ?>
+
+
+
+

@@ -208,7 +208,7 @@ function changesempic(input)
 			 <div class="row">
                     <div class="col-md-12">
                         <h1 class="page-header">
-                            セミナー詳細 <small><?php if($img_err==1){ echo "<font color='red'size='2' >Image too large Or Invalid file type...!</font>";} ?></small>
+                            <?php echo SEMINAR_DETAILS;?> <small><?php if($img_err==1){ echo "<font color='red'size='2' >Image too large Or Invalid file type...!</font>";} ?></small>
                         </h1>
                     </div>
                 </div> 

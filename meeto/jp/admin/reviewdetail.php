@@ -42,7 +42,7 @@
 			 <div class="row">
                     <div class="col-md-12">
                         <h1 class="page-header">
-                           セミナーレビュー。
+                           <?php echo SEMINAR_REVIEWS;?>
                         </h1>
                     </div>
                 </div> 
@@ -79,7 +79,7 @@
                     <!-- Advanced Tables -->
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                             セミナーレビュー
+                             <?php echo SEMINAR_REVIEWS;?>
                         </div>
                         <div class="panel-body">
                             <div class="table-responsive">
@@ -87,9 +87,9 @@
                                     <thead>
                                         <tr>
                                             
-                                            <th>レビュー</th>
-											<th>ユーザー名</th>
-											<th>状態</th>
+                                            <th><?php echo REVIEWS;?></th>
+											<th><?php echo USERNAME;?></th>
+											<th><?php echo STATUS;?></th>
                                             
                                         </tr>
                                     </thead>

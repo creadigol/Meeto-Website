@@ -75,7 +75,7 @@ if($_REQUEST['deluser']=="dd")
                     <div class="col-md-12 page-header">
 						<div  class="col-md-6" align="left" style="color:black;">
                         <h3 >
-                            削除
+                            <?php echo DELETE;?>
                         </h3>
 						</div>
                     </div>
@@ -100,7 +100,7 @@ if($_REQUEST['deluser']=="dd")
 					
                     
 					<div class="col-md-12" id="deleteusermsg" style="padding:20px;"> 
-						<h4 style="color:green;font-weight:bolder;">削除に成功しました...</h4>
+						<h4 style="color:green;font-weight:bolder;"><?php echo SUCCESSFULLY_DELETE;?>...</h4>
 						<div class="col-md-2 col-md-offset-10 btn btn-primary" onclick="$('#hidenewfac12').hide();">
 						Ok</div>
 					</div>
@@ -120,7 +120,7 @@ if($_REQUEST['deluser']=="dd")
 			 <div class="row">
                     <div class="col-md-12">
                         <h1 class="page-header">
-                            ユーザーリスト
+                            <?php echo USER_LIST;?>
                         </h1>
                     </div>
                 </div> 
@@ -131,22 +131,19 @@ if($_REQUEST['deluser']=="dd")
                     <!-- Advanced Tables -->
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                             ユーザーリスト
+                             <?php echo USER_LIST;?>
                         </div>
                         <div class="panel-body">
                             <div class="table-responsive">
                                 <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                     <thead>
                                         <tr>
-                                            <th>
-写真</th>
-                                            <th>
-名</th>
-                                            <th>Eメール</th>
-                                            <th>
-電話番号。</th>
-	<th>状態</th>
-	<th>削除</th>
+                                            <th><?php echo PHOTO;?></th>
+                                            <th><?php echo NAME;?></th>
+                                            <th><?php echo EMAIL;?></th>
+                                            <th><?php echo PHONE_NO;?></th>
+											<th><?php echo STATUS;?></th>
+											<!--<th><?php echo DELETE;?></th>-->
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -183,16 +180,16 @@ if($_REQUEST['deluser']=="dd")
 											<? if($data['status']==1){
 											?>
 												<td><center><i class="fa fa-thumbs-o-up" title="Active" style="color:green;cursor:pointer;" onclick="window.location='user.php?id=<?php echo $data['id'];?>&shuup=dec'"></i></center></td>
-												<td>
+												<!--<td>
 												<center><i class="fa fa-trash-o" title="Active" style="color:red;cursor:pointer;"onclick="facilityshow();"></i></center>
-											</td>
+											</td>-->
 											<?
 											}else{
 											?>
 												<td><center><i class="fa fa-thumbs-o-down" onclick="window.location='user.php?id=<?php echo $data['id'];?>&shuup=act'" title="Inactive" style="color:red;cursor:pointer;"></i></center></td>
-												<td>
+												<!--<td>
 												<center><i class="fa fa-trash-o" title="Active" style="color:red;cursor:pointer;"onclick="marudeleteuser('<?php echo $data['id']; ?>',0)"></i></center>
-											</td>
+											</td>-->
 											<? } ?>
 											
                                         </tr>

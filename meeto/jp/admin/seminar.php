@@ -29,8 +29,7 @@
 			 <div class="row">
                     <div class="col-md-12">
                         <h1 class="page-header">
-                           
-セミナー一覧
+                           <?php echo SEMINAR_LIST;?>
                         </h1>
                     </div>
                 </div> 
@@ -41,30 +40,24 @@
                     <!-- Advanced Tables -->
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                             
-セミナー一覧
+                             <?php echo SEMINAR_LIST;?>
                         </div>
                         <div class="panel-body">
                             <div class="table-responsive">
                                 <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                     <thead>
                                         <tr>
-                                            <th>写真</th>
-                                            <th>
-タイトル</th>
-                                            <th>
-ホスト名</th>
-											<th>ホストメール</th>
+                                            <th><?php echo PHOTO;?></th>
+                                            <th><?php echo TITLE;?></th>
+                                            <th><?php echo HOST_NAME;?></th>
+											<th><?php echo HOST_EMAIL;?></th>
 											<!--<th>Description</th>
                                             <th>Total Seat</th>
-                                            <th>Booked Seat</th>-->
-                                            <th>資格</th>
-                                            <th>
-承認状況</th>
-                                            <th>
-状態</th>
-                                            <th>
-アクション</th>
+                                            <th>Booked Seat</th>
+                                           <th>資格</th>-->
+                                            <th><?php echo APPROVAL_STATUS;?></th>
+                                            <th><?php echo STATUS;?></th>
+                                            <th><?php echo SEMINAR_LIST;?></th>
                                             
                                         </tr>
                                     </thead>
@@ -95,11 +88,19 @@
                                             <td><? $marutra = explode('"',translate(str_replace(" ","+", $data['title']))); echo $marutra[1]; ?></td>
                                            
                                             <td><? $mf= $detaildata['fname']." ".$detaildata['lname']; $marutra = explode('"',translate(str_replace(" ","+",$mf))); echo $marutra[1]?></td>
-                                            <td><? echo $detaildata['email']; ?></td>
+                                            <td>
+											<? 
+											if($detaildata['email']!='')
+											{ echo $detaildata['email']; }
+										    else
+											{
+												echo $data['contact_email'];
+											}	
+											?></td>
 											<!--<td><? echo $data['description']; ?></td>
                                             <td><? echo $data['total_seat']; ?></td>
-                                            <td><? echo $data['total_booked_seat']; ?></td>-->
-                                            <td><? $marutra = explode('"',translate(str_replace(" ","+",$data['qualification']))); echo $marutra[1] ; ?></td>
+                                            <td><? echo $data['total_booked_seat']; ?></td>
+                                            <td><? $marutra = explode('"',translate(str_replace(" ","+",$data['qualification']))); echo $marutra[1] ; ?></td>-->
                                             <td><center><? if($data['approval_status']=='approved'){
 											?>
 												<i class="fa fa-thumbs-o-up" title="Approved Seminar" style="color:green;cursor:pointer;" onclick="approvalsam('rejected','<?php echo $data['id']; ?>');"></i>

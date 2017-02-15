@@ -33,9 +33,7 @@ function countmaru(c1, id)
                 <div class="row">
                     <div class="col-md-12">
                         <h1 class="page-header">
-                            
-ダッシュボード <small>
-あなたのWebの概要</small>
+                            <?php echo DASHBOARD;?> <small><?php echo SUMMARY_OF_YOUR_WEB;?></small>
                         </h1>
                     </div>
                 </div>
@@ -59,7 +57,7 @@ function countmaru(c1, id)
 								<h3 id="das1">
 								
 								</h3>
-                               <strong> 保留中のセミナー</strong>
+                               <strong><?php echo PENDING_SEMINARS;?></strong>
                             </div>
                         </div>
                     </div>
@@ -72,7 +70,7 @@ function countmaru(c1, id)
 								</div>
                             <div class="panel-right pull-right">
 							<?php
-								$sel=mysql_query("select count(*) from registration");
+								$sel=mysql_query("select count(*) from user");
 								$fet=mysql_fetch_array($sel);
 								
 							?>
@@ -80,7 +78,7 @@ function countmaru(c1, id)
 								<h3 id="das2">
 							
 								</h3>
-                               <strong> ユーザー </strong>
+                               <strong><?php echo USERS;?></strong>
                             </div>
                         </div>
                     </div>
@@ -103,7 +101,7 @@ function countmaru(c1, id)
 								<h3 id="das33">
 								
 								</h3>
-                               <strong> セミナー</strong>
+                               <strong><?php echo SEMINAR;?></strong>
                             </div>
                         </div>
                     </div>

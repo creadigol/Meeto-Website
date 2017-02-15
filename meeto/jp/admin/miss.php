@@ -61,7 +61,7 @@ function sendPushNotification($to, $message, $why)
 	if($_REQUEST['kon']=="setstate")
 { 
 ?>
-<option value="">--州を選択--</option>
+<option value="">--<?php echo SELECT_STATE;?>--</option>
 <?php
 	$selcity=mysql_query("select * from states where country_id=$_REQUEST[id] order by name");
 	while($fetcity=mysql_fetch_array($selcity))
@@ -75,7 +75,7 @@ function sendPushNotification($to, $message, $why)
 if($_REQUEST['kon']=="setcity")
 { 
 ?>
-<option value="city">--都市を選びなさい--</option>
+<option value="city">--<?php echo SELECT_CITY;?>--</option>
 <?php
 	$selcity=mysql_query("select * from cities where state_id=$_REQUEST[id] order by name");
 	while($fetcity=mysql_fetch_array($selcity))
@@ -135,20 +135,18 @@ if($_REQUEST['kon']=="setcity")
                     <!-- Advanced Tables -->
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                             
-ホスト・セミナー
+                             <?php echo HOST_SEMINAR;?>
                         </div>
                         <div class="panel-body">
                             <div class="table-responsive">
                                 <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                     <thead>
                                         <tr>
-                                            <th>写真</th>
-                                            <th>タイトル</th>
-                                            <th>説明</th>
-                                            <th>総座席</th>
-                                            <th>
-アクション</th>
+                                            <th><?php echo IMAGE;?></th>
+                                            <th><?php echo TITLE;?></th>
+                                            <th><?php echo DESCRIPTION;?></th>
+                                            <th><?php echo TOTAL_SEATS;?></th>
+                                            <th><?php echo ACTION;?></th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -233,51 +231,51 @@ if($_REQUEST['kon'] =='user')
                                     <form role="form" action="user_detail.php?user_id=<?php echo $_REQUEST[user_id]; ?>" method="POST">
 										<div class="col-lg-6">
                                         <div class="form-group">
-                                            <label>名</label>
+                                            <label><?php echo NAME;?></label>
                                             <input class="form-control" type="text" name="fname" value="<?php $mff= $data['fname']." ".$data['lname'];  $marutra = explode('"',translate(str_replace(" ","+",$mff))); echo $marutra[1];?>">
                                             <p class="help-block error"><?php echo $errorname; ?></p>
                                         </div>
 										<div class="form-group">
-                                            <label>Eメール</label>
+                                            <label><?php echo EMAIL;?></label>
                                             <input class="form-control" type="text" name="email" readonly value="<?php $marutra = explode('"',translate(str_replace(" ","+",$data['email']))); echo $marutra[1] ; ?>">
                                             <p class="help-block error"><?php $marutra = explode('"',translate(str_replace(" ","+",$erroremail))); echo $marutra[1]; ?></p>
                                         </div>
 										<div class="form-group">
-                                            <label>
-性別</label>
+                                            <label><?php echo GENDER;?></label>
                                             <input class="form-control" type="text" name="gender" value="<?php $marutra = explode('"',translate(str_replace(" ","+",$userdata['gender']))); echo $marutra[1] ; ?>">
                                             <p class="help-block"></p>
                                         </div>
                                         <div class="form-group">
-                                            <label>生年月日</label>
+                                            <label><?php echo DATE_OF_BIRTH;?></label>
                                             <input class="form-control" type="date" name="dob" value="<?php echo "10/10/2015"; ?>">
                                             <p class="help-block"></p>
                                         </div>
 										<div class="form-group">
-                                            <label>Contact</label>
+                                            <label><?php echo CONTACT;?></label>
                                             <input class="form-control" type="text" name="contact" readonly value="<?php echo $userdata['phoneno']; ?>">
                                             <p class="help-block error"><?php $marutra = explode('"',translate(str_replace(" ","+", $errorcontact))); echo $marutra[1]; ?></p>
                                         </div>
 										 
 										<div class="form-group">
-                                            <label>会社</label>
+                                            <label><?php echo COMPANY;?></label>
                                             <input class="form-control" type="text" name="company" readonly value="<?php $marutra = explode('"',translate(str_replace(" ","+",$companydata['name']))); echo $marutra[1] ; ?>">
                                             <p class="help-block error"></p>
                                         </div>
 										
 										<div class="form-group">
-                                            <label>会社の説明</label>
+                                            <label><?php echo COMPANY_DESCRIPTION;?></label>
                                             <input class="form-control" type="text" name="cdescription" value="<?php $marutra = explode('"',translate(str_replace(" ","+",$companydata['description']))); echo $marutra[1]; ?>">
                                             <p class="help-block error"></p>
                                         </div>
 										</div>
 										<div class="col-lg-6">
 										 <div class="form-group">
-                                            <label>国</label>
+                                            <label><?php echo COUNTRY;?></label>
                                             <select class="form-control" name="country" id="country" class="country" onchange="user('<?php echo $_REQUEST['user_id']; ?>',this.value);">
+											<option value="" ><?php echo SELECT_COUNTRY;?></option>
 											<?php
 													
-														$querycounty=mysql_query("select * from  countries ");
+														$querycounty=mysql_query("select * from  countries where id!='101' ");
 												while($country=mysql_fetch_array($querycounty))
 												{
 													if($_REQUEST[cscid] == $country[id])
@@ -304,7 +302,7 @@ if($_REQUEST['kon'] =='user')
                                             <p class="help-block"></p>
                                         </div>
 										 <div class="form-group">
-                                            <label>状態</label>
+                                            <label><?php echo STATE;?></label>
                                             <select class="form-control" name="state" class="state" id="state" onchange="user('<?php echo $_REQUEST['user_id']; ?>','<?php echo $_REQUEST[cscid]; ?>',this.value);" >
 											<?php
 												$sf=0;
@@ -341,7 +339,7 @@ if($_REQUEST['kon'] =='user')
                                             <p class="help-block"></p>
                                         </div>
 										<div class="form-group">
-                                            <label>シティ</label>
+                                            <label><?php echo CITY;?></label>
                                             <select class="form-control" name="city">
 											<?php
 												$cf=0;
@@ -375,17 +373,17 @@ if($_REQUEST['kon'] =='user')
                                             <p class="help-block"></p>
                                         </div>
                                         <div class="form-group">
-                                            <label>住所</label>
+                                            <label><?php echo ADDRESS;?></label>
                                             <input class="form-control" type="text" name="address" value="<?php $marutra = explode('"',translate(str_replace(" ","+",$userdata['address']))); echo $marutra[1] ; ?>">
                                             <p class="help-block error"><?php $marutra = explode('"',translate(str_replace(" ","+", $erroraddress))); echo $marutra[1]; ?></p>
                                         </div>
 										 <div class="form-group">
-                                            <label>あなたについて</label>
+                                            <label><?php echo ABOUT_YOU;?></label>
                                             <input class="form-control" type="text" name="about" value="<?php $marutra = explode('"',translate(str_replace(" ","+",$userdata['yourself']))); echo $marutra[1] ; ?>">
                                             <p class="help-block error"><?php $marutra = explode('"',translate(str_replace(" ","+",$errorabout))); echo $marutra[1] ; ?></p>
                                         </div>
 										<div class="form-group">
-                                            <label>既知の言語</label>
+                                            <label><?php echo LANGUAGES_KNOWN;?></label>
 											<?php 
 											$queryl=mysql_query("select * from user_language where uid='".$data[id]."' ");
 											while($langname=mysql_fetch_array($queryl))
@@ -411,7 +409,7 @@ if($_REQUEST['kon'] =='user')
                                             <p class="help-block error"></p>
                                         </div>
 										<div class="form-group">
-                                            <label>写真</label>
+                                            <label><?php echo IMAGE;?></label>
                                             <?
 												if(strlen($userdata["photo"])>0){
 												
@@ -435,8 +433,8 @@ if($_REQUEST['kon'] =='user')
 										</div>
 										<div class="col-lg-12">
 											<center>
-												<input type="submit" name="btn_save" class="btn btn-primary" value="提出します">
-												<button type="reset" class="btn btn-danger" onclick="history.go(-1);">キャンセル</button>
+												<input type="submit" name="btn_save" class="btn btn-primary" value="<?php echo SUBMIT;?>">
+												<button type="reset" class="btn btn-danger" onclick="history.go(-1);"><?php echo RESET1;?></button>
 											</center>
 										</div>
                                     </form>
@@ -475,22 +473,22 @@ if($_REQUEST['kon'] =='seminardetails')
                                     <form role="form" action="seminardetails.php?sid=<?php echo $_REQUEST['sid']; ?>" method="POST" enctype="multipart/form-data">
 										<div class="col-lg-6">
                                         <div class="form-group">
-                                            <label>タイトル</label>
+                                            <label><?php echo TITLE;?></label>
                                             <input class="form-control" type="text" name="title" value="<?php $marutra = explode('"',translate(str_replace(" ","+",$data['title']))); echo $marutra[1] ; ?>">
                                             <p class="help-block error"><?php echo $errortitle; ?></p>
                                         </div>
 										<div class="form-group">
-                                            <label>説明</label>
+                                            <label><?php echo DESCRIPTION;?></label>
                                             <input class="form-control" type="text" name="description" value="<?php $marutra = explode('"',translate(str_replace(" ","+",$data['description']))); echo $marutra[1] ; ?>">
                                             <p class="help-block error"><?php $marutra = explode('"',translate(str_replace(" ","+",$errordescription))); echo $marutra[1] ; ?></p>
                                         </div>
 										<div class="form-group">
-                                            <label>ホスト名</label>
+                                            <label><?php echo HOST_NAME;?></label>
                                             <input class="form-control" type="text" name="hostname" value="<?php $marutra = explode('"',translate(str_replace(" ","+",$data['hostperson_name']))); echo $marutra[1] ; ?>">
                                             <p class="help-block"><?php $marutra = explode('"',translate(str_replace(" ","+",$errorname))); echo $marutra[1] ; ?></p>
                                         </div>
 										<div class="form-group">
-                                            <label>ホストメール</label>
+                                            <label><?php echo HOST_EMAIL;?></label>
                                             <input class="form-control" type="text" name="hostemail" value="<?php echo $data['contact_email']; ?>">
                                             <p class="help-block"><?php $marutra = explode('"',translate(str_replace(" ","+",$erroremail))); echo $marutra[1] ; ?></p>
                                         </div>
@@ -500,17 +498,17 @@ if($_REQUEST['kon'] =='seminardetails')
                                             <p class="help-block"></p>
                                         </div>-->
                                         <div class="form-group">
-                                            <label>総座席</label>
+                                            <label><?php echo TOTAL_SEATS;?></label>
                                             <input class="form-control" type="text" name="total_seat" value="<?php echo $data['total_seat']; ?>" readonly>
                                             <p class="help-block"></p>
                                         </div>
 										<div class="form-group">
-                                            <label>予約された座席</label>
+                                            <label><?php echo BOOKED_SEAT;?></label>
                                             <input class="form-control" type="text" name="booked_seat" value="<?php echo $data['total_booked_seat']; ?>" readonly>
                                             <p class="help-block error"><?php $marutra = explode('"',translate(str_replace(" ","+",$errorcontact))); echo $marutra[1] ; ?></p>
                                         </div>
 										 <div class="form-group">
-                                            <label>写真</label><br>
+                                            <label><?php echo PHOTO;?></label><br>
                                             <?
 												$queryimage=mysql_query("select * from `seminar_photos` where `seminar_id` = '".$data[id]."' ");
 												$image=mysql_fetch_array($queryimage);
@@ -533,7 +531,7 @@ if($_REQUEST['kon'] =='seminardetails')
 										</div>
 										<div class="col-lg-6">
 										 <div class="form-group">
-                                            <label>国</label>
+                                            <label><?php echo COUNTRY;?></label>
                                             <select class="form-control" name="country" id="country" class="country" onchange="seminardetails('<?php echo $_REQUEST['sid']; ?>',this.value);">
 											<?php
 													
@@ -565,8 +563,7 @@ if($_REQUEST['kon'] =='seminardetails')
                                             <p class="help-block"></p>
                                         </div>
 										 <div class="form-group">
-                                            <label>
-状態</label>
+                                            <label><?php echo STATE;?></label>
                                             <select class="form-control" name="state" class="state" id="state" onchange="seminardetails('<?php echo $_REQUEST['sid']; ?>','<?php echo $_REQUEST[cscid]; ?>',this.value);" >
 											<?php
 												$sf=0;
@@ -606,7 +603,7 @@ if($_REQUEST['kon'] =='seminardetails')
                                             <p class="help-block"></p>
                                         </div>
 										<div class="form-group">
-                                            <label>シティ</label>
+                                            <label><?php echo COUNTRY;?></label>
                                             <select class="form-control" name="city" >
 											<?php
 												$cf=0;
@@ -640,12 +637,12 @@ if($_REQUEST['kon'] =='seminardetails')
                                             <p class="help-block"></p>
                                         </div>
                                         <div class="form-group">
-                                            <label>住所</label>
+                                            <label><?php echo ADDRESS;?></label>
                                             <input class="form-control" type="text" name="address" value="<?php $marutra = explode('"',translate(str_replace(" ","+",$data['address']))); echo $marutra[1] ; ?>">
                                             <p class="help-block error"><?php $marutra = explode('"',translate(str_replace(" ","+",$erroraddress))); echo $marutra[1] ; ?></p>
                                         </div>
 										 <div class="form-group">
-                                            <label>キャッチフレーズ</label>
+                                            <label><?php echo TAGLINE;?></label>
                                             <input class="form-control" type="text" name="tagline" value="<?php $marutra = explode('"',translate(str_replace(" ","+",$data['tagline']))); echo $marutra[1] ; ?>" readonly>
                                             <p class="help-block error"></p>
                                         </div>
@@ -674,7 +671,7 @@ if($_REQUEST['kon'] =='seminardetails')
                                             <p class="help-block error"></p>
                                         </div>-->
 										<div class="form-group">
-                                            <label>タイプ</label>
+                                            <label><?php echo PLACE;?></label>
 											<?php 
 											$typequery=mysql_query("select * from `seminar_type` where `id`= $data[typeid] ");
 											$type=mysql_fetch_array($typequery);
@@ -693,15 +690,15 @@ if($_REQUEST['kon'] =='seminardetails')
 											<?php $marutra = explode('"',translate(str_replace(" ","+",$errorpurpose))); echo $marutra[1] ; ?></p>
                                         </div>-->
 										<div class="form-group">
-                                            <label>連絡先番号。</label>
+                                            <label><?php echo CONTACT_NO;?></label>
                                             <input class="form-control" type="text" name="contact" value="<?php echo $data['phoneno']; ?>">
                                             <p class="help-block error"><?php $marutra = explode('"',translate(str_replace(" ","+",$errorcontact))); echo $marutra[1] ; ?></p>
                                         </div>
 										</div>
 										<div class="col-lg-12">
 											<center>
-												<input type="submit" name="btn_save" class="btn btn-primary" value="提出します">
-												<button type="reset" class="btn btn-danger" onclick="history.go(-1);">キャンセル</button>
+												<input type="submit" name="btn_save" class="btn btn-primary" value="<?php echo SUBMIT;?>">
+												<button type="reset" class="btn btn-danger" onclick="history.go(-1);"><?php echo RESET1;?></button>
 											</center>
 										</div>
                                     </form>
@@ -727,15 +724,15 @@ if($_REQUEST['kon'] =='seminardetails')
                     <!-- Advanced Tables -->
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                             セミナー施設
+                            <?php echo SEMINAR_FACILITY;?> 
                         </div>
                         <div class="panel-body">
                             <div class="table-responsive">
                                 <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                     <thead>
                                         <tr>
-                                            <th> 名</th>
-                                            <th>状態</th>
+                                            <th><?php echo NAME;?></th>
+                                            <th><?php echo STATUS;?></th>
                                             
                                         </tr>
                                     </thead>
@@ -782,15 +779,15 @@ if($_REQUEST['kon'] =='seminardetails')
                     <!-- Advanced Tables -->
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                             セミナー参加者
+                            <?php echo SEMINAR_ATTENDES;?>
                         </div>
                         <div class="panel-body">
                             <div class="table-responsive">
                                 <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                     <thead>
                                         <tr>
-                                            <th>名</th>
-                                            <th>状態</th>
+                                            <th><?php echo NAME;?></th>
+                                            <th><?php echo STATUS;?></th>
                                             
                                         </tr>
                                     </thead>
@@ -837,15 +834,15 @@ if($_REQUEST['kon'] =='industrytype')
                     <!-- Advanced Tables -->
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                             業種
+                             <?php echo INDUSTRY_TYPE;?>
                         </div>
                         <div class="panel-body">
                             <div class="table-responsive">
                                 <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                                     <thead>
                                         <tr>
-                                            <th>名</th>
-                                            <th>状態</th>
+                                            <th><?php echo NAME;?></th>
+                                            <th><?php echo STATUS;?></th>
                                             
                                         </tr>
                                     </thead>
@@ -899,11 +896,11 @@ if($_REQUEST['kon'] =='industrytype')
 		<table class="table table-striped table-bordered table-hover" id="">
                                     <thead>
                                         <tr>
-                                            <th><center>名</center></th>
-                                            <th><center>状態</center></th>
+                                            <th><center><?php echo NAME;?></center></th>
+                                            <th><center><?php echo STATUS;?></center></th>
                                            
-											<th><center>更新</center></th>
-											<th><center>削除</center></th>
+											<th><center><?php echo UPDATE;?></center></th>
+											<th><center><?php echo Delete1;?></center></th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -983,11 +980,11 @@ if($_REQUEST['kon'] =='industrytype')
 <table class="table table-striped table-bordered table-hover animated jello infinte" id="">
                                     <thead>
                                         <tr>
-                                            <th><center>名</center></th>
+                                            <th><center><?php echo NAME;?></center></th>
                                         
                                             
-											<th><center>更新</center></th>
-											<th><center>削除</center></th>
+											<th><center><?php echo UPDATE;?></center></th>
+											<th><center><?php echo Delete1;?></center></th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -1058,11 +1055,11 @@ if($_REQUEST['kon'] =='industrytype')
 		<table class="table table-striped table-bordered table-hover" id="">
                                     <thead>
                                         <tr>
-                                            <th><center>名</center></th>
-                                            <th><center>状態</center></th>
+                                            <th><center><?php echo NAME;?></center></th>
+                                            <th><center><?php echo STATUS;?></center></th>
                                          
-											<th><center>更新</center></th>
-											<th><center>削除</center></th>
+											<th><center><?php echo UPDATE;?></center></th>
+											<th><center><?php echo DELETE1;?></center></th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -1138,15 +1135,13 @@ if($_REQUEST['kon'] =='industrytype')
 		<table class="table table-striped table-bordered table-hover" id="">
                                     <thead>
                                         <tr>
-										<th><center>
-画像</center></th>
-                                            <th><center>名</center></th>
+										<th><center><?php echo IMAGE;?></center></th>
+                                            <th><center><?php echo NAME;?></center></th>
 											
-                                            <th><center>状態</center></th>
+                                            <th><center><?php echo STATUS;?></center></th>
                                             
-											<th><center>更新</center></th>
-											<th><center>
-削除</center></th>
+											<th><center><?php echo UPDATE;?></center></th>
+											<th><center><?php echo DELETE1;?></center></th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -1225,15 +1220,13 @@ if($_REQUEST['kon'] =='industrytype')
 		<table class="table table-striped table-bordered table-hover" id="">
                                      <thead>
                                         <tr>
-										<th><center>
-画像</center></th>
-                                            <th><center>名</center></th>
+										<th><center><?php echo IMAGE;?></center></th>
+                                            <th><center><?php echo NAME;?></center></th>
 											
-                                            <th><center>状態</center></th>
+                                            <th><center><?php echo STATUS;?></center></th>
                                             
-											<th><center>更新</center></th>
-											<th><center>
-削除</center></th>
+											<th><center><?php echo UPDATE;?></center></th>
+											<th><center><?php echo DELETE1;?></center></th>
                                         </tr>
                                     </thead>
                                     <tbody>

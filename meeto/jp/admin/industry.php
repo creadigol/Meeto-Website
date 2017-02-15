@@ -63,7 +63,8 @@ include('config.php');
                     <div class="col-md-12 page-header">
 						<div  class="col-md-6" align="left" style="color:black;">
                         <h3>
-                            新産業を追加
+                            <?php echo ADD_NEW_INDUSTRY;?>
+							
                         </h3>
 						</div>
 						<div  class="col-md-6 " align="right" >
@@ -75,20 +76,20 @@ include('config.php');
 					<div class="col-md-12"> 
 						<form method="post" role="form">
 							 <div class="form-group">
-                                            <label>日本産業</label>
-                                            <input class="form-control" type="text" name="addnewjpfac" required="" placeholder="業種の追加" >
+                                            <label><?php echo JAPANESE_INDUSTRY;?></label>
+                                            <input class="form-control" type="text" name="addnewjpfac" required="" placeholder="<?php echo ADD_INDUSTRY;?>" >
                                         </div>
-										
+									
 										<div class="form-group">
-                                            <label>英語産業</label>
-											<div><span style="color:red;">*</span>腎臓は英語の会話に同じです。<br>
-											必要ならGoogle Translatorの助けを借りて</div>
-                                            <input class="form-control" type="text" name="addnewfac" required="" placeholder="業種の追加" >
+                                            <label><?php echo ENGLISH_INDUSTRY;?></label>
+											<div><span style="color:red;">*</span><?php echo KINDLY_ENTER_ENGLISH_CONVERSATION_THE_SAME;?><br>
+											<?php echo IF_REQUIRED_TAKE_HELP_OF_GOOGLE_TRANSLATER;?></div>
+                                            <input class="form-control" type="text" name="addnewfac" required="" placeholder="<?php echo ADD_INDUSTRY;?>" >
                                         </div>
 										
 										<div class="col-lg-12">
 											<center>
-												<input type="submit" name="sub_fac" class="btn btn-primary" value="加えます">
+												<input type="submit" name="sub_fac" class="btn btn-primary" value="<?php echo ADD_NEW_INDUSTRY;?>加えます">
 												
 											</center>
 										</div>
@@ -112,12 +113,12 @@ include('config.php');
                     <div class="col-md-12 page-header">
 						<div  class="col-md-6" align="left">
                         <h1>
-                           産業
+                           <?php echo INDUSTRY;?>
                         </h1>
 						</div>
 						<div  class="col-md-6 " align="right" >
 						<div class="col-md-4 col-md-offset-8 btn btn-primary" onclick="facilityshow();">
-							新産業を追加 <i class="fa fa-plus" style="font-size:10px;"></i>
+							<?php echo ADD_NEW_INDUSTRY;?> <i class="fa fa-plus" style="font-size:10px;"></i>
 						</div>
 						</div>
                     </div>
@@ -129,7 +130,7 @@ include('config.php');
                     <!-- Advanced Tables -->
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                             業種一覧
+                            <?php echo INDUSTRY_LIST;?> 
                         </div>
                         <div class="panel-body">
                             <div class="table-responsive" id="admin_industry">
@@ -137,11 +138,11 @@ include('config.php');
                                 <table class="table table-striped table-bordered table-hover animated jello infinte" id="">
                                     <thead>
                                         <tr>
-                                            <th><center>名</center></th>
+                                            <th><center><?php echo NAME;?></center></th>
                                         
                                             
-											<th><center>更新</center></th>
-											<th><center>削除</center></th>
+											<th><center><?php echo UPDATE;?></center></th>
+											<th><center><?php echo DELETE1;?></center></th>
                                         </tr>
                                     </thead>
                                     <tbody>
